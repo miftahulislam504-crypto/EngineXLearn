@@ -1,3 +1,4 @@
+import { Prisma } from '@prisma/client';
 import { prisma } from '@/lib/prisma';
 
 /**
@@ -14,6 +15,6 @@ export type ActivityType = 'lesson_completed' | 'lab_result_saved' | 'tool_resul
 
 export async function logActivityEvent(userId: string, type: ActivityType, metadata?: Record<string, unknown>) {
   return prisma.activityEvent.create({
-    data: { userId, type, metadata: metadata ?? undefined },
+    data: { userId, type, metadata: (metadata as Prisma.InputJsonValue) ?? undefined },
   });
 }
