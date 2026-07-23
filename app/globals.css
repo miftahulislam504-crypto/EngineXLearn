@@ -1,0 +1,167 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Light theme — vellum/paper surface, structural-navy text */
+    --background: 43 27% 96%;      /* vellum-50 */
+    --foreground: 215 42% 12%;     /* structural-950 */
+
+    --card: 45 24% 94%;            /* vellum-100 */
+    --card-foreground: 215 42% 12%;
+
+    --popover: 43 27% 97%;
+    --popover-foreground: 215 42% 12%;
+
+    --primary: 210 43% 13%;        /* structural-900 */
+    --primary-foreground: 45 24% 96%;
+
+    --secondary: 185 22% 55%;      /* steel-500 */
+    --secondary-foreground: 45 24% 97%;
+
+    --muted: 42 18% 88%;           /* vellum-200 */
+    --muted-foreground: 30 8% 48%; /* concrete-500 */
+
+    --accent: 21 62% 47%;          /* oxide-500 */
+    --accent-foreground: 45 24% 97%;
+
+    --destructive: 6 74% 45%;
+    --destructive-foreground: 45 24% 97%;
+
+    --border: 40 20% 82%;          /* concrete-300 */
+    --input: 40 20% 82%;
+    --ring: 185 22% 45%;
+
+    --grid-line: 210 20% 20% / 0.06;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    /* Dark theme — structural navy surface, vellum text (drafting table at night) */
+    --background: 215 46% 9%;      /* structural-950 */
+    --foreground: 45 24% 94%;      /* vellum-100 */
+
+    --card: 213 42% 12%;           /* structural-900 */
+    --card-foreground: 45 24% 94%;
+
+    --popover: 213 42% 11%;
+    --popover-foreground: 45 24% 94%;
+
+    --primary: 45 24% 94%;
+    --primary-foreground: 215 46% 12%;
+
+    --secondary: 187 24% 40%;      /* steel-600 */
+    --secondary-foreground: 45 24% 96%;
+
+    --muted: 212 34% 17%;          /* structural-800 */
+    --muted-foreground: 35 9% 62%; /* concrete-400 */
+
+    --accent: 21 55% 55%;          /* oxide-400 */
+    --accent-foreground: 215 46% 10%;
+
+    --destructive: 6 65% 55%;
+    --destructive-foreground: 45 24% 96%;
+
+    --border: 212 30% 22%;
+    --input: 212 30% 22%;
+    --ring: 185 30% 55%;
+
+    --grid-line: 45 24% 90% / 0.06;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: 'rlig' 1, 'calt' 1;
+  }
+}
+
+/* Blueprint dimension-line divider — used between major sections instead of a plain <hr>,
+   echoing a drawing sheet's title-block/dimension-line convention. */
+@layer components {
+  .dim-divider {
+    position: relative;
+    height: 1px;
+    background: hsl(var(--border));
+  }
+  .dim-divider::before,
+  .dim-divider::after {
+    content: '';
+    position: absolute;
+    top: -3px;
+    width: 1px;
+    height: 7px;
+    background: hsl(var(--border));
+  }
+  .dim-divider::before {
+    left: 0;
+  }
+  .dim-divider::after {
+    right: 0;
+  }
+
+  .grid-paper-bg {
+    background-image: var(--tw-gradient-stops, none);
+    background-color: transparent;
+  }
+
+  /*
+   * Lesson body typography. Not Tailwind's `prose` plugin (not installed,
+   * and this deserves its own voice rather than a generic typography
+   * default) — headings use the display face, body text stays readable at
+   * lesson-reading length, and code/formula-like spans use the mono face
+   * consistent with the rest of the platform's "specs get mono" rule.
+   */
+  .prose-lesson {
+    @apply max-w-none text-[15px] leading-[1.75] text-foreground;
+  }
+  .prose-lesson h1 {
+    @apply mb-4 mt-8 font-display text-2xl font-semibold tracking-tight first:mt-0;
+  }
+  .prose-lesson h2 {
+    @apply mb-3 mt-7 font-display text-xl font-semibold tracking-tight;
+  }
+  .prose-lesson h3 {
+    @apply mb-2 mt-6 font-display text-lg font-semibold tracking-tight;
+  }
+  .prose-lesson p {
+    @apply mb-4;
+  }
+  .prose-lesson ul {
+    @apply mb-4 ml-5 list-disc space-y-1.5;
+  }
+  .prose-lesson ol {
+    @apply mb-4 ml-5 list-decimal space-y-1.5;
+  }
+  .prose-lesson strong {
+    @apply font-semibold text-foreground;
+  }
+  .prose-lesson code {
+    @apply rounded bg-muted px-1.5 py-0.5 font-mono text-[13px] text-steel-600 dark:text-steel-300;
+  }
+  .prose-lesson pre {
+    @apply mb-4 overflow-x-auto rounded-lg border border-border bg-muted p-4 font-mono text-[13px];
+  }
+  .prose-lesson pre code {
+    @apply bg-transparent p-0;
+  }
+  .prose-lesson blockquote {
+    @apply border-l-2 border-steel-400 pl-4 italic text-muted-foreground;
+  }
+  .prose-lesson table {
+    @apply mb-4 w-full border-collapse text-sm;
+  }
+  .prose-lesson th,
+  .prose-lesson td {
+    @apply border border-border px-3 py-2 text-left;
+  }
+  .prose-lesson th {
+    @apply bg-muted font-display font-semibold;
+  }
+}
