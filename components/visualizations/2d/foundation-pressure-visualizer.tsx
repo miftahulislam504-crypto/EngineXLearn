@@ -60,14 +60,14 @@ export function FoundationPressureVisualizer() {
       const JXG = (await import('jsxgraph')).default;
       if (cancelled || !boardRef.current) return;
 
-      const board = JXG.JSXGraph.initBoard(boardRef.current, {
+      const board: any = JXG.JSXGraph.initBoard(boardRef.current, {
         boundingbox: [-4.5, 3, 4.5, -3],
         axis: false,
         showCopyright: false,
         showNavigation: false,
         pan: { enabled: false },
         zoom: { enabled: false },
-      });
+      } as any);
 
       // Board starts empty — the eccentricity-driven effect below draws
       // the axis line, footing, and pressure diagram together as soon as

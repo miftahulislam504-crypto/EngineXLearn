@@ -49,7 +49,7 @@ export function CompactionCurve({
           x: { name: 'w (%)', withLabel: true, ticks: { insertTicks: true } },
           y: { name: 'γd (g/cm³)', withLabel: true, ticks: { insertTicks: true } },
         },
-      });
+      } as any);
 
       // Zero-air-voids reference line
       const zavPoints = [];

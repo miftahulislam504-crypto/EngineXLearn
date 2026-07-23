@@ -43,7 +43,7 @@ export function FlowCurve({ trials, fit }: { trials: LiquidLimitTrial[]; fit: Fl
         showNavigation: false,
         pan: { enabled: false },
         zoom: { enabled: false },
-      });
+      } as any);
 
       // Gridlines at each tested blow count plus the N=25 reference line,
       // labeled with real (non-log) blow-count values.

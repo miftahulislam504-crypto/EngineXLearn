@@ -55,14 +55,14 @@ export function MomentDiagramExplorer() {
       const JXG = (await import('jsxgraph')).default;
       if (cancelled || !boardRef.current) return;
 
-      const board = JXG.JSXGraph.initBoard(boardRef.current, {
+      const board: any = JXG.JSXGraph.initBoard(boardRef.current, {
         boundingbox: [-0.5, 4.5, SPAN_M + 0.5, -3.5],
         axis: false,
         showCopyright: false,
         showNavigation: false,
         pan: { enabled: false },
         zoom: { enabled: false },
-      });
+      } as any);
 
       // Beam line
       board.create('line', [[0, 0], [SPAN_M, 0]], {

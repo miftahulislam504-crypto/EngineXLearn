@@ -37,7 +37,7 @@ export function ShearEnvelopeChart({ trials, fit }: { trials: ShearTrial[]; fit:
           x: { name: 'σ (kPa)', withLabel: true },
           y: { name: 'τ (kPa)', withLabel: true },
         },
-      });
+      } as any);
 
       const yAt0 = fit.rawCohesionKpa;
       const yAtMax = fit.slope * maxX + fit.rawCohesionKpa;

@@ -43,7 +43,7 @@ export function TraversePlot({
         pan: { enabled: false },
         zoom: { enabled: false },
         keepAspectRatio: true,
-      });
+      } as any);
 
       const allPoints = [
         { n: startNorthing, e: startEasting, label: 'Start' },

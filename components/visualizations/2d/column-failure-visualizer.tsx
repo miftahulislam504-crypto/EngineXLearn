@@ -39,14 +39,14 @@ export function ColumnFailureComparator() {
       const JXG = (await import('jsxgraph')).default;
       if (cancelled || !boardRef.current) return;
 
-      const board = JXG.JSXGraph.initBoard(boardRef.current, {
+      const board: any = JXG.JSXGraph.initBoard(boardRef.current, {
         boundingbox: [MIN_S - 5, Y_MAX_KN, MAX_S + 5, -200],
         axis: false,
         showCopyright: false,
         showNavigation: false,
         pan: { enabled: false },
         zoom: { enabled: false },
-      });
+      } as any);
 
       // Axis lines (manual, for control over styling consistent with the rest of the platform)
       board.create('line', [[MIN_S - 5, 0], [MAX_S + 5, 0]], {

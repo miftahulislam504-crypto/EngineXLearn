@@ -37,7 +37,7 @@ export function GradationCurve({ points }: { points: GradationPoint[] }) {
         showNavigation: false,
         pan: { enabled: false },
         zoom: { enabled: false },
-      });
+      } as any);
 
       // Manual gridlines at each whole-mm-decade + the tested sieve sizes,
       // labeled with their real (non-log) values, so the chart reads like
