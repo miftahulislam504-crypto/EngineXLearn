@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -2107,8 +2107,8 @@ async function main() {
           quizId: createdQuiz.id,
           type: question.type,
           prompt: question.prompt,
-          choices: question.choices ?? undefined,
-          answer: question.answer,
+          choices: (question.choices as Prisma.InputJsonValue | undefined) ?? undefined,
+          answer: question.answer as Prisma.InputJsonValue,
         },
       });
     }
