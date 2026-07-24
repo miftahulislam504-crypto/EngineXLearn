@@ -2,14 +2,15 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { AuthProvider } from '@/lib/auth-context';
 import { DictionaryProvider } from '@/lib/i18n/dictionary-context';
-import { getDictionary } from '@/lib/i18n/dictionaries';
 import { isValidLocale, LOCALES, type Locale } from '@/lib/i18n/config';
 
 /**
  * Locale boundary layout. Validates the [locale] segment (an unknown
  * locale like /fr/learning 404s rather than silently falling back to
- * English), resolves that locale's dictionary server-side, and provides
- * both the dictionary and Firebase auth context to everything beneath it.
+ * English) and provides both the dictionary and Firebase auth context
+ * to everything beneath it. DictionaryProvider resolves the dictionary
+ * itself client-side from the locale string — see the comment there for
+ * why the dict object can't be resolved here and passed down as a prop.
  */
 
 export function generateStaticParams() {
@@ -46,10 +47,9 @@ export default function LocaleLayout({
   }
 
   const locale = params.locale as Locale;
-  const dict = getDictionary(locale);
 
   return (
-    <DictionaryProvider dict={dict} locale={locale}>
+    <DictionaryProvider locale={locale}>
       <AuthProvider>{children}</AuthProvider>
     </DictionaryProvider>
   );

@@ -1,52 +1,56 @@
-'use client';
-
-import { createContext, useContext, type ReactNode } from 'react';
-import type { Dictionary } from '@/lib/i18n/dictionary-type';
-import type { Locale } from '@/lib/i18n/config';
-
-interface DictionaryContextValue {
-  dict: Dictionary;
-  locale: Locale;
-}
-
-const DictionaryContext = createContext<DictionaryContextValue | undefined>(undefined);
+import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import { AuthProvider } from '@/lib/auth-context';
+import { DictionaryProvider } from '@/lib/i18n/dictionary-context';
+import { isValidLocale, LOCALES, type Locale } from '@/lib/i18n/config';
 
 /**
- * Provides the current locale's dictionary to every Client Component
- * beneath it. The dictionary itself is resolved server-side (see
- * app/[locale]/layout.tsx, a Server Component) and passed in as a plain
- * prop — this provider's only job is making it available via a hook
- * instead of prop-drilling `dict` through every intermediate component.
- *
- * Server Components don't use this at all; they call getDictionary(locale)
- * directly since they already receive `params.locale` from Next.js routing.
+ * Locale boundary layout. Validates the [locale] segment (an unknown
+ * locale like /fr/learning 404s rather than silently falling back to
+ * English) and provides both the dictionary and Firebase auth context
+ * to everything beneath it. DictionaryProvider resolves the dictionary
+ * itself client-side from the locale string — see the comment there for
+ * why the dict object can't be resolved here and passed down as a prop.
  */
-export function DictionaryProvider({
-  dict,
-  locale,
-  children,
+
+export function generateStaticParams() {
+  return LOCALES.map((locale) => ({ locale }));
+}
+
+export async function generateMetadata({
+  params,
 }: {
-  dict: Dictionary;
-  locale: Locale;
-  children: ReactNode;
+  params: { locale: string };
+}): Promise<Metadata> {
+  const locale = params.locale as Locale;
+  const isEnglish = locale === 'en';
+
+  return {
+    title: isEnglish
+      ? 'CivilLearn — Civil Engineering Learning Platform'
+      : 'CivilLearn — সিভিল ইঞ্জিনিয়ারিং লার্নিং প্ল্যাটফর্ম',
+    description: isEnglish
+      ? 'Learn, practice, and visualize civil engineering — from first-year mechanics to BNBC 2020-compliant structural design.'
+      : 'সিভিল ইঞ্জিনিয়ারিং শিখুন, প্র্যাকটিস করুন, এবং ভিজ্যুয়ালাইজ করুন — ফার্স্ট-ইয়ার মেকানিক্স থেকে BNBC 2020-compliant স্ট্রাকচারাল ডিজাইন পর্যন্ত।',
+  };
+}
+
+export default function LocaleLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: { locale: string };
 }) {
+  if (!isValidLocale(params.locale)) {
+    notFound();
+  }
+
+  const locale = params.locale as Locale;
+
   return (
-    <DictionaryContext.Provider value={{ dict, locale }}>{children}</DictionaryContext.Provider>
+    <DictionaryProvider locale={locale}>
+      <AuthProvider>{children}</AuthProvider>
+    </DictionaryProvider>
   );
-}
-
-export function useDictionary(): Dictionary {
-  const context = useContext(DictionaryContext);
-  if (!context) {
-    throw new Error('useDictionary must be used within a DictionaryProvider');
-  }
-  return context.dict;
-}
-
-export function useLocale(): Locale {
-  const context = useContext(DictionaryContext);
-  if (!context) {
-    throw new Error('useLocale must be used within a DictionaryProvider');
-  }
-  return context.locale;
 }
