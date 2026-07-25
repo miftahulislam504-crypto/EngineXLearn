@@ -8,7 +8,10 @@ import { getDictionary } from '@/lib/i18n/dictionaries';
 import { isValidLocale, DEFAULT_LOCALE, type Locale } from '@/lib/i18n/config';
 import { localize } from '@/lib/i18n/localize-content';
 
-export const revalidate = 300; // 5 min — subject/course lists change rarely
+// Rendered on request instead of at build time: the build environment has
+// no DATABASE_URL, so a build-time (or ISR) fetch of this Prisma query fails
+// the Vercel build. Runtime requests use the real DATABASE_URL and are fine.
+export const dynamic = 'force-dynamic';
 
 export default async function LearningPage({
   params,

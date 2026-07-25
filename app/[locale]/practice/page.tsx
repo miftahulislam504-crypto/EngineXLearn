@@ -7,6 +7,11 @@ import { getAllQuizzesGrouped } from '@/lib/queries/practice';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { isValidLocale, DEFAULT_LOCALE, type Locale } from '@/lib/i18n/config';
 
+// Rendered on request instead of at build time: the build environment has
+// no DATABASE_URL, so a build-time fetch of this Prisma query fails the
+// Vercel build. Runtime requests use the real DATABASE_URL and are fine.
+export const dynamic = 'force-dynamic';
+
 export default async function PracticePage({ params }: { params: { locale: string } }) {
   const locale: Locale = isValidLocale(params.locale) ? params.locale : DEFAULT_LOCALE;
   const dict = getDictionary(locale);
