@@ -6,10 +6,13 @@ import { cn } from '@/lib/utils';
 import { LabFrame, LabStageFooter, type LabStage } from '../lab-frame';
 import { computePenetration, SAMPLE_TRIALS_DMM } from './bitumen-penetration-logic';
 import { useDictionary } from '@/lib/i18n/dictionary-context';
+import { useAuth } from '@/lib/auth-context';
+import { saveLabResult } from '@/lib/progress/store';
 
 export function BitumenPenetrationLab({ lessonId, loggedIn }: { lessonId: string; loggedIn: boolean }) {
   const dict = useDictionary();
   const t = dict.bitumenPenetration;
+  const { user } = useAuth();
 
   const [stage, setStage] = useState<LabStage>('equipment');
   const [completedStages, setCompletedStages] = useState<Set<LabStage>>(new Set());
@@ -39,33 +42,22 @@ export function BitumenPenetrationLab({ lessonId, loggedIn }: { lessonId: string
     return t.gradeAboveRange;
   }, [result.classification, t]);
 
-  const handleSaveReport = useCallback(async () => {
-    if (!loggedIn) {
+  const handleSaveReport = useCallback(() => {
+    if (!loggedIn || !user) {
       setSaveError(dict.lab.loginToSave);
       return;
     }
     setSaving(true);
     setSaveError(null);
     try {
-      const res = await fetch(`/api/lessons/${lessonId}/lab-result`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          inputData: { trials },
-          results: result,
-        }),
-      });
-      if (res.ok) {
-        setSaved(true);
-      } else {
-        setSaveError(dict.lab.saveError);
-      }
+      saveLabResult(user.uid, lessonId, { trials }, result);
+      setSaved(true);
     } catch {
       setSaveError(dict.lab.saveError);
     } finally {
       setSaving(false);
     }
-  }, [lessonId, loggedIn, trials, result, dict.lab]);
+  }, [lessonId, loggedIn, user, trials, result, dict.lab]);
 
   return (
     <LabFrame

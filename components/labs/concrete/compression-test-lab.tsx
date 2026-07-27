@@ -12,10 +12,13 @@ import {
   type ConcreteGrade,
 } from './compression-test-logic';
 import { useDictionary } from '@/lib/i18n/dictionary-context';
+import { useAuth } from '@/lib/auth-context';
+import { saveLabResult } from '@/lib/progress/store';
 
 export function CompressionTestLab({ lessonId, loggedIn }: { lessonId: string; loggedIn: boolean }) {
   const dict = useDictionary();
   const t = dict.compressionTest;
+  const { user } = useAuth();
 
   const [stage, setStage] = useState<LabStage>('equipment');
   const [completedStages, setCompletedStages] = useState<Set<LabStage>>(new Set());
@@ -39,33 +42,22 @@ export function CompressionTestLab({ lessonId, loggedIn }: { lessonId: string; l
     'fails-acceptance': t.acceptFails,
   };
 
-  const handleSaveReport = useCallback(async () => {
-    if (!loggedIn) {
+  const handleSaveReport = useCallback(() => {
+    if (!loggedIn || !user) {
       setSaveError(dict.lab.loginToSave);
       return;
     }
     setSaving(true);
     setSaveError(null);
     try {
-      const res = await fetch(`/api/lessons/${lessonId}/lab-result`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          inputData: { loadKn, fckMpa },
-          results: result,
-        }),
-      });
-      if (res.ok) {
-        setSaved(true);
-      } else {
-        setSaveError(dict.lab.saveError);
-      }
+      saveLabResult(user.uid, lessonId, { loadKn, fckMpa }, result);
+      setSaved(true);
     } catch {
       setSaveError(dict.lab.saveError);
     } finally {
       setSaving(false);
     }
-  }, [lessonId, loggedIn, loadKn, fckMpa, result, dict.lab]);
+  }, [lessonId, loggedIn, user, loadKn, fckMpa, result, dict.lab]);
 
   return (
     <LabFrame

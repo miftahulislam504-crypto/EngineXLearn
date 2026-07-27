@@ -7,10 +7,13 @@ import { LabFrame, LabStageFooter, type LabStage } from '../lab-frame';
 import { ShearEnvelopeChart } from './shear-envelope-chart';
 import { fitShearEnvelope, SAMPLE_TRIALS, type ShearTrial } from './direct-shear-logic';
 import { useDictionary } from '@/lib/i18n/dictionary-context';
+import { useAuth } from '@/lib/auth-context';
+import { saveLabResult } from '@/lib/progress/store';
 
 export function DirectShearLab({ lessonId, loggedIn }: { lessonId: string; loggedIn: boolean }) {
   const dict = useDictionary();
   const t = dict.directShear;
+  const { user } = useAuth();
 
   const [stage, setStage] = useState<LabStage>('equipment');
   const [completedStages, setCompletedStages] = useState<Set<LabStage>>(new Set());
@@ -31,30 +34,22 @@ export function DirectShearLab({ lessonId, loggedIn }: { lessonId: string; logge
     setTrials((prev) => prev.map((tr, i) => (i === index ? { ...tr, [field]: value } : tr)));
   };
 
-  const handleSaveReport = useCallback(async () => {
-    if (!loggedIn) {
+  const handleSaveReport = useCallback(() => {
+    if (!loggedIn || !user) {
       setSaveError(dict.lab.loginToSave);
       return;
     }
     setSaving(true);
     setSaveError(null);
     try {
-      const res = await fetch(`/api/lessons/${lessonId}/lab-result`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ inputData: { trials }, results: fit }),
-      });
-      if (res.ok) {
-        setSaved(true);
-      } else {
-        setSaveError(dict.lab.saveError);
-      }
+      saveLabResult(user.uid, lessonId, { trials }, fit);
+      setSaved(true);
     } catch {
       setSaveError(dict.lab.saveError);
     } finally {
       setSaving(false);
     }
-  }, [lessonId, loggedIn, trials, fit, dict.lab]);
+  }, [lessonId, loggedIn, user, trials, fit, dict.lab]);
 
   return (
     <LabFrame

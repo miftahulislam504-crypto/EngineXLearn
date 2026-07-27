@@ -1,31 +1,31 @@
+'use client';
+
 import { Link } from '@/components/i18n/link';
 import { notFound } from 'next/navigation';
 import { ChevronLeft } from 'lucide-react';
 import { SiteHeader } from '@/components/layout/site-header';
 import { SiteFooter } from '@/components/layout/site-footer';
-import { getQuizById } from '@/lib/queries/practice';
-import { getDictionary } from '@/lib/i18n/dictionaries';
-import { isValidLocale, DEFAULT_LOCALE, type Locale } from '@/lib/i18n/config';
-import { getCurrentUser } from '@/lib/current-user';
+import { getQuizById } from '@/lib/content';
+import { useDictionary } from '@/lib/i18n/dictionary-context';
+import { useAuth } from '@/lib/auth-context';
 import { QuizTaking, type QuizData } from '@/components/practice/quiz-taking';
 import type { QuestionType, QuestionAnswer } from '@/components/practice/quiz-logic';
 
-export default async function QuizDetailPage({
+export default function QuizDetailPage({
   params,
 }: {
-  params: { quizId: string; locale: string };
+  params: { quizId: string };
 }) {
-  const locale: Locale = isValidLocale(params.locale) ? params.locale : DEFAULT_LOCALE;
-  const dict = getDictionary(locale);
+  const dict = useDictionary();
+  const { user } = useAuth();
 
-  const quiz = await getQuizById(params.quizId);
+  const quiz = getQuizById(params.quizId);
   if (!quiz) notFound();
 
-  const currentUser = await getCurrentUser();
-
-  // DB rows store `answer` as untyped Json — cast at this one boundary
-  // (server-side, right after the query) rather than trusting the shape
-  // implicitly everywhere the question data gets used downstream.
+  // Content data stores `answer` as a loosely-typed Record — cast at this
+  // one boundary (right where the static quiz data is read) rather than
+  // trusting the shape implicitly everywhere the question data gets used
+  // downstream.
   const quizData: QuizData = {
     id: quiz.id,
     title: quiz.title,
@@ -35,7 +35,7 @@ export default async function QuizDetailPage({
       id: q.id,
       type: q.type as QuestionType,
       prompt: q.prompt,
-      choices: (q.choices as { id: string; text: string }[] | null) ?? undefined,
+      choices: q.choices ?? undefined,
       answer: q.answer as unknown as QuestionAnswer,
     })),
   };
@@ -54,7 +54,7 @@ export default async function QuizDetailPage({
 
         <h1 className="mb-6 font-display text-2xl font-semibold tracking-tight md:text-3xl">{quiz.title}</h1>
 
-        <QuizTaking quiz={quizData} loggedIn={!!currentUser} />
+        <QuizTaking quiz={quizData} loggedIn={!!user} />
       </main>
       <SiteFooter />
     </>

@@ -11,6 +11,8 @@ import {
   type UserAnswer,
 } from './quiz-logic';
 import { useDictionary } from '@/lib/i18n/dictionary-context';
+import { useAuth } from '@/lib/auth-context';
+import { saveQuizAttempt } from '@/lib/progress/store';
 
 export interface QuizData {
   id: string;
@@ -29,6 +31,7 @@ function formatTime(seconds: number): string {
 export function QuizTaking({ quiz, loggedIn }: { quiz: QuizData; loggedIn: boolean }) {
   const dict = useDictionary();
   const t = dict.practice;
+  const { user } = useAuth();
 
   const [currentIdx, setCurrentIdx] = useState(0);
   const [answers, setAnswers] = useState<Map<string, UserAnswer>>(new Map());
@@ -50,27 +53,19 @@ export function QuizTaking({ quiz, loggedIn }: { quiz: QuizData; loggedIn: boole
 
   const scoreResult = useMemo(() => computeQuizScore(quiz.questions, answers), [quiz.questions, answers]);
 
-  const submit = useCallback(async () => {
+  const submit = useCallback(() => {
     setSubmitted(true);
-    if (!loggedIn) return;
+    if (!loggedIn || !user) return;
     setSaving(true);
     setSaveError(null);
     try {
-      const res = await fetch(`/api/quizzes/${quiz.id}/attempt`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          answers: Object.fromEntries(answers),
-          score: scoreResult.scorePercent,
-        }),
-      });
-      if (!res.ok) setSaveError(t.saveError);
+      saveQuizAttempt(user.uid, quiz.id, scoreResult.scorePercent ?? 0, Object.fromEntries(answers));
     } catch {
       setSaveError(t.saveError);
     } finally {
       setSaving(false);
     }
-  }, [loggedIn, quiz.id, answers, scoreResult.scorePercent, t.saveError]);
+  }, [loggedIn, user, quiz.id, answers, scoreResult.scorePercent, t.saveError]);
 
   useEffect(() => {
     if (!isTimed || submitted) return;

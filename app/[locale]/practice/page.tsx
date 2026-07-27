@@ -3,21 +3,16 @@ import { ChevronRight, HelpCircle, Clock } from 'lucide-react';
 import { SiteHeader } from '@/components/layout/site-header';
 import { SiteFooter } from '@/components/layout/site-footer';
 import { Card, CardContent } from '@/components/ui/card';
-import { getAllQuizzesGrouped } from '@/lib/queries/practice';
+import { getQuizzesGroupedByCategory } from '@/lib/content';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { isValidLocale, DEFAULT_LOCALE, type Locale } from '@/lib/i18n/config';
 
-// Rendered on request instead of at build time: the build environment has
-// no DATABASE_URL, so a build-time fetch of this Prisma query fails the
-// Vercel build. Runtime requests use the real DATABASE_URL and are fine.
-export const dynamic = 'force-dynamic';
-
-export default async function PracticePage({ params }: { params: { locale: string } }) {
+export default function PracticePage({ params }: { params: { locale: string } }) {
   const locale: Locale = isValidLocale(params.locale) ? params.locale : DEFAULT_LOCALE;
   const dict = getDictionary(locale);
   const t = dict.practice;
 
-  const grouped = await getAllQuizzesGrouped();
+  const grouped = getQuizzesGroupedByCategory();
   const categories = Array.from(grouped.keys());
 
   return (
@@ -47,7 +42,7 @@ export default async function PracticePage({ params }: { params: { locale: strin
                         <CardContent className="p-4">
                           <p className="font-display text-sm font-semibold leading-snug">{quiz.title}</p>
                           <div className="mt-2 flex items-center gap-3 font-mono text-xs text-muted-foreground">
-                            <span>{t.questionCount(quiz._count.questions)}</span>
+                            <span>{t.questionCount(quiz.questions.length)}</span>
                             {quiz.timedSeconds && (
                               <span className="flex items-center gap-1">
                                 <Clock className="h-3 w-3" />

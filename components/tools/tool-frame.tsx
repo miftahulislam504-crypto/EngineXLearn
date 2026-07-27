@@ -22,6 +22,8 @@ import { useState, useCallback } from 'react';
 import { Download } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useDictionary } from '@/lib/i18n/dictionary-context';
+import { useAuth } from '@/lib/auth-context';
+import { saveToolResult } from '@/lib/progress/store';
 
 export interface ToolSaveConfig {
   toolSlug: string;
@@ -46,35 +48,28 @@ export function ToolFrame({
   saveConfig?: ToolSaveConfig;
 }) {
   const dict = useDictionary();
+  const { user } = useAuth();
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
 
-  const handleSave = useCallback(async () => {
+  const handleSave = useCallback(() => {
     if (!saveConfig) return;
-    if (!saveConfig.loggedIn) {
+    if (!saveConfig.loggedIn || !user) {
       setSaveError(dict.lab.loginToSave);
       return;
     }
     setSaving(true);
     setSaveError(null);
     try {
-      const res = await fetch(`/api/tools/${saveConfig.toolSlug}/save`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ inputData: saveConfig.inputData, results: saveConfig.results }),
-      });
-      if (res.ok) {
-        setSaved(true);
-      } else {
-        setSaveError(dict.lab.saveError);
-      }
+      saveToolResult(user.uid, saveConfig.toolSlug, saveConfig.inputData, saveConfig.results);
+      setSaved(true);
     } catch {
       setSaveError(dict.lab.saveError);
     } finally {
       setSaving(false);
     }
-  }, [saveConfig, dict.lab]);
+  }, [saveConfig, user, dict.lab]);
 
   return (
     <div className="overflow-hidden rounded-lg border border-border bg-card">

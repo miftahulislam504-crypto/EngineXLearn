@@ -1,5 +1,24 @@
 # CivilLearn — Phase 1 + Phase 2
 
+> **Architecture note (read this first):** the phase log below describes
+> the project as it was built through Phase 16, including Prisma/
+> PostgreSQL for course content and progress data. **That data layer has
+> since been removed.** Firebase is now Auth-only (Email/Password +
+> Google sign-in) — there is no database, no Prisma, no Firestore, and
+> no server-side credential of any kind. Every course, quiz, and tool is
+> hardcoded static data in `lib/content/` (see `course-data.ts` and
+> `quiz-data.ts` — the same content the old `prisma/seed.ts` held,
+> unchanged, just loaded differently), and all user progress (lesson
+> completion, lab/tool results, quiz attempts, daily goal, activity
+> streak) lives in the browser's `localStorage` via `lib/progress/
+> store.ts`, scoped per signed-in Firebase user. This means progress
+> does not sync across devices or survive a cleared browser — it is
+> genuinely local. Every `npx prisma ...` command, `DATABASE_URL`
+> variable, and `/api/...` route mentioned anywhere below this notice
+> is historical and no longer applies. Setup is now just:
+> `npm install`, copy `.env.example` to `.env.local` and fill in the six
+> `NEXT_PUBLIC_FIREBASE_*` values, `npm run dev`.
+
 **Phase 1** (Foundation): project setup, Firebase Auth, layout system, Home
 page structure, Dashboard shell.
 

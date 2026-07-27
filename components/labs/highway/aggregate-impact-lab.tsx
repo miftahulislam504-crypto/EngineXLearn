@@ -6,10 +6,13 @@ import { cn } from '@/lib/utils';
 import { LabFrame, LabStageFooter, type LabStage } from '../lab-frame';
 import { computeAggregateImpactValue, type AggregateGrade } from './aggregate-impact-logic';
 import { useDictionary } from '@/lib/i18n/dictionary-context';
+import { useAuth } from '@/lib/auth-context';
+import { saveLabResult } from '@/lib/progress/store';
 
 export function AggregateImpactLab({ lessonId, loggedIn }: { lessonId: string; loggedIn: boolean }) {
   const dict = useDictionary();
   const t = dict.aggregateImpact;
+  const { user } = useAuth();
 
   const [stage, setStage] = useState<LabStage>('equipment');
   const [completedStages, setCompletedStages] = useState<Set<LabStage>>(new Set());
@@ -45,33 +48,22 @@ export function AggregateImpactLab({ lessonId, loggedIn }: { lessonId: string; l
     weak: t.suitWeak,
   };
 
-  const handleSaveReport = useCallback(async () => {
-    if (!loggedIn) {
+  const handleSaveReport = useCallback(() => {
+    if (!loggedIn || !user) {
       setSaveError(dict.lab.loginToSave);
       return;
     }
     setSaving(true);
     setSaveError(null);
     try {
-      const res = await fetch(`/api/lessons/${lessonId}/lab-result`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          inputData: { originalMassG, passingG },
-          results: result,
-        }),
-      });
-      if (res.ok) {
-        setSaved(true);
-      } else {
-        setSaveError(dict.lab.saveError);
-      }
+      saveLabResult(user.uid, lessonId, { originalMassG, passingG }, result);
+      setSaved(true);
     } catch {
       setSaveError(dict.lab.saveError);
     } finally {
       setSaving(false);
     }
-  }, [lessonId, loggedIn, originalMassG, passingG, result, dict.lab]);
+  }, [lessonId, loggedIn, user, originalMassG, passingG, result, dict.lab]);
 
   return (
     <LabFrame

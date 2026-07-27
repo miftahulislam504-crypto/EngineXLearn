@@ -1,26 +1,17 @@
-import { prisma } from '@/lib/prisma';
+import { ALL_COURSES, ALL_LESSONS } from './index';
 import { scoreMatch } from '@/lib/search/scoring';
 import { FORMULAS } from '@/lib/search/formulas';
 import { TERMS } from '@/lib/search/terms';
 import { TOOL_REGISTRY } from '@/components/tools/registry';
 import type { Dictionary } from '@/lib/i18n/dictionary-type';
+import type { Locale } from '@/lib/i18n/config';
 
 /**
- * Unified Search (Part 21) — combines Course Search, Topic Search
- * (courses/lessons filtered by subject), Formula Search, and
- * Engineering Term Search into one ranked result set, which is what
- * "Smart Search" actually means here: one relevance-ranked list merged
- * from every source, not a single extra feature layered on top. AI
- * Search is intentionally not implemented this way — see
- * `app/api/search/ai/route.ts` for why.
- *
- * Course/Lesson matching narrows candidates at the database level
- * (case-insensitive `contains`, in both English and Bengali fields —
- * PostgreSQL supports this directly) before the same `scoreMatch`
- * ranking used everywhere else re-sorts that smaller candidate set by
- * actual relevance. Tool/Formula/Term matching runs entirely in
- * application code since those sources are small, static datasets, not
- * database tables.
+ * Unified Search (Part 21) — runs entirely client-side now that every
+ * source it searches (courses, lessons, tools, formulas, terms) is
+ * static, hardcoded data instead of a database query. There's no API
+ * route anymore: the search page calls `unifiedSearch` directly, the
+ * same function a server route used to wrap.
  */
 
 export type SearchResultType = 'course' | 'lesson' | 'tool' | 'formula' | 'term';
@@ -37,57 +28,32 @@ export interface SearchResult {
 
 const MAX_RESULTS_PER_SOURCE = 8;
 
-async function searchCourses(query: string): Promise<SearchResult[]> {
-  const rows = await prisma.course.findMany({
-    where: {
-      published: true,
-      OR: [
-        { title: { contains: query, mode: 'insensitive' } },
-        { titleBn: { contains: query, mode: 'insensitive' } },
-        { description: { contains: query, mode: 'insensitive' } },
-      ],
-    },
-    include: { subject: true },
-    take: 30, // candidate pool for re-ranking, not the final result count
-  });
-
-  return rows
+function searchCourses(query: string): SearchResult[] {
+  return ALL_COURSES.filter((c) => c.published)
     .map((c) => ({
       type: 'course' as const,
       id: c.id,
       title: c.title,
-      description: c.description ?? '',
+      description: c.description,
       href: `/learning/${c.slug}`,
-      score: scoreMatch(query, c.title, c.description ?? ''),
-      category: c.subject.title,
+      score: scoreMatch(query, c.title, c.description),
+      category: c.subjectId,
     }))
     .filter((r) => r.score > 0)
     .sort((a, b) => b.score - a.score)
     .slice(0, MAX_RESULTS_PER_SOURCE);
 }
 
-async function searchLessons(query: string): Promise<SearchResult[]> {
-  const rows = await prisma.lesson.findMany({
-    where: {
-      OR: [
-        { title: { contains: query, mode: 'insensitive' } },
-        { titleBn: { contains: query, mode: 'insensitive' } },
-      ],
-    },
-    include: { module: { include: { course: true } } },
-    take: 30,
-  });
-
-  return rows
-    .map((l) => ({
-      type: 'lesson' as const,
-      id: l.id,
-      title: l.title,
-      description: l.module.course.title,
-      href: `/learning/${l.module.course.slug}/${l.id}`,
-      score: scoreMatch(query, l.title, l.module.course.title),
-      category: l.module.course.title,
-    }))
+function searchLessons(query: string): SearchResult[] {
+  return ALL_LESSONS.map((l) => ({
+    type: 'lesson' as const,
+    id: l.id,
+    title: l.title,
+    description: l.courseTitle,
+    href: `/learning/${l.courseSlug}/${l.id}`,
+    score: scoreMatch(query, l.title, l.courseTitle),
+    category: l.courseTitle,
+  }))
     .filter((r) => r.score > 0)
     .sort((a, b) => b.score - a.score)
     .slice(0, MAX_RESULTS_PER_SOURCE);
@@ -154,26 +120,15 @@ function searchTermEntries(query: string, locale: string): SearchResult[] {
     .slice(0, MAX_RESULTS_PER_SOURCE);
 }
 
-export async function unifiedSearch(query: string, locale: string, dict: Dictionary): Promise<SearchResult[]> {
+export function unifiedSearch(query: string, locale: Locale, dict: Dictionary): SearchResult[] {
   const trimmed = query.trim();
   if (!trimmed) return [];
 
-  const [courses, lessons] = await Promise.all([searchCourses(trimmed), searchLessons(trimmed)]);
+  const courses = searchCourses(trimmed);
+  const lessons = searchLessons(trimmed);
   const tools = searchTools(trimmed, dict);
   const formulas = searchFormulaEntries(trimmed, locale);
   const terms = searchTermEntries(trimmed, locale);
 
   return [...courses, ...lessons, ...tools, ...formulas, ...terms].sort((a, b) => b.score - a.score);
-}
-
-/** Topic Search — courses filtered by subject, not a text query. A
- * distinct entry point from unifiedSearch because "browse everything
- * under Geotechnical Engineering" isn't a relevance-ranking problem,
- * it's a filter. */
-export async function searchByTopic(subjectSlug: string) {
-  return prisma.course.findMany({
-    where: { published: true, subject: { slug: subjectSlug } },
-    include: { subject: true },
-    orderBy: { title: 'asc' },
-  });
 }

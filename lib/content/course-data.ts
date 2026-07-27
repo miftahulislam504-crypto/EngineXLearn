@@ -1,20 +1,18 @@
-import { Prisma, PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
-
 /**
- * Seeds all 8 subject areas and every course listed under them in the
- * Master Blueprint (Part 4.1). One course per subject gets full lesson
- * content written out, so the Lesson Viewer has real material to render
- * in every subject area. The remaining courses are seeded with correct
- * module/lesson structure and accurate descriptions, but `body: null` —
- * structure now, prose later, same as the Phase 1 placeholder convention.
+ * All course/subject content, hardcoded — no database. This file is the
+ * single source of truth for every subject, course, module, and lesson
+ * in CivilLearn. It was originally written as Prisma seed data; the
+ * course/lesson content itself (titles, descriptions, lesson bodies) is
+ * unchanged from that version — only the loading mechanism changed, from
+ * "write these rows to Postgres" to "import this array directly".
  *
- * Run with: npx prisma db seed
- * (wired up via the "prisma.seed" field in package.json)
+ * `lib/content/index.ts` hydrates this raw data with stable ids (derived
+ * from slugs/titles, not random) and resolves every course into its
+ * subject — that's the shape every page actually imports from. This file
+ * only exports the raw `subjects` array and its types.
  */
 
-type LessonSeed = {
+export type LessonSeed = {
   title: string;
   titleBn?: string;
   contentType: 'reading' | 'video' | 'interactive' | 'lab';
@@ -24,13 +22,13 @@ type LessonSeed = {
   labKey?: string; // registry key — see components/labs/registry.tsx
 };
 
-type ModuleSeed = {
+export type ModuleSeed = {
   title: string;
   titleBn?: string;
   lessons: LessonSeed[];
 };
 
-type CourseSeed = {
+export type CourseSeed = {
   slug: string;
   title: string;
   titleBn?: string;
@@ -39,7 +37,7 @@ type CourseSeed = {
   modules: ModuleSeed[];
 };
 
-type SubjectSeed = {
+export type SubjectSeed = {
   slug: string;
   title: string;
   titleBn: string;
@@ -1767,7 +1765,7 @@ function course(slug: string, title: string, titleBn: string, description: strin
   };
 }
 
-const subjects: SubjectSeed[] = [
+export const rawSubjects: SubjectSeed[] = [
   {
     slug: 'mathematics',
     title: 'Mathematics',
@@ -1875,258 +1873,3 @@ const subjects: SubjectSeed[] = [
     ],
   },
 ];
-
-async function main() {
-  console.log('Seeding subjects and courses...');
-
-  for (let sIdx = 0; sIdx < subjects.length; sIdx++) {
-    const s = subjects[sIdx];
-
-    const subject = await prisma.subject.upsert({
-      where: { slug: s.slug },
-      update: {
-        title: s.title,
-        titleBn: s.titleBn,
-        description: s.description,
-        order: sIdx,
-      },
-      create: {
-        slug: s.slug,
-        title: s.title,
-        titleBn: s.titleBn,
-        description: s.description,
-        order: sIdx,
-      },
-    });
-
-    console.log(`  Subject: ${s.title} (${s.courses.length} courses)`);
-
-    for (let cIdx = 0; cIdx < s.courses.length; cIdx++) {
-      const c = s.courses[cIdx];
-
-      const createdCourse = await prisma.course.upsert({
-        where: { slug: c.slug },
-        update: {
-          subjectId: subject.id,
-          title: c.title,
-          titleBn: c.titleBn,
-          description: c.description,
-          published: c.published,
-          order: cIdx,
-        },
-        create: {
-          slug: c.slug,
-          subjectId: subject.id,
-          title: c.title,
-          titleBn: c.titleBn,
-          description: c.description,
-          published: c.published,
-          order: cIdx,
-        },
-      });
-
-      // Clear existing modules/lessons for this course before reseeding,
-      // so re-running the seed doesn't duplicate rows.
-      await prisma.module.deleteMany({ where: { courseId: createdCourse.id } });
-
-      for (let mIdx = 0; mIdx < c.modules.length; mIdx++) {
-        const m = c.modules[mIdx];
-
-        const createdModule = await prisma.module.create({
-          data: {
-            courseId: createdCourse.id,
-            title: m.title,
-            titleBn: m.titleBn,
-            order: mIdx,
-          },
-        });
-
-        for (let lIdx = 0; lIdx < m.lessons.length; lIdx++) {
-          const l = m.lessons[lIdx];
-
-          await prisma.lesson.create({
-            data: {
-              moduleId: createdModule.id,
-              title: l.title,
-              titleBn: l.titleBn,
-              contentType: l.contentType,
-              durationMin: l.durationMin ?? 10,
-              body: l.body ?? null,
-              interactiveKey: l.interactiveKey ?? null,
-              labKey: l.labKey ?? null,
-              order: lIdx,
-            },
-          });
-        }
-      }
-    }
-  }
-
-  const subjectCount = await prisma.subject.count();
-  const courseCount = await prisma.course.count();
-  const moduleCount = await prisma.module.count();
-  const lessonCount = await prisma.lesson.count();
-
-  // ---------------------------------------------------------------------
-  // Practice & Exam System (Part 14) — a starting set of two quizzes, not
-  // comprehensive coverage across every subject (same "structure now,
-  // content later" honesty as the rest of this seed file). Every
-  // numerical answer here is a value already independently verified
-  // elsewhere in this platform's build (the Beam, Soil Bearing, and
-  // Steel Weight tools) — reused, not re-derived from scratch, so a
-  // quiz answer can never quietly drift from the tool that taught the
-  // same number.
-  // ---------------------------------------------------------------------
-
-  type QuizSeed = {
-    title: string;
-    category: string;
-    timedSeconds: number | null;
-    questions: {
-      type: 'mcq' | 'numerical' | 'cq';
-      prompt: string;
-      choices?: { id: string; text: string }[];
-      answer: Record<string, unknown>;
-    }[];
-  };
-
-  const QUIZZES: QuizSeed[] = [
-    {
-      title: 'Structural Analysis Fundamentals',
-      category: 'Structural Engineering',
-      timedSeconds: 600,
-      questions: [
-        {
-          type: 'mcq',
-          prompt:
-            'For a simply-supported beam under a uniformly distributed load, the maximum bending moment occurs:',
-          choices: [
-            { id: 'a', text: 'At the supports' },
-            { id: 'b', text: 'At mid-span' },
-            { id: 'c', text: 'At the quarter points' },
-            { id: 'd', text: 'Nowhere in particular — it is constant along the span' },
-          ],
-          answer: { kind: 'mcq', correctChoiceIds: ['b'] },
-        },
-        {
-          type: 'mcq',
-          prompt: 'A short reinforced concrete column fails primarily by:',
-          choices: [
-            { id: 'a', text: 'Elastic (Euler) buckling' },
-            { id: 'b', text: 'Material crushing' },
-            { id: 'c', text: 'Fatigue' },
-            { id: 'd', text: 'Creep' },
-          ],
-          answer: { kind: 'mcq', correctChoiceIds: ['b'] },
-        },
-        {
-          type: 'numerical',
-          prompt:
-            'A simply-supported beam spans 6m and carries a uniformly distributed load of 10 kN/m. What is the maximum bending moment?',
-          answer: { kind: 'numerical', value: 45.0, tolerancePercent: 2.0, unit: 'kN·m' },
-        },
-        {
-          type: 'numerical',
-          prompt: 'For that same beam, what is the maximum shear force?',
-          answer: { kind: 'numerical', value: 30.0, tolerancePercent: 2.0, unit: 'kN' },
-        },
-        {
-          type: 'cq',
-          prompt:
-            'Explain why reinforced concrete beams need both longitudinal bars and stirrups — why not longitudinal bars alone?',
-          answer: {
-            kind: 'cq',
-            modelAnswer:
-              'Longitudinal bars resist the tension a beam develops on its stretched face under bending — plain concrete is weak in tension, so steel carries that load instead. But bending isn\'t the only thing a beam resists: shear force produces diagonal tension cracks running at roughly 45° near the supports, and longitudinal bars (running along the beam\'s length) can\'t cross those diagonal cracks effectively. Stirrups, wrapped transversely around the section, cross those diagonal cracks directly and resist the shear-induced diagonal tension. Stirrups also hold the longitudinal bars in their correct position during casting and provide some confinement to the concrete core.',
-          },
-        },
-      ],
-    },
-    {
-      title: 'Geotechnical & Materials Basics',
-      category: 'Geotechnical Engineering',
-      timedSeconds: 480,
-      questions: [
-        {
-          type: 'mcq',
-          prompt: "Terzaghi's bearing capacity factor Nγ is typically obtained from:",
-          choices: [
-            { id: 'a', text: 'A closed-form formula, exactly like Nc and Nq' },
-            { id: 'b', text: 'Tabulated values, since it has no clean closed form' },
-            { id: 'c', text: 'It is always zero for any soil' },
-            { id: 'd', text: 'Direct field measurement only, never a calculation' },
-          ],
-          answer: { kind: 'mcq', correctChoiceIds: ['b'] },
-        },
-        {
-          type: 'mcq',
-          prompt: "A soil's Plasticity Index (PI) is defined as:",
-          choices: [
-            { id: 'a', text: 'Liquid Limit + Plastic Limit' },
-            { id: 'b', text: 'Liquid Limit − Plastic Limit' },
-            { id: 'c', text: 'Liquid Limit ÷ Plastic Limit' },
-            { id: 'd', text: 'Plastic Limit − Liquid Limit' },
-          ],
-          answer: { kind: 'mcq', correctChoiceIds: ['b'] },
-        },
-        {
-          type: 'numerical',
-          prompt:
-            'A strip footing has cohesion c=0 kPa, friction angle φ=30°, soil unit weight γ=18 kN/m³, footing depth Df=1.5m, and width B=2.0m. Using Terzaghi\'s equation with Nc=37.2, Nq=22.5, Nγ=19.7, what is the ultimate bearing capacity qu?',
-          answer: { kind: 'numerical', value: 962.1, tolerancePercent: 2.0, unit: 'kPa' },
-        },
-        {
-          type: 'numerical',
-          prompt: 'A 16mm diameter mild steel reinforcement bar has a unit weight of approximately how many kg per meter?',
-          answer: { kind: 'numerical', value: 1.58, tolerancePercent: 3.0, unit: 'kg/m' },
-        },
-        {
-          type: 'cq',
-          prompt:
-            "Explain why a soil's Optimum Moisture Content (OMC) exists — why doesn't compaction just keep improving as more water is added?",
-          answer: {
-            kind: 'cq',
-            modelAnswer:
-              "A little water lubricates soil particles, letting them slide past each other into a denser arrangement under the same compactive effort — so dry density rises as moisture increases, at first. Past a certain point, though, additional water starts filling void space that soil particles could otherwise have occupied, so dry density starts falling again even though more water keeps being added. That rise-then-fall is why there's a genuine peak — the Optimum Moisture Content — rather than a 'more water is always better' relationship, and it's also why no real compacted sample can exceed the theoretical zero-air-voids density at any given moisture content.",
-          },
-        },
-      ],
-    },
-  ];
-
-  await prisma.question.deleteMany({});
-  await prisma.quiz.deleteMany({});
-
-  for (const q of QUIZZES) {
-    const createdQuiz = await prisma.quiz.create({
-      data: { title: q.title, category: q.category, timedSeconds: q.timedSeconds },
-    });
-    for (const question of q.questions) {
-      await prisma.question.create({
-        data: {
-          quizId: createdQuiz.id,
-          type: question.type,
-          prompt: question.prompt,
-          choices: (question.choices as Prisma.InputJsonValue | undefined) ?? undefined,
-          answer: question.answer as Prisma.InputJsonValue,
-        },
-      });
-    }
-  }
-
-  const quizCount = await prisma.quiz.count();
-  const questionCount = await prisma.question.count();
-
-  console.log(
-    `Done. ${subjectCount} subjects, ${courseCount} courses, ${moduleCount} modules, ${lessonCount} lessons, ${quizCount} quizzes, ${questionCount} questions.`
-  );
-}
-
-main()
-  .catch((e) => {
-    console.error(e);
-    process.exit(1);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });

@@ -1,13 +1,16 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import { Link } from '@/components/i18n/link';
 import { notFound } from 'next/navigation';
 import { ArrowLeft, PlayCircle, FileText, FlaskConical, MonitorPlay, CheckCircle2, Circle } from 'lucide-react';
 import { SiteHeader } from '@/components/layout/site-header';
 import { SiteFooter } from '@/components/layout/site-footer';
 import { Button } from '@/components/ui/button';
-import { getCourseWithProgress } from '@/lib/queries/learning';
-import { getCurrentUser } from '@/lib/current-user';
-import { getDictionary } from '@/lib/i18n/dictionaries';
-import { isValidLocale, DEFAULT_LOCALE, type Locale } from '@/lib/i18n/config';
+import { getCourseBySlug, getSubjectBySlug } from '@/lib/content';
+import { getCompletedLessonIds } from '@/lib/progress/store';
+import { useAuth } from '@/lib/auth-context';
+import { useDictionary, useLocale } from '@/lib/i18n/dictionary-context';
 import { localize } from '@/lib/i18n/localize-content';
 
 const CONTENT_ICONS = {
@@ -17,30 +20,34 @@ const CONTENT_ICONS = {
   lab: FlaskConical,
 } as const;
 
-export const revalidate = 60;
+export default function CourseDetailPage({ params }: { params: { slug: string } }) {
+  const dict = useDictionary();
+  const locale = useLocale();
+  const { user } = useAuth();
 
-export default async function CourseDetailPage({
-  params,
-}: {
-  params: { slug: string; locale: string };
-}) {
-  const locale: Locale = isValidLocale(params.locale) ? params.locale : DEFAULT_LOCALE;
-  const dict = getDictionary(locale);
+  const course = getCourseBySlug(params.slug);
 
-  const currentUser = await getCurrentUser();
-  const result = await getCourseWithProgress(params.slug, currentUser?.id ?? null);
+  // Completion state is only knowable client-side (localStorage), so it
+  // starts empty and fills in after mount — the same "server renders
+  // logged-out, client hydrates with real state" pattern used by
+  // MarkCompleteButton and every lab/tool save flow.
+  const [completedLessonIds, setCompletedLessonIds] = useState<Set<string>>(new Set());
 
-  if (!result) notFound();
-  const { course, completedLessonIds } = result;
+  useEffect(() => {
+    if (user) setCompletedLessonIds(getCompletedLessonIds(user.uid));
+  }, [user]);
 
+  if (!course) notFound();
+
+  const subject = getSubjectBySlug(course.subjectSlug);
   const totalLessons = course.modules.reduce((sum, m) => sum + m.lessons.length, 0);
   const firstLesson = course.modules[0]?.lessons[0];
   const percentComplete =
     totalLessons > 0 ? Math.round((completedLessonIds.size / totalLessons) * 100) : 0;
 
-  const subjectTitle = localize(locale, course.subject.title, course.subject.titleBn);
+  const subjectTitle = subject ? localize(locale, subject.title, subject.titleBn) : '';
   const courseTitle = localize(locale, course.title, course.titleBn);
-  const courseDescription = localize(locale, course.description, course.descriptionBn);
+  const courseDescription = localize(locale, course.description, null);
 
   return (
     <>
@@ -78,7 +85,7 @@ export default async function CourseDetailPage({
               </Button>
             )}
 
-            {currentUser && totalLessons > 0 && (
+            {user && totalLessons > 0 && (
               <p className="font-mono text-xs text-muted-foreground">
                 {dict.learning.percentComplete(percentComplete, completedLessonIds.size, totalLessons)}
               </p>

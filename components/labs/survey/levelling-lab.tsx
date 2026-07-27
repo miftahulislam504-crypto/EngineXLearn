@@ -11,10 +11,13 @@ import {
   type StationReading,
 } from './levelling-logic';
 import { useDictionary } from '@/lib/i18n/dictionary-context';
+import { useAuth } from '@/lib/auth-context';
+import { saveLabResult } from '@/lib/progress/store';
 
 export function LevellingLab({ lessonId, loggedIn }: { lessonId: string; loggedIn: boolean }) {
   const dict = useDictionary();
   const t = dict.levelling;
+  const { user } = useAuth();
 
   const [stage, setStage] = useState<LabStage>('equipment');
   const [completedStages, setCompletedStages] = useState<Set<LabStage>>(new Set());
@@ -48,33 +51,22 @@ export function LevellingLab({ lessonId, loggedIn }: { lessonId: string; loggedI
     []
   );
 
-  const handleSaveReport = useCallback(async () => {
-    if (!loggedIn) {
+  const handleSaveReport = useCallback(() => {
+    if (!loggedIn || !user) {
       setSaveError(dict.lab.loginToSave);
       return;
     }
     setSaving(true);
     setSaveError(null);
     try {
-      const res = await fetch(`/api/lessons/${lessonId}/lab-result`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          inputData: { startingRL, readings },
-          results: result,
-        }),
-      });
-      if (res.ok) {
-        setSaved(true);
-      } else {
-        setSaveError(dict.lab.saveError);
-      }
+      saveLabResult(user.uid, lessonId, { startingRL, readings }, result);
+      setSaved(true);
     } catch {
       setSaveError(dict.lab.saveError);
     } finally {
       setSaving(false);
     }
-  }, [lessonId, loggedIn, startingRL, readings, result, dict.lab]);
+  }, [lessonId, loggedIn, user, startingRL, readings, result, dict.lab]);
 
   return (
     <LabFrame

@@ -1,3 +1,6 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import {
   BookOpen,
   Flame,
@@ -10,28 +13,34 @@ import {
 } from 'lucide-react';
 import { Link } from '@/components/i18n/link';
 import { StatCard, ProgressCard, EmptyStateCard } from '@/components/dashboard/stat-cards';
-import { getCurrentUser } from '@/lib/current-user';
-import { getDashboardStats } from '@/lib/queries/dashboard';
-import { getDictionary } from '@/lib/i18n/dictionaries';
-import { isValidLocale, DEFAULT_LOCALE, type Locale } from '@/lib/i18n/config';
+import { useAuth } from '@/lib/auth-context';
+import { getDashboardStats, type DashboardStats } from '@/lib/progress/dashboard';
+import { useDictionary, useLocale } from '@/lib/i18n/dictionary-context';
 
-export default async function DashboardOverviewPage({ params }: { params: { locale: string } }) {
-  const locale: Locale = isValidLocale(params.locale) ? params.locale : DEFAULT_LOCALE;
-  const dict = getDictionary(locale);
+const EMPTY_STATS: DashboardStats = {
+  coursesInProgress: 0,
+  streakDays: 0,
+  quizAveragePercent: null,
+  quizAttemptCount: 0,
+  dailyGoalTargetMinutes: 30,
+  skillLevel: 'beginner',
+  skillProgress: [],
+  continueLearning: null,
+};
 
-  const user = await getCurrentUser();
-  const stats = user
-    ? await getDashboardStats(user.id)
-    : {
-        coursesInProgress: 0,
-        streakDays: 0,
-        quizAveragePercent: null,
-        quizAttemptCount: 0,
-        dailyGoalTargetMinutes: 30,
-        skillLevel: 'beginner' as const,
-        skillProgress: [],
-        continueLearning: null,
-      };
+export default function DashboardOverviewPage() {
+  const dict = useDictionary();
+  const locale = useLocale();
+  const { user } = useAuth();
+
+  // Stats depend on localStorage, so they're only knowable client-side —
+  // start with the same all-zero shape the old server render used for a
+  // logged-out visitor, then fill in real numbers after mount.
+  const [stats, setStats] = useState<DashboardStats>(EMPTY_STATS);
+
+  useEffect(() => {
+    if (user) setStats(getDashboardStats(user.uid));
+  }, [user]);
 
   const skillLevelLabels = {
     beginner: dict.dashboard.beginner,

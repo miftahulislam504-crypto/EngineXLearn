@@ -1,64 +1,50 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import { Link } from '@/components/i18n/link';
 import { notFound } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { ChevronLeft, ChevronRight, MonitorPlay, PlayCircle } from 'lucide-react';
 import { SiteHeader } from '@/components/layout/site-header';
-import { getLessonById } from '@/lib/queries/learning';
-import { getCurrentUser } from '@/lib/current-user';
-import { prisma } from '@/lib/prisma';
+import { getLessonById } from '@/lib/content';
+import { getCompletedLessonIds } from '@/lib/progress/store';
+import { useAuth } from '@/lib/auth-context';
 import { LessonSidebar } from '@/components/learning/lesson-sidebar';
 import { DimensionProgress } from '@/components/learning/dimension-progress';
 import { MarkCompleteButton } from '@/components/learning/mark-complete-button';
 import { InteractiveVisualization } from '@/components/visualizations/registry';
 import { VirtualLab } from '@/components/labs/registry';
-import { getDictionary } from '@/lib/i18n/dictionaries';
-import { isValidLocale, DEFAULT_LOCALE, type Locale } from '@/lib/i18n/config';
+import { useDictionary, useLocale } from '@/lib/i18n/dictionary-context';
 import { localize } from '@/lib/i18n/localize-content';
+import type { Locale } from '@/lib/i18n/config';
 import type { Dictionary } from '@/lib/i18n/dictionary-type';
 
-export const revalidate = 60;
-
-export default async function LessonViewerPage({
+export default function LessonViewerPage({
   params,
 }: {
-  params: { slug: string; lessonId: string; locale: string };
+  params: { slug: string; lessonId: string };
 }) {
-  const locale: Locale = isValidLocale(params.locale) ? params.locale : DEFAULT_LOCALE;
-  const dict = getDictionary(locale);
+  const dict = useDictionary();
+  const locale = useLocale();
+  const { user } = useAuth();
 
-  const [lesson, currentUser] = await Promise.all([
-    getLessonById(params.lessonId),
-    getCurrentUser(),
-  ]);
+  const lesson = getLessonById(params.lessonId);
+
+  const [completedLessonIds, setCompletedLessonIds] = useState<Set<string>>(new Set());
+  useEffect(() => {
+    if (user) setCompletedLessonIds(getCompletedLessonIds(user.uid));
+  }, [user]);
 
   if (!lesson || lesson.module.course.slug !== params.slug) notFound();
 
   const course = lesson.module.course;
-  const allModules = await prisma.module.findMany({
-    where: { courseId: course.id },
-    orderBy: { order: 'asc' },
-    include: { lessons: { orderBy: { order: 'asc' } } },
-  });
+  const allModules = course.modules; // already ordered, already carries every lesson — no separate fetch needed
 
   const flatLessons = allModules.flatMap((m) => m.lessons);
   const currentIndex = flatLessons.findIndex((l) => l.id === lesson.id);
   const prevLesson = currentIndex > 0 ? flatLessons[currentIndex - 1] : null;
-  const nextLesson =
-    currentIndex < flatLessons.length - 1 ? flatLessons[currentIndex + 1] : null;
-
-  let completedLessonIds = new Set<string>();
-  if (currentUser) {
-    const progress = await prisma.lessonProgress.findMany({
-      where: {
-        userId: currentUser.id,
-        lessonId: { in: flatLessons.map((l) => l.id) },
-        completed: true,
-      },
-      select: { lessonId: true },
-    });
-    completedLessonIds = new Set(progress.map((p) => p.lessonId));
-  }
+  const nextLesson = currentIndex < flatLessons.length - 1 ? flatLessons[currentIndex + 1] : null;
 
   const currentModuleLessons = lesson.module.lessons.map((l) => ({
     id: l.id,
@@ -113,7 +99,7 @@ export default async function LessonViewerPage({
             <LessonContent
               lesson={lesson}
               lessonId={lesson.id}
-              loggedIn={!!currentUser}
+              loggedIn={!!user}
               locale={locale}
               dict={dict}
             />
@@ -124,7 +110,15 @@ export default async function LessonViewerPage({
               <MarkCompleteButton
                 lessonId={lesson.id}
                 initiallyComplete={completedLessonIds.has(lesson.id)}
-                loggedIn={!!currentUser}
+                loggedIn={!!user}
+                onToggle={(nextState) => {
+                  setCompletedLessonIds((prev) => {
+                    const next = new Set(prev);
+                    if (nextState) next.add(lesson.id);
+                    else next.delete(lesson.id);
+                    return next;
+                  });
+                }}
               />
 
               <div className="flex gap-2">
@@ -173,8 +167,7 @@ function LessonContent({
   lesson: {
     contentType: string;
     body: string | null;
-    bodyBn: string | null;
-    contentUrl: string | null;
+    contentUrl?: string | null;
     interactiveKey: string | null;
     labKey: string | null;
   };
@@ -183,7 +176,7 @@ function LessonContent({
   locale: Locale;
   dict: Dictionary;
 }) {
-  const localizedBody = localize(locale, lesson.body, lesson.bodyBn);
+  const localizedBody = localize(locale, lesson.body, null);
 
   if (lesson.contentType === 'reading' && localizedBody) {
     return (

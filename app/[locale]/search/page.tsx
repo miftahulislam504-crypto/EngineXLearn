@@ -14,7 +14,7 @@ import { Link } from '@/components/i18n/link';
 import { SiteHeader } from '@/components/layout/site-header';
 import { SiteFooter } from '@/components/layout/site-footer';
 import { useDictionary, useLocale } from '@/lib/i18n/dictionary-context';
-import type { SearchResult, SearchResultType } from '@/lib/queries/search';
+import { unifiedSearch, type SearchResultType } from '@/lib/content/search';
 
 const TYPE_ICONS: Record<SearchResultType, typeof BookOpen> = {
   course: BookOpen,
@@ -31,8 +31,6 @@ export default function SearchPage() {
 
   const [query, setQuery] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState('');
-  const [results, setResults] = useState<SearchResult[]>([]);
-  const [loading, setLoading] = useState(false);
   const [activeType, setActiveType] = useState<SearchResultType | 'all'>('all');
 
   useEffect(() => {
@@ -40,25 +38,12 @@ export default function SearchPage() {
     return () => clearTimeout(timeout);
   }, [query]);
 
-  useEffect(() => {
-    if (!debouncedQuery.trim()) {
-      setResults([]);
-      return;
-    }
-    let cancelled = false;
-    setLoading(true);
-    fetch(`/api/search?q=${encodeURIComponent(debouncedQuery)}&locale=${locale}`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (!cancelled) setResults(data.results ?? []);
-      })
-      .finally(() => {
-        if (!cancelled) setLoading(false);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [debouncedQuery, locale]);
+  // Static, in-memory data — search runs synchronously, no loading state
+  // or network round trip needed the way the old API-route version had.
+  const results = useMemo(
+    () => unifiedSearch(debouncedQuery, locale, dict),
+    [debouncedQuery, locale, dict]
+  );
 
   const typeLabels: Record<SearchResultType, string> = {
     course: t.typeCourse,
@@ -145,36 +130,33 @@ export default function SearchPage() {
         </div>
 
         <div className="mt-6 space-y-2">
-          {loading && <p className="text-sm text-muted-foreground">{dict.common.loading}</p>}
-
-          {!loading && debouncedQuery.trim() && filteredResults.length === 0 && (
+          {debouncedQuery.trim() && filteredResults.length === 0 && (
             <p className="text-sm text-muted-foreground">{t.noResults}</p>
           )}
 
-          {!loading &&
-            filteredResults.map((r) => {
-              const Icon = TYPE_ICONS[r.type];
-              return (
-                <Link key={`${r.type}-${r.id}`} href={r.href} className="block">
-                  <div className="flex items-start gap-3 rounded-lg border border-border p-3.5 transition-colors hover:border-steel-400/60 hover:bg-muted/40">
-                    <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-muted text-steel-500">
-                      <Icon className="h-3.5 w-3.5" strokeWidth={1.75} />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-center gap-2">
-                        <p className="truncate font-display text-sm font-semibold">{r.title}</p>
-                        <span className="shrink-0 rounded-full bg-muted px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground">
-                          {typeLabels[r.type]}
-                        </span>
-                      </div>
-                      {r.description && (
-                        <p className="mt-0.5 truncate text-xs text-muted-foreground">{r.description}</p>
-                      )}
-                    </div>
+          {filteredResults.map((r) => {
+            const Icon = TYPE_ICONS[r.type];
+            return (
+              <Link key={`${r.type}-${r.id}`} href={r.href} className="block">
+                <div className="flex items-start gap-3 rounded-lg border border-border p-3.5 transition-colors hover:border-steel-400/60 hover:bg-muted/40">
+                  <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-muted text-steel-500">
+                    <Icon className="h-3.5 w-3.5" strokeWidth={1.75} />
                   </div>
-                </Link>
-              );
-            })}
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-2">
+                      <p className="truncate font-display text-sm font-semibold">{r.title}</p>
+                      <span className="shrink-0 rounded-full bg-muted px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground">
+                        {typeLabels[r.type]}
+                      </span>
+                    </div>
+                    {r.description && (
+                      <p className="mt-0.5 truncate text-xs text-muted-foreground">{r.description}</p>
+                    )}
+                  </div>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </main>
       <SiteFooter />

@@ -9,7 +9,6 @@ import {
 } from 'react';
 import {
   onAuthStateChanged,
-  onIdTokenChanged,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signInWithPopup,
@@ -19,6 +18,17 @@ import {
   type User,
 } from 'firebase/auth';
 import { auth } from '@/lib/firebase/client';
+
+/**
+ * Firebase Auth only — there is no server-side session to mirror a
+ * token into. Every course/quiz/tool in the app is static content (see
+ * lib/content/), and every piece of user progress lives in the
+ * browser's localStorage (see lib/progress/store.ts), keyed by
+ * `user.uid` from this context. No Server Component ever needs to know
+ * who's signed in, so this deliberately does NOT set an id_token
+ * cookie or do anything server-reachable — `user` here is exactly (and
+ * only) what the Firebase client SDK already tracks in the browser.
+ */
 
 interface AuthContextValue {
   user: User | null;
@@ -31,60 +41,20 @@ interface AuthContextValue {
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
-const ID_TOKEN_COOKIE = 'id_token';
-
-/**
- * Mirrors the Firebase ID token into a (non-httpOnly) cookie so Server
- * Components can read it — see lib/current-user.ts, which verifies it
- * with lib/verify-id-token.ts (no service account / admin key needed).
- * `onIdTokenChanged` below re-fires whenever Firebase silently refreshes
- * the token (about once an hour), so the cookie never goes stale while
- * a tab stays open.
- */
-function setIdTokenCookie(idToken: string) {
-  // Firebase ID tokens are valid for 1 hour; give the cookie a little
-  // headroom past that so a near-expiry token is still readable
-  // server-side right up until Firebase itself would reject it.
-  const maxAgeSeconds = 60 * 65;
-  document.cookie = `${ID_TOKEN_COOKIE}=${idToken}; path=/; max-age=${maxAgeSeconds}; SameSite=Lax${
-    location.protocol === 'https:' ? '; Secure' : ''
-  }`;
-}
-
-function clearIdTokenCookie() {
-  document.cookie = `${ID_TOKEN_COOKIE}=; path=/; max-age=0`;
-}
-
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribeAuth = onAuthStateChanged(auth, (firebaseUser) => {
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       setUser(firebaseUser);
       setLoading(false);
     });
-
-    // Keeps the cookie in sync on initial load and on Firebase's
-    // automatic hourly token refresh — not just at sign-in.
-    const unsubscribeToken = onIdTokenChanged(auth, async (firebaseUser) => {
-      if (firebaseUser) {
-        const idToken = await firebaseUser.getIdToken();
-        setIdTokenCookie(idToken);
-      } else {
-        clearIdTokenCookie();
-      }
-    });
-
-    return () => {
-      unsubscribeAuth();
-      unsubscribeToken();
-    };
+    return unsubscribe;
   }, []);
 
   const signIn = async (email: string, password: string) => {
-    const credential = await signInWithEmailAndPassword(auth, email, password);
-    setIdTokenCookie(await credential.user.getIdToken());
+    await signInWithEmailAndPassword(auth, email, password);
   };
 
   const signUp = async (email: string, password: string, name: string) => {
@@ -92,18 +62,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (name) {
       await updateProfile(credential.user, { displayName: name });
     }
-    setIdTokenCookie(await credential.user.getIdToken());
   };
 
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
-    const credential = await signInWithPopup(auth, provider);
-    setIdTokenCookie(await credential.user.getIdToken());
+    await signInWithPopup(auth, provider);
   };
 
   const signOut = async () => {
     await firebaseSignOut(auth);
-    clearIdTokenCookie();
   };
 
   return (

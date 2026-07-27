@@ -3,24 +3,19 @@ import { BookOpen, ChevronRight } from 'lucide-react';
 import { SiteHeader } from '@/components/layout/site-header';
 import { SiteFooter } from '@/components/layout/site-footer';
 import { Card, CardContent } from '@/components/ui/card';
-import { getAllPublishedCoursesGrouped } from '@/lib/queries/learning';
+import { SUBJECTS } from '@/lib/content';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { isValidLocale, DEFAULT_LOCALE, type Locale } from '@/lib/i18n/config';
 import { localize } from '@/lib/i18n/localize-content';
 
-// Rendered on request instead of at build time: the build environment has
-// no DATABASE_URL, so a build-time (or ISR) fetch of this Prisma query fails
-// the Vercel build. Runtime requests use the real DATABASE_URL and are fine.
-export const dynamic = 'force-dynamic';
-
-export default async function LearningPage({
+export default function LearningPage({
   params,
 }: {
   params: { locale: string };
 }) {
   const locale: Locale = isValidLocale(params.locale) ? params.locale : DEFAULT_LOCALE;
   const dict = getDictionary(locale);
-  const subjects = await getAllPublishedCoursesGrouped();
+  const subjects = SUBJECTS;
 
   return (
     <>
@@ -41,7 +36,7 @@ export default async function LearningPage({
         <div className="space-y-12">
           {subjects.map((subject) => {
             const subjectTitle = localize(locale, subject.title, subject.titleBn);
-            const subjectDescription = localize(locale, subject.description, subject.descriptionBn);
+            const subjectDescription = localize(locale, subject.description, null);
 
             return (
               <section key={subject.id}>
@@ -63,7 +58,7 @@ export default async function LearningPage({
                   {subject.courses.map((c) => {
                     const moduleCount = c.modules.length;
                     const courseTitle = localize(locale, c.title, c.titleBn);
-                    const courseDescription = localize(locale, c.description, c.descriptionBn);
+                    const courseDescription = localize(locale, c.description, null);
 
                     return (
                       <Link key={c.id} href={`/learning/${c.slug}`}>
