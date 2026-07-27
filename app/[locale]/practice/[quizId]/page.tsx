@@ -3,8 +3,7 @@
 import { Link } from '@/components/i18n/link';
 import { notFound } from 'next/navigation';
 import { ChevronLeft } from 'lucide-react';
-import { SiteHeader } from '@/components/layout/site-header';
-import { SiteFooter } from '@/components/layout/site-footer';
+import { AppShell } from '@/components/layout/app-shell';
 import { getQuizById } from '@/lib/content';
 import { useDictionary } from '@/lib/i18n/dictionary-context';
 import { useAuth } from '@/lib/auth-context';
@@ -41,8 +40,7 @@ export default function QuizDetailPage({
   };
 
   return (
-    <>
-      <SiteHeader />
+    <AppShell>
       <main className="container max-w-2xl py-10 md:py-14">
         <Link
           href="/practice"
@@ -56,7 +54,6 @@ export default function QuizDetailPage({
 
         <QuizTaking quiz={quizData} loggedIn={!!user} />
       </main>
-      <SiteFooter />
-    </>
+    </AppShell>
   );
 }

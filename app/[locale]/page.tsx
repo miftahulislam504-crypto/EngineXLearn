@@ -10,8 +10,7 @@ import {
   Award,
   Sparkles,
 } from 'lucide-react';
-import { SiteHeader } from '@/components/layout/site-header';
-import { SiteFooter } from '@/components/layout/site-footer';
+import { LandingHeader } from '@/components/home/landing-header';
 import { Hero } from '@/components/home/hero';
 import { SectionShell } from '@/components/home/section-shell';
 import { PlaceholderGrid } from '@/components/home/placeholder-grid';
@@ -23,7 +22,7 @@ export default function HomePage() {
 
   return (
     <>
-      <SiteHeader />
+      <LandingHeader />
       <main>
         <Hero />
 
@@ -121,7 +120,13 @@ export default function HomePage() {
           />
         </SectionShell>
       </main>
-      <SiteFooter />
+      <footer className="border-t border-border bg-vellum-100 py-8 dark:bg-structural-900">
+        <div className="container">
+          <p className="font-mono text-xs text-muted-foreground">
+            © {new Date().getFullYear()} {dict.footer.copyright}
+          </p>
+        </div>
+      </footer>
     </>
   );
 }

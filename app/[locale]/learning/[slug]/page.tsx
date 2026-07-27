@@ -4,8 +4,7 @@ import { useEffect, useState } from 'react';
 import { Link } from '@/components/i18n/link';
 import { notFound } from 'next/navigation';
 import { ArrowLeft, PlayCircle, FileText, FlaskConical, MonitorPlay, CheckCircle2, Circle } from 'lucide-react';
-import { SiteHeader } from '@/components/layout/site-header';
-import { SiteFooter } from '@/components/layout/site-footer';
+import { AppShell } from '@/components/layout/app-shell';
 import { Button } from '@/components/ui/button';
 import { getCourseBySlug, getSubjectBySlug } from '@/lib/content';
 import { getCompletedLessonIds } from '@/lib/progress/store';
@@ -50,8 +49,7 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
   const courseDescription = localize(locale, course.description, null);
 
   return (
-    <>
-      <SiteHeader />
+    <AppShell>
       <main className="container max-w-3xl py-10 md:py-14">
         <Link
           href="/learning"
@@ -143,7 +141,6 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
           })}
         </div>
       </main>
-      <SiteFooter />
-    </>
+    </AppShell>
   );
 }

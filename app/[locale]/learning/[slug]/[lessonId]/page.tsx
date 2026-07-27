@@ -6,7 +6,7 @@ import { notFound } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { ChevronLeft, ChevronRight, MonitorPlay, PlayCircle } from 'lucide-react';
-import { SiteHeader } from '@/components/layout/site-header';
+import { AppShell } from '@/components/layout/app-shell';
 import { getLessonById } from '@/lib/content';
 import { getCompletedLessonIds } from '@/lib/progress/store';
 import { useAuth } from '@/lib/auth-context';
@@ -64,8 +64,7 @@ export default function LessonViewerPage({
   }));
 
   return (
-    <>
-      <SiteHeader />
+    <AppShell>
       <div className="container max-w-6xl py-8 md:py-10">
         <div className="flex flex-col gap-8 md:flex-row">
           <LessonSidebar
@@ -153,7 +152,7 @@ export default function LessonViewerPage({
           </main>
         </div>
       </div>
-    </>
+    </AppShell>
   );
 }
 

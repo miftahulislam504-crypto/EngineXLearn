@@ -1,7 +1,6 @@
 import { Link } from '@/components/i18n/link';
 import { ChevronRight, HelpCircle, Clock } from 'lucide-react';
-import { SiteHeader } from '@/components/layout/site-header';
-import { SiteFooter } from '@/components/layout/site-footer';
+import { AppShell } from '@/components/layout/app-shell';
 import { Card, CardContent } from '@/components/ui/card';
 import { getQuizzesGroupedByCategory } from '@/lib/content';
 import { getDictionary } from '@/lib/i18n/dictionaries';
@@ -16,8 +15,7 @@ export default function PracticePage({ params }: { params: { locale: string } })
   const categories = Array.from(grouped.keys());
 
   return (
-    <>
-      <SiteHeader />
+    <AppShell>
       <main className="container max-w-5xl py-12 md:py-16">
         <div className="mb-10">
           <span className="font-mono text-xs uppercase tracking-wider text-steel-500">{t.eyebrow}</span>
@@ -61,7 +59,6 @@ export default function PracticePage({ params }: { params: { locale: string } })
           </div>
         )}
       </main>
-      <SiteFooter />
-    </>
+    </AppShell>
   );
 }

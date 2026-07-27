@@ -1,7 +1,6 @@
 import { Link } from '@/components/i18n/link';
 import { BookOpen, ChevronRight } from 'lucide-react';
-import { SiteHeader } from '@/components/layout/site-header';
-import { SiteFooter } from '@/components/layout/site-footer';
+import { AppShell } from '@/components/layout/app-shell';
 import { Card, CardContent } from '@/components/ui/card';
 import { SUBJECTS } from '@/lib/content';
 import { getDictionary } from '@/lib/i18n/dictionaries';
@@ -18,8 +17,7 @@ export default function LearningPage({
   const subjects = SUBJECTS;
 
   return (
-    <>
-      <SiteHeader />
+    <AppShell>
       <main className="container max-w-5xl py-12 md:py-16">
         <div className="mb-10">
           <span className="font-mono text-xs uppercase tracking-wider text-steel-500">
@@ -93,7 +91,6 @@ export default function LearningPage({
           })}
         </div>
       </main>
-      <SiteFooter />
-    </>
+    </AppShell>
   );
 }

@@ -7,6 +7,14 @@ import { Button } from '@/components/ui/button';
 import { BeamDiagram } from '@/components/visuals/beam-diagram';
 import { useDictionary } from '@/lib/i18n/dictionary-context';
 
+/**
+ * Landing-page hero. Per product requirement, the landing page has
+ * exactly one interactive element — "Start learning", which sends a
+ * signed-out visitor to /login. Everything else on the page
+ * (curriculum/practical/lab/tools/AI/community sections below) is a
+ * static summary, not a set of links to click through.
+ */
+
 export function Hero() {
   const dict = useDictionary();
 
@@ -44,15 +52,10 @@ export function Hero() {
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link href="/signup">
+              <Link href="/login">
                 <Button size="lg" variant="accent">
                   {dict.hero.startLearning}
                   <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
-              <Link href="/learning">
-                <Button size="lg" variant="outline">
-                  {dict.hero.browseCurriculum}
                 </Button>
               </Link>
             </div>

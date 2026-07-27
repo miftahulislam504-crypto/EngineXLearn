@@ -11,8 +11,7 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { Link } from '@/components/i18n/link';
-import { SiteHeader } from '@/components/layout/site-header';
-import { SiteFooter } from '@/components/layout/site-footer';
+import { AppShell } from '@/components/layout/app-shell';
 import { useDictionary, useLocale } from '@/lib/i18n/dictionary-context';
 import { unifiedSearch, type SearchResultType } from '@/lib/content/search';
 
@@ -67,8 +66,7 @@ export default function SearchPage() {
   );
 
   return (
-    <>
-      <SiteHeader />
+    <AppShell>
       <main className="container max-w-3xl py-10 md:py-14">
         <h1 className="mb-1 font-display text-2xl font-semibold tracking-tight md:text-3xl">{t.pageTitle}</h1>
         <p className="mb-6 text-sm text-muted-foreground">{t.pageDescription}</p>
@@ -159,7 +157,6 @@ export default function SearchPage() {
           })}
         </div>
       </main>
-      <SiteFooter />
-    </>
+    </AppShell>
   );
 }

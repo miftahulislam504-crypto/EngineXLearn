@@ -3,8 +3,7 @@
 import { useState, useMemo } from 'react';
 import { Search as SearchIcon, ChevronLeft } from 'lucide-react';
 import { Link } from '@/components/i18n/link';
-import { SiteHeader } from '@/components/layout/site-header';
-import { SiteFooter } from '@/components/layout/site-footer';
+import { AppShell } from '@/components/layout/app-shell';
 import { FORMULAS, type FormulaCategory } from '@/lib/search/formulas';
 import { useDictionary, useLocale } from '@/lib/i18n/dictionary-context';
 
@@ -40,8 +39,7 @@ export default function FormulaSearchPage() {
   }, [query, category]);
 
   return (
-    <>
-      <SiteHeader />
+    <AppShell>
       <main className="container max-w-2xl py-10 md:py-14">
         <Link href="/search" className="mb-4 inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground">
           <ChevronLeft className="h-4 w-4" />
@@ -112,7 +110,6 @@ export default function FormulaSearchPage() {
           {filtered.length === 0 && <p className="text-sm text-muted-foreground">{t.noResults}</p>}
         </div>
       </main>
-      <SiteFooter />
-    </>
+    </AppShell>
   );
 }

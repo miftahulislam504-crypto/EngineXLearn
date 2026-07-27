@@ -2,8 +2,7 @@
 
 import { Link } from '@/components/i18n/link';
 import { ChevronRight } from 'lucide-react';
-import { SiteHeader } from '@/components/layout/site-header';
-import { SiteFooter } from '@/components/layout/site-footer';
+import { AppShell } from '@/components/layout/app-shell';
 import { Card, CardContent } from '@/components/ui/card';
 import { TOOL_REGISTRY, getToolsByCategory, type ToolCategory } from '@/components/tools/registry';
 import { useDictionary } from '@/lib/i18n/dictionary-context';
@@ -21,8 +20,7 @@ export default function ToolsPage() {
   };
 
   return (
-    <>
-      <SiteHeader />
+    <AppShell>
       <main className="container max-w-5xl py-12 md:py-16">
         <div className="mb-10">
           <span className="font-mono text-xs uppercase tracking-wider text-steel-500">{t.eyebrow}</span>
@@ -74,7 +72,6 @@ export default function ToolsPage() {
           {t.toolCount(TOOL_REGISTRY.length)}
         </p>
       </main>
-      <SiteFooter />
-    </>
+    </AppShell>
   );
 }

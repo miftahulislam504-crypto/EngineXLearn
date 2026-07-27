@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { AuthProvider } from '@/lib/auth-context';
 import { DictionaryProvider } from '@/lib/i18n/dictionary-context';
 import { isValidLocale, LOCALES, type Locale } from '@/lib/i18n/config';
+import { SiteSplash } from '@/components/layout/site-splash';
 
 /**
  * Locale boundary layout. Validates the [locale] segment (an unknown
@@ -50,7 +51,10 @@ export default function LocaleLayout({
 
   return (
     <DictionaryProvider locale={locale}>
-      <AuthProvider>{children}</AuthProvider>
+      <AuthProvider>
+        <SiteSplash />
+        {children}
+      </AuthProvider>
     </DictionaryProvider>
   );
 }
