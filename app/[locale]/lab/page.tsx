@@ -30,7 +30,7 @@ const KEY_TO_DICT_SECTION = {
   traverse: 'traverse',
 } as const;
 
-export function labTitle(dict: Dictionary, key: LabCatalogEntry['key']): string {
+function labTitle(dict: Dictionary, key: LabCatalogEntry['key']): string {
   const section = KEY_TO_DICT_SECTION[key];
   return (dict[section] as { title: string }).title;
 }
