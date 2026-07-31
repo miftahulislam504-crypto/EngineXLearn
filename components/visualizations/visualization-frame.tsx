@@ -91,8 +91,10 @@ export function VizSlider({
   onChange: (value: number) => void;
 }) {
   return (
-    <label className="flex items-center gap-3 text-sm">
-      <span className="w-32 shrink-0 font-mono text-xs text-muted-foreground">{label}</span>
+    <label className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm sm:flex-nowrap">
+      <span className="w-full shrink-0 font-mono text-xs text-muted-foreground sm:w-28">
+        {label}
+      </span>
       <input
         type="range"
         min={min}
@@ -100,9 +102,9 @@ export function VizSlider({
         step={step}
         value={value}
         onChange={(e) => onChange(parseFloat(e.target.value))}
-        className="h-1.5 flex-1 cursor-pointer appearance-none rounded-full bg-border accent-oxide-500"
+        className="h-1.5 min-w-0 flex-1 cursor-pointer appearance-none rounded-full bg-border accent-oxide-500"
       />
-      <span className="w-16 shrink-0 text-right font-mono text-xs tabular-nums text-foreground">
+      <span className="shrink-0 whitespace-nowrap text-right font-mono text-xs tabular-nums text-foreground">
         {displayValue}
       </span>
     </label>
