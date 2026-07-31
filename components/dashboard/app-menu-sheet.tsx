@@ -8,6 +8,12 @@ import {
   Sigma,
   BookMarked,
   ClipboardCheck,
+  Box,
+  FolderOpen,
+  Package,
+  Building2,
+  HardHat,
+  Crown,
   Sparkles,
   Users,
   Award,
@@ -24,12 +30,13 @@ interface AppMenuSheetProps {
 
 /**
  * Everything that isn't one of the 5 bottom-nav destinations lives
- * here: Search, Formulas, Glossary, Practice, AI Assistant, Community,
- * Certificates, plus the language switcher and sign-out. Formulas and
- * Glossary are also reachable as sub-links from inside the Search page
- * itself, but are listed here directly too so they're one tap away
- * without going through Search first. Opened from the hamburger icon
- * in DashboardTopbar.
+ * here: Search, Formulas, Glossary, Practice, Visualizations,
+ * Resources, Materials, Projects, Practical Hub, AI Assistant,
+ * Community, Certificates, Premium, plus the language switcher and
+ * sign-out. Formulas and Glossary are also reachable as sub-links
+ * from inside the Search page itself, but are listed here directly
+ * too so they're one tap away without going through Search first.
+ * Opened from the hamburger icon in DashboardTopbar.
  */
 export function AppMenuSheet({ open, onClose }: AppMenuSheetProps) {
   const { signOut } = useAuth();
@@ -40,9 +47,15 @@ export function AppMenuSheet({ open, onClose }: AppMenuSheetProps) {
     { href: '/search/formulas', label: dict.search.browseFormulas, icon: Sigma },
     { href: '/search/terms', label: dict.search.browseTerms, icon: BookMarked },
     { href: '/practice', label: dict.nav.practice, icon: ClipboardCheck },
+    { href: '/visualizations', label: dict.nav.visualizations, icon: Box },
+    { href: '/resources', label: dict.nav.resources, icon: FolderOpen },
+    { href: '/materials', label: dict.nav.materials, icon: Package },
+    { href: '/projects', label: dict.nav.projects, icon: Building2 },
+    { href: '/practical', label: dict.nav.practical, icon: HardHat },
     { href: '/dashboard/ai', label: dict.dashboard.aiNav, icon: Sparkles },
     { href: '/dashboard/community', label: dict.dashboard.communityNav, icon: Users },
-    { href: '/dashboard/certificates', label: dict.dashboard.certificates, icon: Award },
+    { href: '/certificates', label: dict.dashboard.certificates, icon: Award },
+    { href: '/premium', label: dict.nav.premium, icon: Crown },
   ];
 
   return (

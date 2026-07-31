@@ -6,6 +6,8 @@ import {
   getQuizAttempts,
   getActivityDates,
   getDailyGoalMinutes,
+  getLabResults,
+  getToolResults,
 } from '@/lib/progress/store';
 
 /**
@@ -81,7 +83,7 @@ export interface DashboardStats {
   dailyGoalTargetMinutes: number;
   skillLevel: SkillLevel;
   skillProgress: { subjectTitle: string; subjectTitleBn: string | null; percent: number; courseCount: number }[];
-  continueLearning: { courseTitle: string; lessonId: string; percent: number } | null;
+  continueLearning: { courseTitle: string; courseSlug: string; lessonId: string; percent: number } | null;
 }
 
 function courseLessonIds(course: Course): string[] {
@@ -132,6 +134,7 @@ export function getDashboardStats(uid: string): DashboardStats {
   const continueLearning = mostRecentTouched
     ? {
         courseTitle: mostRecentTouched.course.title,
+        courseSlug: mostRecentTouched.course.slug,
         lessonId:
           mostRecentTouched.course.modules
             .flatMap((m) => m.lessons)
@@ -158,4 +161,50 @@ export function getDashboardStats(uid: string): DashboardStats {
     skillProgress,
     continueLearning,
   };
+}
+
+// ---------------------------------------------------------------------------
+// Recent activity feed (Profile System, blueprint Part 20)
+// ---------------------------------------------------------------------------
+
+/**
+ * Unified recent-activity feed across lab results, tool results, and quiz
+ * attempts — the same "merge every real source, don't build a parallel
+ * per-source UI" approach unifiedSearch (Part 21) already took. Returns
+ * structure only (type, key, lessonId, timestamp) with no display text:
+ * the Profile page resolves each item's title (lesson/tool/quiz name)
+ * itself, since that's presentation, not data, and titles need the
+ * localized dictionary this file has no access to.
+ *
+ * This is also what finally gives getLabResults/getToolResults a real
+ * reader — both were previously write-only (every lab/tool save called
+ * them, but nothing ever read the results back for display).
+ */
+export interface RecentActivityItem {
+  type: 'lab' | 'tool' | 'quiz';
+  /** lessonId for a lab result, toolSlug for a tool result, quizId for a quiz attempt. */
+  key: string;
+  createdAt: string;
+}
+
+export function getRecentActivity(uid: string, limit = 6): RecentActivityItem[] {
+  const labs: RecentActivityItem[] = getLabResults(uid).map((r) => ({
+    type: 'lab',
+    key: r.lessonId,
+    createdAt: r.createdAt,
+  }));
+  const tools: RecentActivityItem[] = getToolResults(uid).map((r) => ({
+    type: 'tool',
+    key: r.toolSlug,
+    createdAt: r.createdAt,
+  }));
+  const quizzes: RecentActivityItem[] = getQuizAttempts(uid).map((r) => ({
+    type: 'quiz',
+    key: r.quizId,
+    createdAt: r.finishedAt,
+  }));
+
+  return [...labs, ...tools, ...quizzes]
+    .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+    .slice(0, limit);
 }

@@ -10,6 +10,20 @@
  * Bengali translation for a new English string is a compile error, not a
  * silent fallback to English in production.
  */
+
+/** Shared shape for every entry in materialLibrary.materials — one
+ * type used 10 times rather than the same 8 fields spelled out 10
+ * times over. */
+export interface MaterialContent {
+  title: string;
+  summary: string;
+  properties: string[];
+  advantages: string[];
+  disadvantages: string[];
+  uses: string[];
+  testing: string[];
+  marketInfo: string;
+}
 export interface Dictionary {
   nav: {
     learning: string;
@@ -22,6 +36,11 @@ export interface Dictionary {
     login: string;
     startLearning: string;
     dashboard: string;
+    visualizations: string;
+    resources: string;
+    materials: string;
+    premium: string;
+    projects: string;
     openMenu: string;
     closeMenu: string;
   };
@@ -169,6 +188,43 @@ export interface Dictionary {
     settings: string;
     logOut: string;
     notificationsAria: string;
+  };
+  /**
+   * Profile System (blueprint Part 20) — lives at the /settings route,
+   * which fixes what was previously a dead 5th bottom-nav destination
+   * (BottomNav already linked here; nothing existed at this path
+   * before this phase). Reuses lib/progress/dashboard.ts's stats
+   * (skill level/progress, streak, quiz average) rather than
+   * recomputing them separately, so profile and dashboard can never
+   * disagree about the same underlying numbers.
+   */
+  profile: {
+    pageTitle: string;
+    signedInAs: string;
+    roleLabel: string;
+    roleSelfDeclaredNote: string;
+    roleStudent: string;
+    roleEngineer: string;
+    roleTeacher: string;
+    roleProfessional: string;
+    skillLevelHeading: string;
+    skillProgressHeading: string;
+    noSkillProgressYet: string;
+    learningHistoryHeading: string;
+    lessonsCompletedCount: (n: number) => string;
+    noHistoryYet: string;
+    noHistoryDescription: string;
+    activityStatsHeading: string;
+    currentStreak: string;
+    quizzesAttempted: string;
+    labResultsSaved: string;
+    toolResultsSaved: string;
+    certificatesHeading: string;
+    noCertificatesYet: string;
+    certificatesEmptyHint: string;
+    certificatesSummary: (certs: number, badges: number) => string;
+    viewCertificates: string;
+    signOutButton: string;
   };
   learning: {
     curriculumEyebrow: string;
@@ -348,6 +404,346 @@ export interface Dictionary {
       explainRoofSlab: string;
       explainWalls: string;
       explainParapetFinishing: string;
+    };
+  };
+  /**
+   * The standalone Visualization Gallery (/visualizations) — separate
+   * from the `visualizations` section above, which holds each
+   * component's in-lesson control labels. This section holds the
+   * gallery-card copy (one-line description per visualization) and
+   * page-level strings, keyed by the same VisualizationKey registry
+   * keys so a missing entry is a compile error, not a silent gap.
+   */
+  visualizationGallery: {
+    eyebrow: string;
+    pageTitle: string;
+    pageDescription: string;
+    category2d: string;
+    category3d: string;
+    count: (n: number) => string;
+    backToGallery: string;
+    usedInLessons: string;
+    noLessonYet: string;
+    descriptions: {
+      'moment-diagram-explorer': string;
+      'column-buckling-visualizer': string;
+      'load-transfer-visualizer': string;
+      'column-failure-comparator': string;
+      'foundation-pressure-visualizer': string;
+      'reinforcement-details-visualizer': string;
+      'crack-formation-visualizer': string;
+      'water-flow-visualizer': string;
+      'earthquake-motion-visualizer': string;
+      'soil-layers-visualizer': string;
+      'building-structure-visualizer': string;
+      'reinforcement-model-visualizer': string;
+      'construction-sequence-visualizer': string;
+    };
+  };
+  /**
+   * The standalone Lab Gallery (/lab) — mirrors visualizationGallery
+   * exactly, including keying descriptions by the same LabKey registry
+   * keys used in components/labs/registry.tsx.
+   */
+  labGallery: {
+    eyebrow: string;
+    pageTitle: string;
+    pageDescription: string;
+    categorySoil: string;
+    categoryConcrete: string;
+    categoryHighway: string;
+    categorySurvey: string;
+    count: (n: number) => string;
+    backToGallery: string;
+    usedInLessons: string;
+    noLessonYet: string;
+    descriptions: {
+      'sieve-analysis': string;
+      'atterberg-limits': string;
+      'compaction-test': string;
+      'direct-shear': string;
+      'slump-test': string;
+      'compression-test': string;
+      'flexural-test': string;
+      'aggregate-impact-value': string;
+      'bitumen-penetration': string;
+      levelling: string;
+      'total-station': string;
+      traverse: string;
+    };
+  };
+  /**
+   * Resource Library (blueprint Part 16, /resources). Item copy is
+   * keyed by the same `id` values as RESOURCE_CATALOG in
+   * lib/content/resource-catalog.ts, so a missing entry is a compile
+   * error rather than a silent gap — same discipline as
+   * visualizationGallery/labGallery.
+   */
+  resourceLibrary: {
+    eyebrow: string;
+    pageTitle: string;
+    pageDescription: string;
+    categoryPdfNotes: string;
+    categoryHandNotes: string;
+    categoryCadFiles: string;
+    categoryExcelSheets: string;
+    categoryTemplates: string;
+    categoryChecklists: string;
+    categorySiteFormats: string;
+    categoryEngineeringBooks: string;
+    categoryCodeBooks: string;
+    count: (n: number) => string;
+    downloadButton: string;
+    notAvailableYet: string;
+    referenceOnlyNote: string;
+    items: {
+      'concrete-pour-checklist': { title: string; description: string };
+      'site-safety-checklist': { title: string; description: string };
+      'foundation-inspection-checklist': { title: string; description: string };
+      'daily-site-report-format': { title: string; description: string };
+      'material-requisition-format': { title: string; description: string };
+      'concrete-pour-record-format': { title: string; description: string };
+      'boq-template': { title: string; description: string };
+      'material-estimate-template': { title: string; description: string };
+      'soil-classification-quick-notes': { title: string; description: string };
+      'rcc-design-quick-notes': { title: string; description: string };
+      'surveying-quick-notes': { title: string; description: string };
+      'structural-analysis-hand-notes': { title: string; description: string };
+      'soil-mechanics-hand-notes': { title: string; description: string };
+      'standard-foundation-details-dwg': { title: string; description: string };
+      'standard-stair-details-dwg': { title: string; description: string };
+      'rebar-development-length-sheet': { title: string; description: string };
+      'earthwork-volume-sheet': { title: string; description: string };
+      'design-of-reinforced-concrete': { title: string; description: string };
+      'soil-mechanics-and-foundations': { title: string; description: string };
+      'surveying-theory-and-practice': { title: string; description: string };
+      'bnbc-2020': { title: string; description: string };
+      'aci-318-19': { title: string; description: string };
+      'aashto-lrfd': { title: string; description: string };
+    };
+  };
+  /**
+   * Engineering Material Library (blueprint Part 10, /materials).
+   * MaterialContent is shared across all 10 materials so a missing
+   * field on any one material is a compile error, not a silent gap.
+   */
+  materialLibrary: {
+    eyebrow: string;
+    pageTitle: string;
+    pageDescription: string;
+    count: (n: number) => string;
+    propertiesHeading: string;
+    advantagesHeading: string;
+    disadvantagesHeading: string;
+    usesHeading: string;
+    testingHeading: string;
+    marketInfoHeading: string;
+    relatedLabsHeading: string;
+    relatedToolsHeading: string;
+    backToMaterials: string;
+    materials: {
+      cement: MaterialContent;
+      sand: MaterialContent;
+      aggregate: MaterialContent;
+      steel: MaterialContent;
+      brick: MaterialContent;
+      concrete: MaterialContent;
+      asphalt: MaterialContent;
+      wood: MaterialContent;
+      glass: MaterialContent;
+      aluminum: MaterialContent;
+    };
+  };
+  /**
+   * Certification System (blueprint Part 19, /certificates and
+   * /certificates/verify). Badge copy is keyed by the same BadgeId
+   * values as lib/progress/certificates.ts.
+   */
+  certificates: {
+    eyebrow: string;
+    pageTitle: string;
+    pageDescription: string;
+    courseCertificatesHeading: string;
+    noCourseCertificatesYet: string;
+    noCourseCertificatesDescription: string;
+    downloadButton: string;
+    completedOn: (date: string) => string;
+    skillBadgesHeading: string;
+    noBadgesYetNote: string;
+    progressCertificateHeading: string;
+    progressCertificateDescription: string;
+    generateProgressCertificate: string;
+    verifyLinkText: string;
+    verifyPageTitle: string;
+    verifyPageDescription: string;
+    verifyInputPlaceholder: string;
+    verifyButton: string;
+    verifyResultWellFormed: string;
+    verifyResultNotWellFormed: string;
+    verifyResultCourse: (title: string) => string;
+    verifyResultDate: (date: string) => string;
+    verifyHonestNote: string;
+    backToCertificates: string;
+    certificateEyebrow: string;
+    certificateBodyLine: string;
+    progressCertificateEyebrow: string;
+    progressCertificateBodyLine: (n: number) => string;
+    badges: {
+      'first-course': { title: string; description: string };
+      'five-courses': { title: string; description: string };
+      'streak-7': { title: string; description: string };
+      'streak-30': { title: string; description: string };
+      'first-quiz': { title: string; description: string };
+      'ten-quizzes': { title: string; description: string };
+      'lab-explorer': { title: string; description: string };
+      'tool-user': { title: string; description: string };
+    };
+  };
+  /**
+   * Premium Features preview (blueprint Part 25, /premium). This
+   * platform has no payment processor and no subscription backend —
+   * see the honesty note in app/[locale]/premium/page.tsx before
+   * assuming this gates anything. It's an honest preview of what a
+   * premium tier would include, not a working paywall.
+   */
+  premium: {
+    eyebrow: string;
+    pageTitle: string;
+    pageDescription: string;
+    noBackendNote: string;
+    previewAvailableLabel: string;
+    dependsOnUnbuiltLabel: (part: string) => string;
+    advancedCoursesHeading: string;
+    advancedCoursesDescription: string;
+    viewAdvancedCourses: string;
+    exclusiveProjectsHeading: string;
+    exclusiveProjectsDescription: string;
+    aiPremiumToolsHeading: string;
+    aiPremiumToolsDescription: string;
+    liveMentorshipHeading: string;
+    liveMentorshipDescription: string;
+    downloadAccessHeading: string;
+    downloadAccessDescription: string;
+    viewResources: string;
+  };
+  /**
+   * Real Project Experience (blueprint Part 11, /projects). Each
+   * project's `sections` record is keyed by that project's
+   * sectionKeys in lib/content/project-catalog.ts — different
+   * projects have different section keys (Residential: planning/
+   * construction/finishing; Bridge: construction-sequence only), so
+   * this is one flat record covering every section key used across
+   * all 4 projects rather than 4 separate shapes.
+   */
+  projects: {
+    eyebrow: string;
+    pageTitle: string;
+    pageDescription: string;
+    backToProjects: string;
+    representativeNote: string;
+    mediaHeading: string;
+    mediaNote: string;
+    relatedVisualizationsHeading: string;
+    relatedLabsHeading: string;
+    relatedMaterialsHeading: string;
+    list: {
+      residential: { title: string; summary: string };
+      commercial: { title: string; summary: string };
+      bridge: { title: string; summary: string };
+      road: { title: string; summary: string };
+    };
+    sections: {
+      planning: { title: string; body: string };
+      construction: { title: string; body: string };
+      finishing: { title: string; body: string };
+      'structural-system': { title: string; body: string };
+      'site-management': { title: string; body: string };
+      'construction-sequence': { title: string; body: string };
+      'pavement-layers': { title: string; body: string };
+    };
+  };
+  /**
+   * Practical Engineering Hub (blueprint Part 5, /practical). `topics`
+   * covers all 43 blueprint sub-topics (5.1–5.6) in one flat record,
+   * grouped into 6 categories by lib/content/practical-catalog.ts's
+   * `topicKeys` per category — same "one dictionary key per real
+   * content item" discipline as everywhere else, so a missing
+   * translation is a compile error.
+   */
+  practical: {
+    eyebrow: string;
+    pageTitle: string;
+    pageDescription: string;
+    backToHub: string;
+    mediaHeading: string;
+    mediaNote: string;
+    relatedVisualizationsHeading: string;
+    relatedLabsHeading: string;
+    relatedMaterialsHeading: string;
+    relatedToolsHeading: string;
+    commonMistakesHeading: string;
+    categories: {
+      'site-engineering': { title: string; summary: string };
+      'reinforcement-work': { title: string; summary: string };
+      'concrete-technology': { title: string; summary: string };
+      'foundation-systems': { title: string; summary: string };
+      'road-construction': { title: string; summary: string };
+      'site-safety': { title: string; summary: string };
+    };
+    topics: {
+      'site-setup': { title: string; body: string };
+      excavation: { title: string; body: string };
+      'layout-work': { title: string; body: string };
+      'foundation-work': { title: string; body: string };
+      'column-casting': { title: string; body: string };
+      'beam-casting': { title: string; body: string };
+      'slab-casting': { title: string; body: string };
+      pcc: { title: string; body: string };
+      'rcc-work': { title: string; body: string };
+      brickwork: { title: string; body: string };
+      plastering: { title: string; body: string };
+      'tile-work': { title: string; body: string };
+      waterproofing: { title: string; body: string };
+      painting: { title: string; body: string };
+      'finishing-work': { title: string; body: string };
+      'bar-cutting': { title: string; body: string };
+      'bar-bending': { title: string; body: string };
+      'bar-placement': { title: string; body: string };
+      lapping: { title: string; body: string };
+      anchorage: { title: string; body: string };
+      'cover-block': { title: string; body: string };
+      'reinforcement-detailing': { title: string; body: string };
+      'concrete-mix': { title: string; body: string };
+      'water-cement-ratio': { title: string; body: string };
+      'slump-test-practice': { title: string; body: string };
+      casting: { title: string; body: string };
+      'vibrating-compaction': { title: string; body: string };
+      curing: { title: string; body: string };
+      'concrete-failure': { title: string; body: string };
+      'isolated-footing': { title: string; body: string };
+      'combined-footing': { title: string; body: string };
+      'raft-foundation': { title: string; body: string };
+      'pile-foundation': { title: string; body: string };
+      subgrade: { title: string; body: string };
+      subbase: { title: string; body: string };
+      'base-course': { title: string; body: string };
+      'asphalt-work': { title: string; body: string };
+      'road-compaction': { title: string; body: string };
+      ppe: { title: string; body: string };
+      scaffolding: { title: string; body: string };
+      'electrical-safety': { title: string; body: string };
+      'crane-safety': { title: string; body: string };
+      'site-risk-management': { title: string; body: string };
+    };
+    mistakes: {
+      'mistake-curing': { title: string; body: string };
+      'mistake-layout': { title: string; body: string };
+      'mistake-cover': { title: string; body: string };
+      'mistake-lap-location': { title: string; body: string };
+      'mistake-water-added': { title: string; body: string };
+      'mistake-founding-level': { title: string; body: string };
+      'mistake-subgrade-skip': { title: string; body: string };
+      'mistake-ppe-culture': { title: string; body: string };
     };
   };
   lab: {

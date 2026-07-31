@@ -12,6 +12,11 @@ const en: Dictionary = {
     login: 'Log in',
     startLearning: 'Start learning',
     dashboard: 'Dashboard',
+    visualizations: 'Visualizations',
+    resources: 'Resources',
+    materials: 'Materials',
+    premium: 'Premium',
+    projects: 'Projects',
     openMenu: 'Open menu',
     closeMenu: 'Close menu',
   },
@@ -165,6 +170,34 @@ const en: Dictionary = {
     settings: 'Settings',
     logOut: 'Log out',
     notificationsAria: 'Notifications',
+  },
+  profile: {
+    pageTitle: 'Profile',
+    signedInAs: 'Signed in as',
+    roleLabel: 'I am a...',
+    roleSelfDeclaredNote: 'Self-declared — used only to tailor what the platform shows you, not verified against any record.',
+    roleStudent: 'Student',
+    roleEngineer: 'Engineer',
+    roleTeacher: 'Teacher',
+    roleProfessional: 'Professional',
+    skillLevelHeading: 'Skill Level',
+    skillProgressHeading: 'Skill Progress by Subject',
+    noSkillProgressYet: 'Start a course to see your skill progress by subject here.',
+    learningHistoryHeading: 'Learning History',
+    lessonsCompletedCount: (n) => `${n} lesson${n === 1 ? '' : 's'} completed`,
+    noHistoryYet: 'No lessons completed yet',
+    noHistoryDescription: 'Finish your first lesson and it will show up here.',
+    activityStatsHeading: 'Activity',
+    currentStreak: 'Current streak',
+    quizzesAttempted: 'Quizzes attempted',
+    labResultsSaved: 'Lab results saved',
+    toolResultsSaved: 'Tool results saved',
+    certificatesHeading: 'Certificates & Achievements',
+    noCertificatesYet: 'No certificates yet',
+    certificatesEmptyHint: 'Complete a course or earn a badge to see them here.',
+    certificatesSummary: (certs, badges) => `${certs} certificate${certs === 1 ? '' : 's'} · ${badges} badge${badges === 1 ? '' : 's'} earned`,
+    viewCertificates: 'View all certificates & badges',
+    signOutButton: 'Sign out',
   },
   learning: {
     curriculumEyebrow: 'Learning System',
@@ -350,6 +383,1292 @@ const en: Dictionary = {
       explainRoofSlab: 'The roof beams and slab cap the top story, completing the structural frame — everything from here on is non-structural.',
       explainWalls: 'Infill walls fill in around the completed frame, on every story — built after the frame, not before, since they carry no structural load and don\'t need to be in place for the frame above to stand.',
       explainParapetFinishing: 'A parapet wall caps the roof edge and finishing work follows — the building is structurally complete; what remains is protection, access, and appearance.',
+    },
+  },
+  visualizationGallery: {
+    eyebrow: 'Visual Learning',
+    pageTitle: 'Visualizations',
+    pageDescription:
+      'Every interactive 2D and 3D visualization on the platform, browsable on its own — each one also lives inside the lesson that teaches it.',
+    category2d: '2D Visualizations',
+    category3d: '3D Visualizations',
+    count: (n) => `${n} visualization${n === 1 ? '' : 's'}`,
+    backToGallery: 'Back to visualizations',
+    usedInLessons: 'Used in lesson',
+    noLessonYet: 'Not yet linked to a lesson',
+    descriptions: {
+      'moment-diagram-explorer': 'Drag a point load along a simply-supported beam and watch the bending-moment diagram redraw live.',
+      'column-buckling-visualizer': "Euler's critical buckling load in 3D — see the column's deflected shape change as slenderness changes.",
+      'load-transfer-visualizer': 'Follow one load path — slab to beam to column to foundation to soil — as an area load becomes a line, then a point, then an area again.',
+      'column-failure-comparator': 'Crushing capacity versus Euler buckling capacity, plotted together, with the real crossover point that decides which mode governs.',
+      'foundation-pressure-visualizer': 'How bearing pressure redistributes under an eccentrically-loaded footing — uniform, trapezoidal, or triangular with uplift.',
+      'reinforcement-details-visualizer': 'A real beam cross-section with rebar placed exactly where the minimum-reinforcement and spacing checks put it.',
+      'crack-formation-visualizer': 'Crack angle rotating from vertical (flexural) to diagonal (shear) along a beam span, and why stirrup spacing isn\'t uniform.',
+      'water-flow-visualizer': "Open-channel flow via Manning's Equation, with an animated water surface whose speed matches the real computed velocity.",
+      'earthquake-motion-visualizer': "A single-degree-of-freedom oscillator under ground shaking — watch resonance spike when periods match.",
+      'soil-layers-visualizer': "Drag a depth probe through stratified soil layers and see Terzaghi's effective stress build up through a water table.",
+      'building-structure-visualizer': 'A full G+2 reinforced concrete building in detailed 3D — toggle walls and stories on a real structural frame.',
+      'reinforcement-model-visualizer': 'The same building in X-ray mode — concrete turns translucent to reveal the actual rebar cage inside.',
+      'construction-sequence-visualizer': 'The same building built up stage by stage, from excavation to finishing, in real construction order.',
+    },
+  },
+  labGallery: {
+    eyebrow: 'Experiment & Lab',
+    pageTitle: 'Virtual Labs',
+    pageDescription:
+      'Every virtual lab on the platform, browsable on its own — each one also lives inside the lesson that teaches it.',
+    categorySoil: 'Soil Mechanics Labs',
+    categoryConcrete: 'Concrete Labs',
+    categoryHighway: 'Highway Engineering Labs',
+    categorySurvey: 'Surveying Labs',
+    count: (n) => `${n} lab${n === 1 ? '' : 's'}`,
+    backToGallery: 'Back to labs',
+    usedInLessons: 'Used in lesson',
+    noLessonYet: 'Not yet linked to a lesson',
+    descriptions: {
+      'sieve-analysis': 'Shake a soil sample through a stack of sieves and plot the real particle-size distribution curve.',
+      'atterberg-limits': "Find a soil's liquid limit, plastic limit, and plasticity index from simulated Casagrande-cup and thread-rolling tests.",
+      'compaction-test': 'Run a Proctor compaction test across moisture contents and locate the real optimum moisture content and maximum dry density.',
+      'direct-shear': "Shear a soil sample under different normal loads and read off its friction angle and cohesion from the failure envelope.",
+      'slump-test': 'Fill a slump cone with a simulated concrete mix and measure how far it slumps — the standard workability check on any site.',
+      'compression-test': 'Load a concrete cylinder to failure and read its compressive strength straight off the simulated testing machine.',
+      'flexural-test': 'Load a concrete beam at third points until it cracks and compute the modulus of rupture from the failure load.',
+      'aggregate-impact-value': 'Drop a hammer on an aggregate sample repeatedly and compute its impact value — a direct measure of toughness for pavement material.',
+      'bitumen-penetration': 'Track a standard needle sinking into a bitumen sample and read its penetration grade — the core quality check for road binder.',
+      levelling: 'Take a series of staff readings between benchmarks and reduce them to real elevations, height-of-instrument style.',
+      'total-station': 'Take simulated angle and distance readings from a total station and compute real coordinates for each point.',
+      traverse: 'Close a survey traverse — sum the angles, balance the latitudes and departures, and check it closes within tolerance.',
+    },
+  },
+  resourceLibrary: {
+    eyebrow: 'Resource Library',
+    pageTitle: 'Resources',
+    pageDescription: 'Checklists, site formats, templates, and reference material for civil engineering practice.',
+    categoryPdfNotes: 'PDF Notes',
+    categoryHandNotes: 'Hand Notes',
+    categoryCadFiles: 'CAD Files',
+    categoryExcelSheets: 'Excel Sheets',
+    categoryTemplates: 'Templates',
+    categoryChecklists: 'Checklists',
+    categorySiteFormats: 'Site Formats',
+    categoryEngineeringBooks: 'Engineering Books',
+    categoryCodeBooks: 'Code Books',
+    count: (n) => `${n} resource${n === 1 ? '' : 's'}`,
+    downloadButton: 'Download',
+    notAvailableYet: 'Not available yet — needs file hosting this build doesn\'t have',
+    referenceOnlyNote: 'Reference only — a real published title, not distributed here',
+    items: {
+      'concrete-pour-checklist': {
+        title: 'Concrete Pour Checklist',
+        description: 'Pre-pour, during-pour, and after-pour verification points for a standard RCC pour.',
+      },
+      'site-safety-checklist': {
+        title: 'Daily Site Safety Checklist',
+        description: 'A general daily walk-around safety check covering PPE, site conditions, equipment, and emergency readiness.',
+      },
+      'foundation-inspection-checklist': {
+        title: 'Foundation Inspection Checklist',
+        description: 'Verification points for excavation, reinforcement, and formwork before a foundation pour.',
+      },
+      'daily-site-report-format': {
+        title: 'Daily Site Report Format',
+        description: 'A standard format for recording daily progress, manpower, and activity on site.',
+      },
+      'material-requisition-format': {
+        title: 'Material Requisition Format',
+        description: 'A request form for materials needed at site, ready for store or procurement approval.',
+      },
+      'concrete-pour-record-format': {
+        title: 'Concrete Pour Record Format',
+        description: 'A record format for slump, cube samples, and pour details, for QA/QC and as-built records.',
+      },
+      'boq-template': {
+        title: 'Bill of Quantities (BOQ) Template',
+        description: 'A fillable spreadsheet with quantity × rate calculated automatically and a running total.',
+      },
+      'material-estimate-template': {
+        title: 'Material Estimate Template',
+        description: 'Estimate material quantities with wastage percentage and cost, calculated automatically.',
+      },
+      'soil-classification-quick-notes': {
+        title: 'Soil Classification — Quick Notes',
+        description: 'A one-page revision summary of grain-size groups, Atterberg limits, and USCS group symbols.',
+      },
+      'rcc-design-quick-notes': {
+        title: 'RCC Design — Quick Notes',
+        description: 'A revision summary of reinforced concrete design essentials.',
+      },
+      'surveying-quick-notes': {
+        title: 'Surveying — Quick Notes',
+        description: 'A revision summary of levelling, traversing, and total station basics.',
+      },
+      'structural-analysis-hand-notes': {
+        title: 'Structural Analysis — Hand Notes',
+        description: 'Worked hand-written examples covering structural analysis methods.',
+      },
+      'soil-mechanics-hand-notes': {
+        title: 'Soil Mechanics — Hand Notes',
+        description: 'Worked hand-written examples covering soil mechanics fundamentals.',
+      },
+      'standard-foundation-details-dwg': {
+        title: 'Standard Foundation Details (DWG)',
+        description: 'Typical foundation detail drawings for common footing types.',
+      },
+      'standard-stair-details-dwg': {
+        title: 'Standard Stair Details (DWG)',
+        description: 'Typical staircase detail drawings with standard riser/tread proportions.',
+      },
+      'rebar-development-length-sheet': {
+        title: 'Rebar Development Length Sheet',
+        description: 'A reference spreadsheet for development length by bar size and concrete grade.',
+      },
+      'earthwork-volume-sheet': {
+        title: 'Earthwork Volume Sheet',
+        description: 'A reference spreadsheet for cut/fill volume calculation by the average end area method.',
+      },
+      'design-of-reinforced-concrete': {
+        title: 'Design of Reinforced Concrete',
+        description: 'Jack C. McCormac & Russell H. Brown — a widely used RCC design textbook.',
+      },
+      'soil-mechanics-and-foundations': {
+        title: 'Soil Mechanics and Foundations',
+        description: 'Muni Budhu — a standard soil mechanics and foundation engineering textbook.',
+      },
+      'surveying-theory-and-practice': {
+        title: 'Surveying: Theory and Practice',
+        description: 'James M. Anderson & Edward M. Mikhail — a standard surveying reference.',
+      },
+      'bnbc-2020': {
+        title: 'BNBC 2020',
+        description: 'Bangladesh National Building Code, 2020 — the code this entire platform is built to.',
+      },
+      'aci-318-19': {
+        title: 'ACI 318-19',
+        description: 'Building Code Requirements for Structural Concrete, American Concrete Institute.',
+      },
+      'aashto-lrfd': {
+        title: 'AASHTO LRFD Bridge Design Specifications',
+        description: 'American Association of State Highway and Transportation Officials — bridge design specification.',
+      },
+    },
+  },
+  materialLibrary: {
+    eyebrow: 'Material Library',
+    pageTitle: 'Engineering Materials',
+    pageDescription: 'Properties, advantages, uses, and testing for the 10 materials every civil engineer works with.',
+    count: (n) => `${n} material${n === 1 ? '' : 's'}`,
+    propertiesHeading: 'Properties',
+    advantagesHeading: 'Advantages',
+    disadvantagesHeading: 'Disadvantages',
+    usesHeading: 'Uses',
+    testingHeading: 'Testing',
+    marketInfoHeading: 'Market Information',
+    relatedLabsHeading: 'Try it in a lab',
+    relatedToolsHeading: 'Related tool',
+    backToMaterials: 'Back to materials',
+    materials: {
+      cement: {
+        title: 'Cement',
+        summary: "The binding agent in concrete and mortar — reacts with water to form a hardened matrix that binds aggregate together.",
+        properties: [
+          'Initial setting time around 30 minutes, final setting around 10 hours for Ordinary Portland Cement',
+          'Specific gravity approximately 3.15',
+          'Fineness affects the rate of strength gain',
+          'Hydration is an exothermic reaction — generates heat as it cures',
+        ],
+        advantages: [
+          'Widely available and factory-produced with consistent quality',
+          'Develops high compressive strength',
+          'Versatile — different types and grades suit different needs',
+        ],
+        disadvantages: [
+          'Very low tensile strength on its own',
+          'Shrinks while drying, which can cause cracking',
+          'Manufacturing has a high carbon footprint',
+          'Sensitive to water-cement ratio errors on site',
+        ],
+        uses: ['Concrete and mortar production', 'Plastering', 'Grouting', 'Precast elements'],
+        testing: [
+          'Fineness test',
+          'Setting time test (Vicat apparatus)',
+          'Soundness test',
+          'Compressive strength of cement mortar cubes',
+        ],
+        marketInfo:
+          'Sold in standard 50 kg bags in Bangladesh. Common types are OPC (Ordinary Portland Cement) and PCC (Portland Composite Cement). Always check the manufacture date — cement loses strength if stored too long.',
+      },
+      sand: {
+        title: 'Sand (Fine Aggregate)',
+        summary: 'Fine aggregate used in concrete, mortar, and plaster — fills voids between coarse aggregate and improves workability.',
+        properties: [
+          'Grain size between 0.075 mm and 4.75 mm',
+          'Fineness modulus typically 2.2–3.2 for concrete sand',
+          'Specific gravity approximately 2.6–2.7',
+          'Volume increases ("bulks") with moisture content',
+        ],
+        advantages: [
+          'Improves workability of concrete and mortar',
+          'Fills voids between coarse aggregate, reducing porosity',
+          'Locally available and relatively low cost',
+        ],
+        disadvantages: [
+          'Excess silt or clay content weakens concrete',
+          'River sand extraction raises environmental concerns',
+          'Quality varies significantly by source',
+        ],
+        uses: ['Concrete', 'Mortar', 'Plaster', 'Filling', 'Brick work'],
+        testing: ['Sieve analysis (grading)', 'Silt content test', 'Bulking test', 'Specific gravity test'],
+        marketInfo:
+          'Sold by truck-load, measured in CFT or cubic meter, in Bangladesh. Sylhet sand is prized for concrete work due to its low silt content; other local sand often needs washing before quality use.',
+      },
+      aggregate: {
+        title: 'Aggregate (Coarse Aggregate)',
+        summary: "Crushed stone or gravel forming the load-bearing skeleton of concrete — occupies roughly 60–75% of concrete's volume.",
+        properties: [
+          'Typical size 10–40 mm for structural concrete',
+          'Angular particles bond better with cement paste than rounded ones',
+          'Hardness and toughness resist crushing and impact',
+          'Specific gravity approximately 2.6–2.9',
+        ],
+        advantages: [
+          'Provides bulk volume economically',
+          'Contributes most of concrete\'s compressive strength',
+          'Angular aggregate improves bond with cement paste',
+        ],
+        disadvantages: [
+          'Soft or weathered aggregate significantly weakens concrete',
+          'Transportation cost is high due to weight and bulk',
+          'Flaky or elongated particles reduce workability',
+        ],
+        uses: ['Concrete', 'Road base and sub-base', 'Drainage and filter media'],
+        testing: [
+          'Sieve analysis',
+          'Aggregate impact value test',
+          'Aggregate crushing value test',
+          'Specific gravity and water absorption test',
+        ],
+        marketInfo:
+          'Sold by truck-load (CFT or cubic meter) in Bangladesh. Natural stone deposits are limited domestically, so crushed stone is often imported, with brick khoa used as a substitute in some applications.',
+      },
+      steel: {
+        title: 'Steel (Reinforcement)',
+        summary: 'A high-strength, tension-resisting material embedded in concrete — concrete handles compression, steel handles tension.',
+        properties: [
+          'Common yield strength grades of 400 or 500 MPa (locally referred to as Grade 60 / Grade 75)',
+          'High tensile strength',
+          'Ductile — deforms noticeably before failure, giving warning',
+          'Thermal expansion similar to concrete, which is why the two bond well together',
+        ],
+        advantages: [
+          'Excellent tensile strength',
+          'Ductility provides a safety margin before collapse',
+          'Recyclable',
+          'Widely standardized across manufacturers',
+        ],
+        disadvantages: [
+          'Corrodes if concrete cover or quality is inadequate',
+          'Expensive relative to other structural materials',
+          'Heavy, which affects transport and handling',
+          'Loses strength rapidly at high fire temperatures',
+        ],
+        uses: ['Reinforced concrete beams, columns, slabs, and footings', 'Structural steel framing', 'Rebar cages'],
+        testing: [
+          'Tensile test',
+          'Bend test',
+          'Visual corrosion check',
+          'Weight-per-meter check against the nominal value',
+        ],
+        marketInfo:
+          'Sold by weight (per ton or per kg) in Bangladesh. Common grades are 60 Grade and 500W. Brand reputation matters heavily — under-weight or under-strength rebar is a known quality risk in the local market.',
+      },
+      brick: {
+        title: 'Brick',
+        summary: 'A common masonry unit made from fired clay — used for walls and partitions, and in Bangladesh often as a substitute for coarse aggregate (brick khoa).',
+        properties: [
+          'Compressive strength varies widely by class (1st / 2nd / 3rd class)',
+          'Good quality brick should have water absorption within about 20%',
+          'Uniform size, shape, and colour indicate good, even firing',
+        ],
+        advantages: [
+          'Manufactured locally almost everywhere in Bangladesh',
+          'Low cost',
+          'Good thermal mass',
+          'Easy to work with by hand, no special equipment needed',
+        ],
+        disadvantages: [
+          'Lower strength than concrete block or stone',
+          'Quality is highly inconsistent between kilns',
+          'High water absorption reduces durability if not well-fired',
+          'Brick-making consumes significant topsoil and fuel',
+        ],
+        uses: ['Masonry walls', 'Partitions', 'Brick khoa (as aggregate substitute)', 'Pavement and soling'],
+        testing: ['Compressive strength test', 'Water absorption test', 'Efflorescence test', 'Dimension and shape check'],
+        marketInfo:
+          'Sold per piece or per 1000 pieces in Bangladesh, graded 1st / 2nd / 3rd class by quality — 1st class for exposed or structural work, lower classes for filling or non-critical work.',
+      },
+      concrete: {
+        title: 'Concrete',
+        summary: 'The composite of cement, sand, aggregate, and water that forms the structural backbone of most modern buildings — strong in compression, weak in tension.',
+        properties: [
+          'Compressive strength defined by grade — e.g. M20 means 20 MPa at 28 days',
+          'Workability measured by the slump test',
+          'Density roughly 2400 kg/m³',
+          'Gains strength progressively over time, strongly dependent on curing',
+        ],
+        advantages: [
+          'Moldable into almost any shape',
+          'High compressive strength',
+          'Fire resistant',
+          'Relatively low maintenance once cured',
+        ],
+        disadvantages: [
+          'Weak in tension without steel reinforcement',
+          'Shrinks and can crack if not cured properly',
+          'Heavy',
+          'Quality is highly dependent on mix proportioning and site curing practice',
+        ],
+        uses: ['Foundations', 'Columns', 'Beams', 'Slabs', 'Pavements', 'Precast elements'],
+        testing: ['Slump test', 'Compressive strength test (cube or cylinder)', 'Flexural strength test', 'Water-cement ratio verification'],
+        marketInfo:
+          'Mix design is normally specified by grade (M15 / M20 / M25 and so on). Ready-mix concrete is available in major Bangladeshi cities; site-mixed concrete is still more common elsewhere.',
+      },
+      asphalt: {
+        title: 'Asphalt (Bitumen)',
+        summary: 'A viscous, petroleum-derived binder mixed with aggregate to form flexible pavement — the standard surfacing material for most roads.',
+        properties: [
+          'Penetration grade indicates hardness (e.g. 60/70, 80/100)',
+          'Softens with heat, becomes brittle in cold',
+          'Viscoelastic behaviour under traffic load',
+        ],
+        advantages: [
+          'Flexible — tolerates minor ground movement without cracking',
+          'Relatively quick to lay and open to traffic',
+          'Recyclable as reclaimed asphalt pavement (RAP)',
+          'Produces a smooth riding surface',
+        ],
+        disadvantages: [
+          'Softens in high heat, creating rutting risk',
+          'Petroleum-based, so price is tied to the oil market',
+          'Needs periodic resurfacing and maintenance',
+          'Less durable than concrete pavement under heavy, repeated loading',
+        ],
+        uses: ['Road surfacing', 'Waterproofing (in modified forms)', 'Pavement binder courses'],
+        testing: ['Penetration test', 'Softening point (ring and ball) test', 'Ductility test', 'Viscosity test'],
+        marketInfo:
+          'Sold by drum or in bulk (per ton) in Bangladesh, commonly sourced through Roads and Highways Department-approved suppliers for public works.',
+      },
+      wood: {
+        title: 'Wood (Timber)',
+        summary: 'A natural, renewable structural and finishing material — used in Bangladesh mainly for formwork, roofing members, doors, windows, and traditional construction.',
+        properties: [
+          'Strength varies significantly by species',
+          'Anisotropic — strength differs along the grain versus across it',
+          'Moisture content strongly affects strength and dimensional stability',
+          'Naturally combustible',
+        ],
+        advantages: [
+          'Renewable resource',
+          'Good strength-to-weight ratio',
+          'Easy to work with hand tools',
+          'Aesthetically warm finish',
+        ],
+        disadvantages: [
+          'Susceptible to decay, termite attack, and fire',
+          'Strength and durability vary by species and treatment',
+          'Dimensional changes with moisture',
+          'Increasingly costly as quality timber becomes scarcer',
+        ],
+        uses: ['Formwork / shuttering', 'Roof trusses and purlins', 'Doors and windows', 'Furniture', 'Scaffolding (bamboo is often used similarly)'],
+        testing: ['Moisture content test', 'Density test', 'Bending / flexural strength test', 'Visual grading for defects (knots, splits)'],
+        marketInfo:
+          'Sold by cubic foot in Bangladesh. Sal and Segun (teak) are valued for structural and finishing use, though imported timber is common for higher grades.',
+      },
+      glass: {
+        title: 'Glass',
+        summary: 'A brittle, transparent material used mainly for windows, facades, and increasingly structural facade systems in modern buildings.',
+        properties: [
+          'High compressive strength but very low tensile strength — fails suddenly (brittle)',
+          'Transparent or translucent',
+          'Poor thermal insulator unless treated (e.g. low-E coating, double glazing)',
+          'Non-combustible',
+        ],
+        advantages: [
+          'Allows natural light into a building',
+          'Aesthetically modern',
+          'Recyclable',
+          'Can be treated (tempered or laminated) for improved safety',
+        ],
+        disadvantages: [
+          'Brittle — fails suddenly without warning',
+          'Tempering and lamination add cost',
+          'Poor insulator in untreated form — a real concern in Bangladesh\'s climate',
+          'Heavy, requiring careful handling and installation',
+        ],
+        uses: ['Windows', 'Doors', 'Curtain wall facades', 'Partitions', 'Balustrades (when tempered or laminated)'],
+        testing: ['Thickness and dimension check', 'Visual defect inspection', 'Impact / safety-glass certification check'],
+        marketInfo:
+          'Sold by square foot in Bangladesh, priced by thickness and type — float glass versus tempered versus laminated. Tempered and laminated cost significantly more but are required for safety-critical applications.',
+      },
+      aluminum: {
+        title: 'Aluminum',
+        summary: 'A lightweight, corrosion-resistant metal increasingly used for window and door frames, facade systems, and roofing sheets.',
+        properties: [
+          'About one-third the density of steel',
+          'Naturally forms a protective oxide layer — corrosion resistant',
+          'High strength-to-weight ratio',
+          'High thermal conductivity and thermal expansion',
+        ],
+        advantages: [
+          'Lightweight yet strong',
+          'Corrosion resistant without painting',
+          'Low maintenance',
+          'Recyclable',
+          'Easy to extrude into complex profiles',
+        ],
+        disadvantages: [
+          'More expensive than steel for the strength delivered',
+          'Lower stiffness than steel — more deflection under load',
+          'Softens and loses strength at high fire temperatures',
+          'Risk of galvanic corrosion if in direct contact with dissimilar metals',
+        ],
+        uses: ['Window and door frames', 'Curtain wall / facade systems', 'Roofing sheets', 'False ceiling framing'],
+        testing: ['Anodizing / coating thickness check', 'Dimension and profile check', 'Alloy grade verification'],
+        marketInfo:
+          'Sold by kg or by running foot (for extruded profiles) in Bangladesh. Profile quality and anodizing thickness vary significantly by brand, which affects long-term corrosion performance.',
+      },
+    },
+  },
+  certificates: {
+    eyebrow: 'Certification',
+    pageTitle: 'Certificates & Badges',
+    pageDescription: 'Course certificates, skill badges, and a progress snapshot — generated from your real activity on this platform.',
+    courseCertificatesHeading: 'Course Certificates',
+    noCourseCertificatesYet: 'No course certificates yet',
+    noCourseCertificatesDescription: 'Complete every lesson in a course to earn its certificate.',
+    downloadButton: 'Download',
+    completedOn: (date) => `Completed ${date}`,
+    skillBadgesHeading: 'Skill Badges',
+    noBadgesYetNote: 'Badges are earned automatically from your activity — streaks, quizzes, labs, tools, and completed courses. None yet, but they\'ll appear here as you go.',
+    progressCertificateHeading: 'Progress Certificate',
+    progressCertificateDescription: 'A snapshot of your overall progress right now — not gated on finishing anything, generated on demand.',
+    generateProgressCertificate: 'Generate progress certificate',
+    verifyLinkText: 'Verify a certificate',
+    verifyPageTitle: 'Verify a Certificate',
+    verifyPageDescription: 'Check whether a certificate ID is well-formed.',
+    verifyInputPlaceholder: 'e.g. EXL-STE-20260715-A3F9C',
+    verifyButton: 'Check',
+    verifyResultWellFormed: 'This ID is well-formed and matches a real course on this platform.',
+    verifyResultNotWellFormed: 'This ID is not well-formed, or doesn\'t match any course on this platform.',
+    verifyResultCourse: (title) => `Course: ${title}`,
+    verifyResultDate: (date) => `Date encoded in ID: ${date}`,
+    verifyHonestNote:
+      'This checks only that the ID is correctly formatted and matches a real course — it cannot confirm who the certificate belongs to. This platform has no central server, so there is no record of who was actually issued which certificate outside that person\'s own device. Treat this as a format check, not proof of identity.',
+    backToCertificates: 'Back to certificates',
+    certificateEyebrow: 'Certificate of Completion',
+    certificateBodyLine: 'has successfully completed the course',
+    progressCertificateEyebrow: 'Certificate of Progress',
+    progressCertificateBodyLine: (n) => `has completed ${n} lesson${n === 1 ? '' : 's'} on EngineXLearn as of`,
+    badges: {
+      'first-course': {
+        title: 'First Course',
+        description: 'Completed your first full course.',
+      },
+      'five-courses': {
+        title: 'Five Courses',
+        description: 'Completed five full courses.',
+      },
+      'streak-7': {
+        title: '7-Day Streak',
+        description: 'Stayed active for 7 days in a row.',
+      },
+      'streak-30': {
+        title: '30-Day Streak',
+        description: 'Stayed active for 30 days in a row.',
+      },
+      'first-quiz': {
+        title: 'First Quiz',
+        description: 'Attempted your first quiz.',
+      },
+      'ten-quizzes': {
+        title: 'Ten Quizzes',
+        description: 'Attempted ten quizzes.',
+      },
+      'lab-explorer': {
+        title: 'Lab Explorer',
+        description: 'Saved results from five different virtual labs.',
+      },
+      'tool-user': {
+        title: 'Tool User',
+        description: 'Saved results from five different engineering tools.',
+      },
+    },
+  },
+  premium: {
+    eyebrow: 'Premium',
+    pageTitle: 'Premium Features',
+    pageDescription: "A preview of what a paid tier would include — this platform doesn't sell anything yet.",
+    noBackendNote:
+      'This platform has no payment processor and no subscription system. Nothing below can actually be purchased right now — this page previews what a premium tier would include if one is ever built, and everything on the platform today remains fully free.',
+    previewAvailableLabel: 'Preview available today, fully free',
+    dependsOnUnbuiltLabel: (part) => `Not started — depends on ${part}, which isn't built yet`,
+    advancedCoursesHeading: 'Advanced Courses',
+    advancedCoursesDescription:
+      'Specialized software courses like Civil 3D, STAAD Pro, SAP2000, and Primavera P6 are the kind of content a future "Advanced" tier might include. Right now, they\'re already part of the free Software Learning Center.',
+    viewAdvancedCourses: 'View these courses now',
+    exclusiveProjectsHeading: 'Exclusive Projects',
+    exclusiveProjectsDescription: 'Real, detailed worked project case studies for premium members.',
+    aiPremiumToolsHeading: 'AI Premium Tools',
+    aiPremiumToolsDescription: 'Advanced AI-assisted features beyond the basic AI Assistant.',
+    liveMentorshipHeading: 'Live Mentorship',
+    liveMentorshipDescription: 'One-on-one or small-group sessions with practicing engineers.',
+    downloadAccessHeading: 'Download Access',
+    downloadAccessDescription:
+      'Priority or expanded access to downloadable templates, checklists, and formats. The Resource Library already has real, free downloads today.',
+    viewResources: 'View the Resource Library now',
+  },
+  projects: {
+    eyebrow: 'Real Project Experience',
+    pageTitle: 'Projects',
+    pageDescription: 'Walk through four project types the way they actually unfold on site — planning, structure, sequencing, and the decisions in between.',
+    backToProjects: 'Back to projects',
+    representativeNote:
+      'This is a representative example built to show how a real project of this type typically unfolds — not documentation of one specific, named building. Real drawings, site photos, and construction video would come from an actual completed project; see the note at the bottom of this page for why none of that is included here.',
+    mediaHeading: 'Real Drawings, Site Photos & Construction Video',
+    mediaNote:
+      'This platform has no real completed project behind it, and no way to produce a genuine site photograph or construction video — those would need to come from an actual project. Rather than substitute stock imagery and present it as "real," this section is left honestly empty until real project documentation is available to add.',
+    relatedVisualizationsHeading: 'See it in 3D',
+    relatedLabsHeading: 'Related lab',
+    relatedMaterialsHeading: 'Related materials',
+    list: {
+      residential: {
+        title: 'Residential Building',
+        summary: 'A typical G+3 residential building, from site selection through finishing.',
+      },
+      commercial: {
+        title: 'Commercial Building',
+        summary: 'A multi-story commercial building — structural system choices and a busier, more constrained site.',
+      },
+      bridge: {
+        title: 'Bridge Project',
+        summary: 'A simple-span bridge, and the construction sequence that gets it from ground to deck.',
+      },
+      road: {
+        title: 'Road Project',
+        summary: 'A flexible pavement road — the layer system beneath the surface most people never think about.',
+      },
+    },
+    sections: {
+      planning: {
+        title: 'Planning',
+        body: `Before any drawing is finalized, a residential project's planning
+phase settles questions that are expensive to change later. A soil
+investigation (at minimum a few trial pits, ideally a proper boring
+log for anything beyond 2-3 stories) tells the structural designer
+what foundation type is realistic — an isolated footing on firm soil
+versus a raft or piled foundation where the soil is soft, which is
+common across much of Bangladesh's floodplain geology.
+
+Setback rules from the local authority (RAJUK in Dhaka, or the
+relevant Pourashava/City Corporation elsewhere) fix how much of the
+plot can actually be built on, which in turn fixes the building
+footprint before architectural planning can really start. For a
+typical urban plot, front/rear/side setbacks combined with a
+Floor Area Ratio (FAR) limit often constrain the design more than
+the client's own preferences do.
+
+Architectural and structural coordination has to start here, not
+after drawings are "finished" — a column grid that looks clean on an
+architectural plan can be structurally awkward (long unsupported
+spans, columns that land inside a stairwell) if structure isn't
+consulted while the layout is still flexible.`,
+      },
+      construction: {
+        title: 'Construction',
+        body: `Construction on a typical residential project follows a fairly
+fixed sequence: earthwork and foundation first, then the structural
+frame rises story by story, with each story's slab and beam cast
+before the columns above it start. This is exactly the sequence the
+platform's Construction Sequence visualizer (Part 6) shows stage by
+stage — worth reviewing alongside this section.
+
+A few things repeatedly separate a well-run residential site from a
+troubled one in practice: curing discipline (concrete that isn't kept
+wet for the first 7 days loses strength it can never fully recover,
+and Bangladesh's heat makes this worse, not better), reinforcement
+cover control (spacers that go missing mid-pour lead to exposed,
+corroding rebar years later), and realistic sequencing of MEP
+rough-in — electrical conduit and plumbing sleeves need to go in
+*before* a slab is cast, not chased into it afterward, which is both
+weaker and uglier.
+
+Site supervision matters more than site technology here — a
+supervisor physically checking formwork alignment and rebar spacing
+before every pour catches most of the errors that would otherwise
+only show up as cracks or leaks years later.`,
+      },
+      finishing: {
+        title: 'Finishing',
+        body: `Finishing is where a structurally sound building either becomes a
+pleasant place to live or a source of years of small complaints —
+plastering, tiling, painting, and fitting out electrical and plumbing
+fixtures. The most common real-world mistake here isn't a finishing
+defect itself; it's sequencing: rushing finishing work before the
+structure has fully cured and settled leads to cracked plaster and
+tile that has nothing to do with the finishing crew's skill and
+everything to do with starting too early.
+
+Plastering needs a properly cured, cleaned masonry surface — plaster
+applied over dusty or freshly-wet brick work debonds later. Tiling
+needs a level, properly-cured screed underneath; skipping the screed
+or rushing its curing is why so many tiled floors develop hollow
+spots within a year. Electrical and plumbing fixtures generally go in
+after first-coat painting but before the final coat, so damage during
+fixture installation can be touched up rather than requiring a full
+repaint.`,
+      },
+      'structural-system': {
+        title: 'Structural System',
+        body: `A commercial building's structural system usually faces different
+demands than a residential one: higher live loads (retail, office, or
+assembly occupancies all load higher than residential per BNBC),
+often larger clear spans (a retail floor plate wants fewer columns,
+not more), and frequently a request for future flexibility — the
+tenant layout today may not be the tenant layout in five years.
+
+This pushes many commercial buildings toward either a conventional
+RCC frame with strategically placed shear walls (for lateral
+stability without columns blocking every possible layout) or a flat
+slab system (no beams, more ceiling height per floor, simpler
+formwork) where spans allow it. The Building Structure and
+Reinforcement Model visualizers (Part 6) show exactly this kind of
+full 3D frame — worth reviewing here for how a real multi-story frame
+is actually organized.
+
+Parking floors specifically often drive their own structural
+decisions — a ground or basement parking floor typically wants a
+wider column grid than the floors above, which means a transfer
+structure (a transfer beam or transfer slab) carrying the upper
+floors' columns down to a sparser parking-floor grid — one of the more
+technically demanding parts of a commercial building's design.`,
+      },
+      'site-management': {
+        title: 'Site Management',
+        body: `A commercial site is frequently in a denser, busier location than a
+residential plot — less room to stage material, less room for crane
+swing radius, and often direct proximity to a public footpath or
+active road that residential sites in newer areas don't have to
+contend with.
+
+This changes how the site actually runs day to day: material
+deliveries need scheduling (not just showing up and hoping there's
+room), hoarding/site boundary fencing becomes a real safety and legal
+requirement rather than a formality, and a lot more coordination goes
+into simply sequencing which trade works where on a given day, since
+there's less physical space for multiple trades to work in parallel
+without getting in each other's way.
+
+Public safety around the site perimeter also becomes a genuine,
+ongoing site management task, not a one-time setup — falling debris,
+crane operation over a public path, and dust/noise affecting
+neighboring properties all need active daily management on a
+commercial urban site in a way a residential plot on a quieter street
+usually doesn't.`,
+      },
+      'construction-sequence': {
+        title: 'Construction Sequence',
+        body: `A simple-span bridge's construction sequence is structured almost
+entirely around getting the substructure right before the
+superstructure ever starts, since every later stage depends on the
+one before it being both correct and fully cured.
+
+**Substructure first:** piling (if the soil needs it) is driven or
+bored first, then pile caps are cast on top of the piles, then
+abutments and/or piers are built up from the pile caps to the
+elevation where the superstructure will sit. Each of these needs to
+cure and gain strength before the next stage loads it.
+
+**Superstructure next:** depending on span and site access, this is
+either cast-in-situ (falsework/staging built up from the ground to
+support formwork for the deck, used where ground access below the
+span is available) or precast (girders cast off-site or on a nearby
+casting yard, then lifted into place with a crane — the more common
+choice where the span crosses a river or a road that can't be
+obstructed by falsework).
+
+**Deck and finishing:** the deck slab is cast on top of the girders
+(or as part of a cast-in-situ pour), followed by wearing surface,
+parapets/railings, and expansion joints at the abutments — the detail
+most responsible for a bridge deck's long-term ride quality, since a
+poorly detailed expansion joint is one of the most common sources of
+early bridge deck deterioration.
+
+No visualization on this platform currently models bridge
+construction specifically — the Construction Sequence visualizer in
+the Learning System is built around a *building's* stage-by-stage
+construction, which is a different enough process (no piling/pier
+sequence, no girder erection) that linking it here would be
+misleading rather than helpful.`,
+      },
+      'pavement-layers': {
+        title: 'Pavement Layers',
+        body: `A road's pavement is a layered system, and the layer nobody sees —
+everything under the wearing surface — is usually what actually
+determines whether a road lasts 15 years or fails in 3.
+
+From the bottom up: the **subgrade** (the prepared, compacted natural
+ground) has to be brought to a consistent, adequate strength first —
+a soft or inconsistent subgrade undermines every layer above it no
+matter how well those layers are built. The **sub-base** (typically a
+granular layer) spreads load from the layers above across a wider
+area of the subgrade and improves drainage. The **base course**
+(often a stronger granular material, sometimes stabilized) carries
+most of the structural load transfer. The **binder course** and
+**wearing course** (both asphalt/bitumen-bound layers) sit on top —
+the wearing course is the only layer road users ever see or feel, but
+it's carrying the least structural responsibility of the whole
+system, which is a common misconception among people encountering
+pavement design for the first time.
+
+Material quality at every layer matters, not just the visible wearing
+surface — an aggregate that fails the impact or crushing value test in
+the base course causes exactly the kind of premature failure (rutting,
+potholing) that gets blamed on "bad asphalt" when the real cause was
+several layers down.`,
+      },
+    },
+  },
+  practical: {
+    eyebrow: 'Practical Engineering Hub',
+    pageTitle: 'Practical Hub',
+    pageDescription: 'How things actually get done on a real site — 42 practical topics across 6 areas, plus the mistakes that keep repeating and how to avoid them.',
+    backToHub: 'Back to Practical Hub',
+    mediaHeading: 'Real Photos, Real Videos & Drone Views',
+    mediaNote:
+      'This platform has no real site behind it and no way to produce genuine site photography, video, or drone footage — those would need to come from an actual, ongoing project. Rather than substitute stock imagery and present it as real site documentation, this section is left honestly empty until real site media is available to add.',
+    relatedVisualizationsHeading: 'See it in 3D',
+    relatedLabsHeading: 'Related lab',
+    relatedMaterialsHeading: 'Related materials',
+    relatedToolsHeading: 'Related tool',
+    commonMistakesHeading: 'Common Site Mistakes',
+    categories: {
+      'site-engineering': {
+        title: 'Site Engineering / Site Work',
+        summary: 'From site setup through finishing — the full sequence of a typical building site, stage by stage.',
+      },
+      'reinforcement-work': {
+        title: 'Reinforcement Work',
+        summary: 'Cutting, bending, placing, and detailing rebar — the practical side of what a structural drawing specifies.',
+      },
+      'concrete-technology': {
+        title: 'Concrete Technology',
+        summary: 'Mixing, casting, compacting, and curing — the practical decisions that determine whether concrete reaches its design strength.',
+      },
+      'foundation-systems': {
+        title: 'Foundation Systems',
+        summary: 'Isolated, combined, raft, and pile foundations — which one fits which site condition, and why.',
+      },
+      'road-construction': {
+        title: 'Road Construction',
+        summary: 'Subgrade through asphalt — building a road layer by layer, and compacting each one correctly.',
+      },
+      'site-safety': {
+        title: 'Site Safety',
+        summary: 'PPE, scaffolding, electrical and crane safety, and managing site risk day to day.',
+      },
+    },
+    topics: {
+      'site-setup': {
+        title: 'Site Setup',
+        body: `Before any excavation starts, a site needs its boundary clearly
+marked, a temporary site office, material storage areas planned (so
+delivered cement and steel aren't dumped wherever there's space),
+water and electricity connections arranged, and a site safety
+boundary (hoarding/fencing) up if the site is anywhere near a public
+path. Rushing past site setup to "start real work" sooner is a common
+temptation that usually costs more time later, once material is
+already piled in the wrong place or a delivery truck can't access the
+site.`,
+      },
+      excavation: {
+        title: 'Excavation',
+        body: `Excavation depth and width need to match the foundation drawing
+exactly, with extra working space (typically 300–450 mm) on each side
+of the foundation for formwork and worker access. In loose or
+water-bearing soil, side slopes or shoring/timbering are needed to
+stop the excavation face from collapsing — skipping this to save time
+is one of the more dangerous shortcuts taken on small sites. Excavated
+soil that will be reused as backfill should be stockpiled separately
+from soil meant for disposal, not mixed together.`,
+      },
+      'layout-work': {
+        title: 'Layout Work',
+        body: `Layout work transfers the drawing's grid and building outline onto
+the actual ground, using a theodolite/total station or, on smaller
+sites, batter boards and string lines referenced from a fixed
+benchmark. Every column position, wall line, and grid intersection
+gets marked and checked against the drawing before any excavation or
+foundation work starts on that line — an error caught at layout stage
+costs almost nothing to fix; the same error caught after a foundation
+is cast can mean demolition.`,
+      },
+      'foundation-work': {
+        title: 'Foundation Work',
+        body: `Foundation work follows layout and excavation: a blinding/PCC layer
+first (to give a clean, level base for reinforcement, not to carry
+structural load itself), then reinforcement placed per the
+foundation drawing with cover blocks maintaining the specified cover,
+then formwork, then the pour itself. Every stage here should be
+inspected before the next one covers it up — reinforcement placement
+especially, since once concrete is poured, checking bar size or
+spacing is no longer possible without breaking it out.`,
+      },
+      'column-casting': {
+        title: 'Column Casting',
+        body: `Column formwork needs to be plumb (vertically true) and well-braced
+— a column that leans even slightly at the base compounds that lean
+up every story above it. Concrete is placed in layers and vibrated
+each layer, not dropped in from height in one go, which causes
+segregation (coarse aggregate separating from the mortar). Formwork
+is struck (removed) only after the concrete has gained enough early
+strength to support itself, not on a fixed schedule regardless of
+site conditions — hot weather speeds this up, cold weather slows it
+down.`,
+      },
+      'beam-casting': {
+        title: 'Beam Casting',
+        body: `Beam and slab are usually cast together as one monolithic pour where
+the design assumes monolithic action — casting a beam alone and the
+slab days later (an unplanned "cold joint") can weaken the connection
+unless it's specifically designed and prepared for it (roughened
+surface, added shear reinforcement). Beam soffit (bottom) formwork
+needs to stay propped until the concrete has gained sufficient
+strength to span on its own — removing props too early is a common
+cause of beam deflection or cracking that only becomes visible weeks
+later.`,
+      },
+      'slab-casting': {
+        title: 'Slab Casting',
+        body: `Slab casting needs the reinforcement mesh (or crossed bars) checked
+for correct spacing and cover before the pour, with cover blocks/chairs
+holding the top reinforcement layer at its correct height — top steel
+that sinks to the bottom during the pour (from workers walking on it
+without proper walkways, or from cover chairs failing) stops doing
+its job of resisting negative moment over supports. Slabs are
+finished (screeded and floated) promptly after casting, before the
+concrete starts to set, and then covered/cured immediately after.`,
+      },
+      pcc: {
+        title: 'PCC (Plain Cement Concrete)',
+        body: `Plain Cement Concrete (PCC) — concrete with no reinforcement — is
+used where only compressive strength matters and there's no tension
+to resist: blinding layers under foundations, flooring sub-base, and
+some pavement applications. Because it has no reinforcement to
+redistribute stress, PCC needs a properly prepared, uniform sub-base
+underneath it; PCC cast directly over soft or uneven ground will
+crack in an uncontrolled pattern rather than a designed one.`,
+      },
+      'rcc-work': {
+        title: 'RCC Work',
+        body: `Reinforced Cement Concrete (RCC) is what carries both compression
+(via the concrete) and tension (via the embedded steel) — the
+combination that makes modern beams, slabs, and columns possible.
+Getting RCC right on site means three things happening correctly at
+once: the concrete mix reaching its design strength, the
+reinforcement being the right size and in the right position, and
+the two bonding properly (which needs clean, uncorroded, unpainted
+bar surfaces and adequate concrete cover, not too much and not too
+little).`,
+      },
+      brickwork: {
+        title: 'Brickwork',
+        body: `Brick masonry is built in courses with staggered (bonded) vertical
+joints so no continuous vertical joint runs up through multiple
+courses, which would create a plane of weakness. Bricks are
+pre-wetted before laying (dry bricks pull water out of the fresh
+mortar too fast, weakening the bond) but not soaked to the point of
+being saturated. Mortar joints are kept consistent in thickness
+(typically around 10 mm) — inconsistent joint thickness both looks
+poor and performs inconsistently.`,
+      },
+      plastering: {
+        title: 'Plastering',
+        body: `Plastering needs the masonry surface properly cured, cleaned of
+dust and loose material, and dampened (not soaking wet) before the
+first coat goes on — plaster applied to a dry, dusty wall debonds
+later, often showing up as hollow-sounding patches or delamination
+months after the work looked fine. Plaster is normally applied in two
+coats (a rougher base coat, then a finer finishing coat) rather than
+one thick coat, which is more prone to cracking and sagging.`,
+      },
+      'tile-work': {
+        title: 'Tile Work',
+        body: `Tile work needs a level, properly cured screed or bedding layer
+underneath — tiles laid directly on an uneven or uncured base
+develop hollow spots and eventually crack or pop loose. Adhesive or
+mortar needs full, even coverage under each tile (checked by
+occasionally lifting a tile during laying), not just dabs at the
+corners, since uneven coverage is exactly what causes a hollow sound
+under one part of a tile and not another.`,
+      },
+      waterproofing: {
+        title: 'Waterproofing',
+        body: `Waterproofing at roof slabs, bathrooms, and water tanks needs the
+surface properly prepared (cleaned, cracks and honeycombing repaired)
+before any waterproofing membrane or coating is applied — coating over
+an unrepaired crack simply bridges it temporarily until the membrane
+itself cracks at the same spot. Waterproofing details at
+penetrations (pipes passing through a roof slab or bathroom floor)
+are where leaks most often start in practice, not in the middle of
+an otherwise flat surface, so those details deserve disproportionate
+attention relative to their size.`,
+      },
+      painting: {
+        title: 'Painting',
+        body: `Painting needs fully cured, dry plaster or concrete underneath —
+painting over a wall that's still releasing moisture from curing
+traps that moisture in and causes peeling or blistering later,
+regardless of paint quality. A primer/sealer coat suited to the
+substrate comes first, then normally two finish coats, with adequate
+drying time between coats rather than rushing to a second coat while
+the first is still tacky.`,
+      },
+      'finishing-work': {
+        title: 'Finishing Work',
+        body: `Finishing work (final touch-ups, fixture installation, cleaning,
+snag-list corrections) is where a project's overall quality
+impression is actually formed for the client, even though it
+represents a small fraction of total site effort — a structurally
+excellent building with careless finishing reads as a poor-quality
+building to almost everyone who experiences it, since very few
+occupants ever directly evaluate the structural work underneath.`,
+      },
+      'bar-cutting': {
+        title: 'Bar Cutting',
+        body: `Reinforcement bars are cut to the exact lengths shown in the bar
+bending schedule (BBS), accounting for bend deductions (a bent bar
+needs a slightly shorter straight length than its nominal dimension,
+because the bend itself takes up length) — cutting bars to nominal
+length without bend deductions is a common source of bars that end
+up slightly too long once bent, causing cover or spacing problems on
+site.`,
+      },
+      'bar-bending': {
+        title: 'Bar Bending',
+        body: `Bars are bent to standard hook and bend shapes (90°, 135°, 180°
+hooks) using a bar bender, with bend radii that meet code minimums —
+bending too sharply (too small a radius) can crack or weaken the
+bar at the bend, especially in larger diameter bars. Bends are
+planned before cutting, from the BBS, not improvised on site, since
+an incorrectly bent bar usually can't be re-bent to the correct shape
+without weakening it.`,
+      },
+      'bar-placement': {
+        title: 'Bar Placement',
+        body: `Bars are placed at the spacing and position shown on the
+reinforcement drawing, tied at intersections with binding wire (not
+just laid loose, which lets them shift during the pour), and held at
+the correct height and cover using cover blocks or chairs — placement
+is the stage where a design's careful calculations either survive
+contact with the real site or don't; bars placed in the wrong
+position deliver a different, weaker structural behavior than the
+one that was actually designed and checked.`,
+      },
+      lapping: {
+        title: 'Lapping',
+        body: `Where two bars need to continue a load path but can't be one
+continuous length (which is most of the time, since bars come in
+limited standard lengths), they're lapped — overlapped by a
+calculated development length and tied together. Laps are
+deliberately staggered (not all bars in a section lapped at the same
+point) and located away from a member's maximum-moment zone wherever
+possible, since a lap is inherently a slightly weaker point than
+continuous bar and shouldn't coincide with where the member is most
+highly stressed.`,
+      },
+      anchorage: {
+        title: 'Anchorage',
+        body: `Anchorage is how a bar transfers its force into the surrounding
+concrete at its end — through straight embedment length, a hook, or a
+mechanical anchor — long enough that the bar can reach its full
+design stress before it would pull out of the concrete. Under-length
+anchorage (a bar cut too short at a critical end, or a hook omitted
+where the drawing calls for one) is a quiet failure mode: it often
+doesn't show up until the member is actually loaded near its design
+capacity, well after construction is finished and inspected.`,
+      },
+      'cover-block': {
+        title: 'Cover Block',
+        body: `Cover blocks (or chairs) hold reinforcement away from the formwork
+face by the exact cover distance specified in the drawing — enough to
+protect the steel from corrosion and fire, but not so much that the
+steel sits too far from where it's structurally needed. Missing or
+crushed cover blocks are one of the most common, most preventable
+site defects: steel that ends up touching the formwork face has
+essentially zero cover once the formwork is struck, and corrodes far
+faster than designed.`,
+      },
+      'reinforcement-detailing': {
+        title: 'Reinforcement Detailing',
+        body: `Reinforcement detailing is the drawing work that turns a structural
+analysis result (this beam needs this much steel) into buildable
+instructions (bars of this size, this shape, at these locations, with
+these laps and anchorages) — good detailing anticipates real
+construction sequence and congestion (can all these bars actually fit
+and be tied at a busy beam-column joint?) rather than just satisfying
+calculated steel area on paper.`,
+      },
+      'concrete-mix': {
+        title: 'Concrete Mix / Mixing',
+        body: `A concrete mix combines cement, sand, aggregate, and water in
+proportions designed to hit a target strength grade while staying
+workable enough to place and compact properly. Mix proportions are a
+design decision, not something to adjust freely on site by feel —
+adding extra cement "to be safe" or extra water "to make it easier to
+pour" both change the concrete's actual behavior away from what was
+designed and tested.`,
+      },
+      'water-cement-ratio': {
+        title: 'Water Cement Ratio',
+        body: `The water-cement ratio — how much water is used relative to cement,
+by weight — is one of the single most important variables in
+concrete strength: too much water (a common site shortcut to make
+concrete easier to place) dramatically weakens the hardened concrete,
+even though it makes the wet mix look and feel easier to work with.
+This is exactly why "just add a bit more water" is one of the most
+damaging habits on an unsupervised site, despite seeming harmless in
+the moment.`,
+      },
+      'slump-test-practice': {
+        title: 'Slump Test',
+        body: `The slump test measures a concrete batch's workability before
+placing — filling a standard cone, lifting it, and measuring how much
+the concrete slumps down. It's a quick site quality check performed
+on every batch (or at defined intervals) specifically to catch a mix
+that's drifted from its design water content before it gets poured
+into the structure, not just a formality performed for records. This
+platform's Slump Test lab (Part 7) lets you run this exact test on
+simulated data.`,
+      },
+      casting: {
+        title: 'Casting',
+        body: `Casting (placing concrete into formwork) should proceed
+continuously for a given structural element wherever possible, in
+planned layers, without letting one layer begin to set before the
+next is placed on top of it (which would create a weak, poorly-bonded
+"cold joint" mid-element rather than at a planned construction
+joint). Concrete should be placed as close as possible to its final
+position, not dumped from height or dragged long distances with a
+vibrator, both of which cause segregation.`,
+      },
+      'vibrating-compaction': {
+        title: 'Vibrating / Compaction',
+        body: `Vibration compacts freshly placed concrete, working entrapped air
+out and helping the mix flow fully around reinforcement and into
+corners of the formwork. Under-vibration leaves voids (visible later
+as "honeycombing" — a rough, gap-filled concrete surface) —
+over-vibration causes segregation, with heavier aggregate settling
+and a weak layer of cement paste rising to the top. Vibration is
+applied systematically and briefly at each location, not held in one
+spot indefinitely or skipped in hard-to-reach corners.`,
+      },
+      curing: {
+        title: 'Curing',
+        body: `Curing keeps concrete moist (and within a reasonable temperature
+range) for a sustained period after casting — typically at least 7
+days for ordinary conditions — so the cement hydration reaction that
+actually builds strength can continue properly. Concrete that's
+allowed to dry out early stops gaining strength at whatever point it
+dried, permanently, not temporarily — inadequate curing is one of the
+most common, most preventable causes of concrete not reaching its
+design strength, especially in Bangladesh's hot climate where
+surface water evaporates fast.`,
+      },
+      'concrete-failure': {
+        title: 'Concrete Failure / Failures',
+        body: `Concrete failures on site show up in recognizable patterns:
+honeycombing (poor compaction), plastic shrinkage cracks (surface
+drying too fast before the concrete has set), later drying shrinkage
+cracks (inadequate curing or joint spacing), and structural cracks
+under load (usually a sign of a genuine design, detailing, or
+construction defect rather than a material issue alone). Correctly
+identifying which pattern is present is the first step to finding the
+real cause rather than guessing.`,
+      },
+      'isolated-footing': {
+        title: 'Isolated Footing',
+        body: `An isolated footing supports a single column, spreading its point
+load over a wider footing area so the resulting pressure on the soil
+stays within the soil's safe bearing capacity. It's the simplest,
+most economical foundation type where soil is reasonably strong and
+columns are far enough apart that individual footings don't
+overlap or interfere with each other.`,
+      },
+      'combined-footing': {
+        title: 'Combined Footing',
+        body: `A combined footing supports two (or occasionally more) columns on
+one shared footing — used when individual isolated footings would be
+too close together (would overlap) or when a column sits right at a
+property line and its footing can't extend past that line on one
+side, so it's combined with the next interior column's footing to
+balance the resulting pressure.`,
+      },
+      'raft-foundation': {
+        title: 'Raft Foundation',
+        body: `A raft (or mat) foundation is one continuous slab supporting the
+entire building footprint, used where soil bearing capacity is low
+enough that individual footings would need to be uneconomically large
+or would end up covering most of the footprint anyway — at that
+point, one continuous raft is usually simpler and more effective than
+many overlapping individual footings, and also better distributes
+any differential settlement across the whole structure.`,
+      },
+      'pile-foundation': {
+        title: 'Pile Foundation',
+        body: `A pile foundation transfers building load down through weak upper
+soil layers to either a deeper, stronger bearing stratum (end-bearing
+piles) or relies on friction between the pile surface and the
+surrounding soil along its length (friction piles) where no strong
+stratum exists at a reasonable depth. This is common across much of
+Bangladesh's soft, alluvial soil, where a shallow foundation often
+can't reach adequate bearing capacity at a practical depth.`,
+      },
+      subgrade: {
+        title: 'Subgrade',
+        body: `The subgrade is the prepared, compacted natural ground a road is
+built on top of — every layer above it depends on the subgrade being
+brought to consistent, adequate strength first. A soft or
+inconsistently compacted subgrade undermines the whole pavement
+structure regardless of how well the layers above it are built,
+which is why subgrade preparation gets disproportionate attention
+relative to how little of it is ever visible once the road is
+finished.`,
+      },
+      subbase: {
+        title: 'Subbase',
+        body: `The sub-base sits directly on the subgrade — typically a granular
+material — and serves to spread load from the layers above across a
+wider area of subgrade, improve drainage away from the pavement
+structure, and provide a stable working platform for constructing the
+layers above it. A poorly compacted or contaminated (mixed with
+subgrade soil) sub-base loses most of its load-spreading benefit.`,
+      },
+      'base-course': {
+        title: 'Base Course',
+        body: `The base course, above the sub-base, is typically a stronger
+granular or stabilized material carrying most of the structural load
+transfer down through the pavement system. Aggregate quality here
+matters directly — material that fails impact or crushing value
+testing breaks down under repeated traffic loading, which shows up
+later as rutting or potholing that often gets blamed on the visible
+asphalt surface when the real cause is several layers below it.`,
+      },
+      'asphalt-work': {
+        title: 'Asphalt Work',
+        body: `Asphalt (bituminous) layers — binder course and wearing course —
+sit on top of the base course and need to be laid at the correct
+temperature (asphalt that's too cool compacts poorly and never
+reaches its design density) and compacted promptly before it cools
+past a workable temperature. Joints between adjacent paving passes
+need particular care, since a poorly compacted longitudinal joint is
+a common early failure point.`,
+      },
+      'road-compaction': {
+        title: 'Road Compaction',
+        body: `Every pavement layer — subgrade, sub-base, base, and asphalt — needs
+compaction checked against a target density (from a compaction test
+like the one on this platform's Labs) rather than judged only by
+visual appearance or the number of roller passes performed. Under-
+compaction at any single layer, even if every other layer is built
+perfectly, creates a weak point that leads to premature settlement or
+rutting at exactly that depth.`,
+      },
+      ppe: {
+        title: 'PPE (Personal Protective Equipment)',
+        body: `Personal Protective Equipment — helmet, safety boots, high-visibility
+vest, and task-specific items like harnesses for work at height or
+respirators for dusty work — is the minimum baseline for anyone in an
+active work area, not an optional extra for particularly hazardous
+tasks. The habit that actually prevents injuries is consistent,
+site-wide PPE culture enforced for everyone including supervisors and
+visitors, not selective enforcement only on visibly risky tasks.`,
+      },
+      scaffolding: {
+        title: 'Scaffolding',
+        body: `Scaffolding needs to be erected on stable, level ground with base
+plates (and sole boards on soft ground), properly braced, tied to the
+structure at regular intervals once it rises beyond a certain height,
+and tagged/inspected before use and after any modification. An
+untagged or visibly modified scaffold (boards removed for material
+access and not replaced, for instance) should be treated as unsafe
+until re-inspected, not used based on how it looked last time.`,
+      },
+      'electrical-safety': {
+        title: 'Electrical Safety',
+        body: `Site electrical safety means temporary wiring and distribution
+boards are protected from water and physical damage, circuits are
+protected with appropriate breakers/RCDs, and work near
+overhead or buried services accounts for safe clearance distances
+before excavation or crane operation nearby. Improvised, exposed, or
+water-exposed temporary wiring is a common site hazard precisely
+because it's treated as "temporary" and therefore less rigorously
+maintained than permanent electrical work.`,
+      },
+      'crane-safety': {
+        title: 'Crane Safety',
+        body: `Crane safety on site depends on the crane being set up on
+verified-adequate ground bearing capacity (a crane that looks stable
+can still tip if the ground beneath its outriggers isn't checked),
+load charts being respected for the actual radius and angle being
+used (not just the load weight in isolation), and a clear, enforced
+exclusion zone under the load path — most serious crane incidents
+involve either ground failure under an outrigger or a load path that
+wasn't actually kept clear of personnel.`,
+      },
+      'site-risk-management': {
+        title: 'Site Risk Management',
+        body: `Site risk management means identifying foreseeable hazards for each
+activity before it starts (not generically for the site as a whole),
+assigning a clear control measure for each one, and revisiting that
+assessment when conditions change — a risk assessment done once at
+project start and never revisited stops reflecting the site's actual
+current risks within weeks, as the work itself changes from
+excavation to structure to finishing, each with genuinely different
+hazards.`,
+      },
+    },
+    mistakes: {
+      'mistake-curing': {
+        title: 'Skipping or shortening curing',
+        body: 'Concrete that isn\'t kept moist for the first several days permanently loses strength it can never fully recover — not "some" strength temporarily, but strength gain that stops at whatever point the concrete dried out. This is one of the most common and most avoidable site defects, especially in hot climates where surface water evaporates within hours if curing isn\'t actively maintained. The fix is simple and cheap relative to the cost of the defect: keep every cast surface wet (ponding, wet hessian, or a curing compound) for at least 7 days, not "until it looks dry-ish."',
+      },
+      'mistake-layout': {
+        title: 'Rushing layout to start "real work" sooner',
+        body: 'An error in layout — a column position off by even a few centimeters, a grid line misread — costs almost nothing to fix at the layout stage: erase the mark, remeasure, remark. The same error caught after excavation, or worse, after a foundation is cast, can mean expensive rework or, in bad cases, demolition. Layout feels like it isn\'t "real progress" compared to visible excavation or casting, which is exactly why it gets rushed — but it\'s the stage where mistakes are cheapest to catch.',
+      },
+      'mistake-cover': {
+        title: 'Missing or crushed cover blocks',
+        body: 'Cover blocks get kicked out of place, crushed underfoot, or simply forgotten during a busy pour, letting reinforcement sag or shift until it touches the formwork face. Once the formwork is struck, that steel has essentially zero cover instead of the specified amount, and corrodes far faster than the design assumed — a defect that\'s invisible on the day of the pour and only becomes visible as rust staining or spalling years later. Checking cover block placement immediately before every pour, not just once during rebar tying, is the practical fix.',
+      },
+      'mistake-lap-location': {
+        title: 'Lapping all bars at the same critical section',
+        body: 'A lap is inherently a slightly weaker point in a bar than continuous, unbroken steel — which is exactly why laps are supposed to be staggered and kept away from a member\'s maximum-moment location. Lapping every bar in a section at the same point (often done simply because it\'s the easiest place to plan the cut) concentrates that weakness exactly where the member is least able to tolerate it. The reinforcement detailing (drawing) should show where laps go; site placement should follow that, not default to whatever\'s most convenient to tie.',
+      },
+      'mistake-water-added': {
+        title: '"Just add a bit more water" to make it easier to pour',
+        body: 'Extra water makes a concrete batch noticeably easier to place and finish in the moment, which is exactly why this shortcut is so tempting on a hot, tiring pour day — and exactly why it\'s so damaging, since it directly and significantly weakens the hardened concrete\'s final strength regardless of how good the mix looked going in. The slump test exists specifically to catch this before it becomes a permanent, un-fixable part of the structure — a batch that fails its slump test should be rejected, not adjusted with more water on site.',
+      },
+      'mistake-founding-level': {
+        title: 'Casting a footing before confirming the founding level matches the soil report',
+        body: 'The founding level (the depth at which a footing actually bears) needs to match what the soil investigation confirmed as adequate bearing capacity — not just whatever depth the excavation happened to reach. Casting blinding concrete and reinforcement before an engineer confirms the exposed soil at the base of the excavation actually matches the assumed bearing condition risks a foundation bearing on weaker soil than it was designed for, a mistake that\'s essentially impossible to correct after the fact without demolition.',
+      },
+      'mistake-subgrade-skip': {
+        title: 'Treating subgrade preparation as a formality',
+        body: 'Because the subgrade is invisible once the road is finished, it\'s tempting to treat its preparation as a quick formality before getting to the more visible sub-base and asphalt work. But a soft or inconsistently compacted subgrade undermines every layer built on top of it, no matter how well those layers are constructed — a road that fails within a year or two, when every visible layer looks like it was built correctly, very often traces back to inadequate subgrade preparation that nobody checked at the time.',
+      },
+      'mistake-ppe-culture': {
+        title: 'Enforcing PPE only for visibly risky tasks',
+        body: 'PPE compliance that\'s enforced only when a task looks obviously dangerous (working at height, near a crane) while being ignored for routine tasks (walking through a general work area, minor material handling) creates a culture where PPE is seen as task-specific rather than baseline — which means it\'s also skipped on the days a routine task unexpectedly turns hazardous (an unplanned lift, an unexpected fall hazard). Consistent, site-wide enforcement for everyone present, on every task, is what actually builds the habit that holds up when something goes wrong unexpectedly.',
+      },
     },
   },
   lab: {

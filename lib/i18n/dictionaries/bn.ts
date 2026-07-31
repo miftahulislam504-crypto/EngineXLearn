@@ -12,6 +12,11 @@ const bn: Dictionary = {
     login: 'লগ ইন',
     startLearning: 'শেখা শুরু করুন',
     dashboard: 'ড্যাশবোর্ড',
+    visualizations: 'ভিজ্যুয়ালাইজেশন',
+    resources: 'রিসোর্স',
+    materials: 'ম্যাটেরিয়াল',
+    premium: 'প্রিমিয়াম',
+    projects: 'প্রজেক্ট',
     openMenu: 'মেনু খুলুন',
     closeMenu: 'মেনু বন্ধ করুন',
   },
@@ -162,6 +167,34 @@ const bn: Dictionary = {
     settings: 'সেটিংস',
     logOut: 'লগ আউট',
     notificationsAria: 'নোটিফিকেশন',
+  },
+  profile: {
+    pageTitle: 'প্রোফাইল',
+    signedInAs: 'যেভাবে সাইন ইন করা আছে',
+    roleLabel: 'আমি একজন...',
+    roleSelfDeclaredNote: 'Self-declared — শুধু প্ল্যাটফর্ম তোমার জন্য কী দেখাবে সেটা tailor করতে ব্যবহৃত হয়, কোনো record-এর সাথে verify করা হয় না।',
+    roleStudent: 'শিক্ষার্থী',
+    roleEngineer: 'ইঞ্জিনিয়ার',
+    roleTeacher: 'শিক্ষক',
+    roleProfessional: 'প্রফেশনাল',
+    skillLevelHeading: 'স্কিল লেভেল',
+    skillProgressHeading: 'বিষয়ভিত্তিক স্কিল প্রোগ্রেস',
+    noSkillProgressYet: 'একটা কোর্স শুরু করলে এখানে তোমার বিষয়ভিত্তিক স্কিল প্রোগ্রেস দেখতে পাবে।',
+    learningHistoryHeading: 'লার্নিং হিস্ট্রি',
+    lessonsCompletedCount: (n) => `${n}টা lesson সম্পূর্ণ`,
+    noHistoryYet: 'এখনো কোনো lesson সম্পূর্ণ হয়নি',
+    noHistoryDescription: 'প্রথম lesson শেষ করলে এখানে দেখা যাবে।',
+    activityStatsHeading: 'অ্যাক্টিভিটি',
+    currentStreak: 'বর্তমান streak',
+    quizzesAttempted: 'যতগুলো quiz দেওয়া হয়েছে',
+    labResultsSaved: 'যতগুলো lab result save করা আছে',
+    toolResultsSaved: 'যতগুলো tool result save করা আছে',
+    certificatesHeading: 'সার্টিফিকেট ও অ্যাচিভমেন্ট',
+    noCertificatesYet: 'এখনো কোনো সার্টিফিকেট নেই',
+    certificatesEmptyHint: 'একটা কোর্স সম্পূর্ণ করলে বা একটা ব্যাজ অর্জন করলে এখানে দেখতে পাবে।',
+    certificatesSummary: (certs, badges) => `${certs}টা সার্টিফিকেট · ${badges}টা ব্যাজ অর্জিত`,
+    viewCertificates: 'সব সার্টিফিকেট ও ব্যাজ দেখুন',
+    signOutButton: 'সাইন আউট',
   },
   learning: {
     curriculumEyebrow: 'লার্নিং সিস্টেম',
@@ -343,6 +376,887 @@ const bn: Dictionary = {
       explainRoofSlab: 'রুফ বিম আর স্ল্যাব top স্টোরি cap করে, structural frame সম্পূর্ণ করে — এখান থেকে যা কিছু বাকি সব non-structural।',
       explainWalls: 'Infill wall সম্পূর্ণ হওয়া frame-এর চারপাশে, প্রতিটা স্টোরিতে বসে — frame-এর পরে বসানো হয়, আগে না, কারণ এগুলো কোনো structural load বহন করে না এবং উপরের frame দাঁড়াতে এগুলোর আগে থেকে জায়গায় থাকা দরকার নেই।',
       explainParapetFinishing: 'একটা parapet wall রুফের edge cap করে এবং finishing কাজ চলে — বিল্ডিং structurally সম্পূর্ণ; যা বাকি থাকে তা protection, access, আর appearance।',
+    },
+  },
+  visualizationGallery: {
+    eyebrow: 'ভিজ্যুয়াল লার্নিং',
+    pageTitle: 'ভিজ্যুয়ালাইজেশন',
+    pageDescription:
+      'প্ল্যাটফর্মের সব interactive 2D এবং 3D ভিজ্যুয়ালাইজেশন, আলাদাভাবে browse করা যায় — প্রতিটা যে lesson-এ শেখানো হয় সেখানেও থাকে।',
+    category2d: '2D ভিজ্যুয়ালাইজেশন',
+    category3d: '3D ভিজ্যুয়ালাইজেশন',
+    count: (n) => `${n}টা ভিজ্যুয়ালাইজেশন`,
+    backToGallery: 'ভিজ্যুয়ালাইজেশনে ফিরে যান',
+    usedInLessons: 'যে lesson-এ ব্যবহৃত',
+    noLessonYet: 'এখনো কোনো lesson-এর সাথে link করা নেই',
+    descriptions: {
+      'moment-diagram-explorer': 'Simply-supported বিমের উপর একটা point load টেনে নিয়ে bending-moment diagram লাইভ redraw হতে দেখুন।',
+      'column-buckling-visualizer': 'Euler-এর critical buckling load 3D-তে — slenderness বদলালে কলামের deflected shape কীভাবে বদলায় দেখুন।',
+      'load-transfer-visualizer': 'একটা load path অনুসরণ করুন — স্ল্যাব থেকে বিম, কলাম, ফাউন্ডেশন, তারপর মাটি পর্যন্ত — একটা area load ধীরে ধীরে line, তারপর point, তারপর আবার area হয়ে যায়।',
+      'column-failure-comparator': 'Crushing capacity বনাম Euler buckling capacity, একসাথে plot করা, আর real crossover point যেটা ঠিক করে কোন mode govern করবে।',
+      'foundation-pressure-visualizer': 'Eccentrically-loaded footing-এর নিচে bearing pressure কীভাবে redistribute হয় — uniform, trapezoidal, অথবা uplift-সহ triangular।',
+      'reinforcement-details-visualizer': 'একটা real বিম cross-section, যেখানে rebar ঠিক সেই জায়গায় বসানো যেখানে minimum-reinforcement আর spacing check অনুযায়ী বসার কথা।',
+      'crack-formation-visualizer': 'বিম span বরাবর crack angle vertical (flexural) থেকে diagonal (shear)-এ ঘুরছে, আর কেন stirrup spacing সমান নয় তার কারণ।',
+      'water-flow-visualizer': "Manning's Equation দিয়ে open-channel flow, একটা animated water surface যার speed আসল হিসাব করা velocity-র সাথে মেলে।",
+      'earthquake-motion-visualizer': 'Ground shaking-এর নিচে একটা single-degree-of-freedom oscillator — period মিলে গেলে resonance কীভাবে বেড়ে যায় দেখুন।',
+      'soil-layers-visualizer': "Stratified soil layer-এর মধ্য দিয়ে একটা depth probe টেনে নিয়ে water table-এর মধ্য দিয়ে Terzaghi-র effective stress বাড়তে দেখুন।",
+      'building-structure-visualizer': 'একটা পূর্ণাঙ্গ G+2 RCC বিল্ডিং বিস্তারিত 3D-তে — real structural frame-এ wall আর story toggle করুন।',
+      'reinforcement-model-visualizer': 'একই বিল্ডিং X-ray mode-এ — কংক্রিট translucent হয়ে ভিতরের আসল rebar cage দেখায়।',
+      'construction-sequence-visualizer': 'একই বিল্ডিং ধাপে ধাপে তৈরি হচ্ছে, excavation থেকে finishing পর্যন্ত, real construction order-এ।',
+    },
+  },
+  labGallery: {
+    eyebrow: 'এক্সপেরিমেন্ট ও ল্যাব',
+    pageTitle: 'ভার্চুয়াল ল্যাব',
+    pageDescription:
+      'প্ল্যাটফর্মের সব virtual lab, আলাদাভাবে browse করা যায় — প্রতিটা যে lesson-এ শেখানো হয় সেখানেও থাকে।',
+    categorySoil: 'সয়েল মেকানিক্স ল্যাব',
+    categoryConcrete: 'কংক্রিট ল্যাব',
+    categoryHighway: 'হাইওয়ে ইঞ্জিনিয়ারিং ল্যাব',
+    categorySurvey: 'সার্ভেয়িং ল্যাব',
+    count: (n) => `${n}টা ল্যাব`,
+    backToGallery: 'ল্যাবে ফিরে যান',
+    usedInLessons: 'যে lesson-এ ব্যবহৃত',
+    noLessonYet: 'এখনো কোনো lesson-এর সাথে link করা নেই',
+    descriptions: {
+      'sieve-analysis': 'একটা soil sample-কে sieve-এর stack দিয়ে ঝাঁকিয়ে নিয়ে real particle-size distribution curve plot করুন।',
+      'atterberg-limits': 'Simulated Casagrande-cup আর thread-rolling test থেকে মাটির liquid limit, plastic limit, আর plasticity index বের করুন।',
+      'compaction-test': 'বিভিন্ন moisture content-এ Proctor compaction test চালিয়ে real optimum moisture content আর maximum dry density খুঁজে বের করুন।',
+      'direct-shear': 'বিভিন্ন normal load-এ একটা soil sample shear করে failure envelope থেকে friction angle আর cohesion বের করুন।',
+      'slump-test': 'একটা simulated কংক্রিট মিক্স দিয়ে slump cone ভরে দেখুন কতটা slump হয় — সাইটে workability check করার standard পদ্ধতি।',
+      'compression-test': 'একটা কংক্রিট সিলিন্ডার failure পর্যন্ত load করে simulated testing machine থেকে সরাসরি compressive strength পড়ুন।',
+      'flexural-test': 'একটা কংক্রিট বিম third points-এ crack না হওয়া পর্যন্ত load করে failure load থেকে modulus of rupture হিসাব করুন।',
+      'aggregate-impact-value': 'একটা aggregate sample-এর উপর বারবার hammer ফেলে impact value বের করুন — pavement material-এর toughness-এর সরাসরি measure।',
+      'bitumen-penetration': 'একটা standard needle বিটুমিন sample-এ ডুবতে track করে penetration grade পড়ুন — road binder-এর মূল quality check।',
+      levelling: 'বেঞ্চমার্কগুলোর মধ্যে একের পর এক staff reading নিয়ে সেগুলো real elevation-এ reduce করুন, height-of-instrument পদ্ধতিতে।',
+      'total-station': 'একটা total station থেকে simulated angle আর distance reading নিয়ে প্রতিটা পয়েন্টের real coordinate হিসাব করুন।',
+      traverse: 'একটা survey traverse close করুন — angle যোগ করুন, latitude আর departure balance করুন, tolerance-এর মধ্যে close হচ্ছে কিনা চেক করুন।',
+    },
+  },
+  resourceLibrary: {
+    eyebrow: 'রিসোর্স লাইব্রেরি',
+    pageTitle: 'রিসোর্স',
+    pageDescription: 'সিভিল ইঞ্জিনিয়ারিং প্র্যাকটিসের জন্য checklist, site format, template, আর reference material।',
+    categoryPdfNotes: 'PDF নোটস',
+    categoryHandNotes: 'হ্যান্ড নোটস',
+    categoryCadFiles: 'CAD ফাইলস',
+    categoryExcelSheets: 'এক্সেল শিট',
+    categoryTemplates: 'টেমপ্লেট',
+    categoryChecklists: 'চেকলিস্ট',
+    categorySiteFormats: 'সাইট ফরম্যাট',
+    categoryEngineeringBooks: 'ইঞ্জিনিয়ারিং বই',
+    categoryCodeBooks: 'কোড বই',
+    count: (n) => `${n}টা রিসোর্স`,
+    downloadButton: 'ডাউনলোড',
+    notAvailableYet: 'এখনো পাওয়া যাচ্ছে না — এই build-এ file hosting নেই',
+    referenceOnlyNote: 'শুধু reference — একটা real published title, এখান থেকে distribute করা হয় না',
+    items: {
+      'concrete-pour-checklist': {
+        title: 'কংক্রিট পোর চেকলিস্ট',
+        description: 'একটা standard RCC পোরের জন্য pre-pour, during-pour, আর after-pour verification পয়েন্ট।',
+      },
+      'site-safety-checklist': {
+        title: 'দৈনিক সাইট সেফটি চেকলিস্ট',
+        description: 'PPE, সাইট কন্ডিশন, ইকুইপমেন্ট, আর emergency readiness কভার করা একটা general দৈনিক walk-around safety check।',
+      },
+      'foundation-inspection-checklist': {
+        title: 'ফাউন্ডেশন ইন্সপেকশন চেকলিস্ট',
+        description: 'ফাউন্ডেশন পোরের আগে excavation, reinforcement, আর formwork-এর verification পয়েন্ট।',
+      },
+      'daily-site-report-format': {
+        title: 'দৈনিক সাইট রিপোর্ট ফরম্যাট',
+        description: 'সাইটে দৈনিক progress, manpower, আর activity রেকর্ড করার একটা standard format।',
+      },
+      'material-requisition-format': {
+        title: 'ম্যাটেরিয়াল রিকুইজিশন ফরম্যাট',
+        description: 'সাইটে দরকারি ম্যাটেরিয়ালের জন্য একটা request form, store বা procurement approval-এর জন্য রেডি।',
+      },
+      'concrete-pour-record-format': {
+        title: 'কংক্রিট পোর রেকর্ড ফরম্যাট',
+        description: 'Slump, cube sample, আর পোরের বিস্তারিত রেকর্ড করার format, QA/QC আর as-built রেকর্ডের জন্য।',
+      },
+      'boq-template': {
+        title: 'Bill of Quantities (BOQ) টেমপ্লেট',
+        description: 'একটা fillable স্প্রেডশিট যেখানে quantity × rate অটোমেটিক্যালি হিসাব হয়, সাথে running total।',
+      },
+      'material-estimate-template': {
+        title: 'ম্যাটেরিয়াল এস্টিমেট টেমপ্লেট',
+        description: 'Wastage percentage আর cost সহ ম্যাটেরিয়াল quantity এস্টিমেট করুন, অটোমেটিক্যালি হিসাব হয়।',
+      },
+      'soil-classification-quick-notes': {
+        title: 'সয়েল ক্লাসিফিকেশন — কুইক নোটস',
+        description: 'Grain-size group, Atterberg limits, আর USCS group symbol-এর এক-পাতার revision summary।',
+      },
+      'rcc-design-quick-notes': {
+        title: 'RCC ডিজাইন — কুইক নোটস',
+        description: 'রিইনফোর্সড কংক্রিট ডিজাইনের essentials-এর একটা revision summary।',
+      },
+      'surveying-quick-notes': {
+        title: 'সার্ভেয়িং — কুইক নোটস',
+        description: 'Levelling, traversing, আর total station-এর basics-এর একটা revision summary।',
+      },
+      'structural-analysis-hand-notes': {
+        title: 'স্ট্রাকচারাল অ্যানালাইসিস — হ্যান্ড নোটস',
+        description: 'স্ট্রাকচারাল অ্যানালাইসিস মেথড কভার করা হাতে-লেখা worked example।',
+      },
+      'soil-mechanics-hand-notes': {
+        title: 'সয়েল মেকানিক্স — হ্যান্ড নোটস',
+        description: 'সয়েল মেকানিক্স ফান্ডামেন্টালস কভার করা হাতে-লেখা worked example।',
+      },
+      'standard-foundation-details-dwg': {
+        title: 'স্ট্যান্ডার্ড ফাউন্ডেশন ডিটেইলস (DWG)',
+        description: 'সাধারণ footing type-এর জন্য typical foundation detail drawing।',
+      },
+      'standard-stair-details-dwg': {
+        title: 'স্ট্যান্ডার্ড স্টেয়ার ডিটেইলস (DWG)',
+        description: 'Standard riser/tread proportion সহ typical staircase detail drawing।',
+      },
+      'rebar-development-length-sheet': {
+        title: 'রিবার ডেভেলপমেন্ট লেংথ শিট',
+        description: 'বার সাইজ আর কংক্রিট গ্রেড অনুযায়ী development length-এর reference স্প্রেডশিট।',
+      },
+      'earthwork-volume-sheet': {
+        title: 'আর্থওয়ার্ক ভলিউম শিট',
+        description: 'Average end area পদ্ধতিতে cut/fill volume হিসাবের reference স্প্রেডশিট।',
+      },
+      'design-of-reinforced-concrete': {
+        title: 'Design of Reinforced Concrete',
+        description: 'Jack C. McCormac ও Russell H. Brown — একটা ব্যাপকভাবে ব্যবহৃত RCC ডিজাইন textbook।',
+      },
+      'soil-mechanics-and-foundations': {
+        title: 'Soil Mechanics and Foundations',
+        description: 'Muni Budhu — একটা standard সয়েল মেকানিক্স ও ফাউন্ডেশন ইঞ্জিনিয়ারিং textbook।',
+      },
+      'surveying-theory-and-practice': {
+        title: 'Surveying: Theory and Practice',
+        description: 'James M. Anderson ও Edward M. Mikhail — একটা standard সার্ভেয়িং reference।',
+      },
+      'bnbc-2020': {
+        title: 'BNBC 2020',
+        description: 'Bangladesh National Building Code, 2020 — যে code-এর উপর ভিত্তি করে এই পুরো প্ল্যাটফর্ম তৈরি।',
+      },
+      'aci-318-19': {
+        title: 'ACI 318-19',
+        description: 'Building Code Requirements for Structural Concrete, American Concrete Institute।',
+      },
+      'aashto-lrfd': {
+        title: 'AASHTO LRFD Bridge Design Specifications',
+        description: 'American Association of State Highway and Transportation Officials — ব্রিজ ডিজাইন স্পেসিফিকেশন।',
+      },
+    },
+  },
+  materialLibrary: {
+    eyebrow: 'ম্যাটেরিয়াল লাইব্রেরি',
+    pageTitle: 'ইঞ্জিনিয়ারিং ম্যাটেরিয়াল',
+    pageDescription: 'প্রতিটা সিভিল ইঞ্জিনিয়ার যে ১০টা ম্যাটেরিয়াল নিয়ে কাজ করে, তাদের properties, advantages, uses, আর testing।',
+    count: (n) => `${n}টা ম্যাটেরিয়াল`,
+    propertiesHeading: 'বৈশিষ্ট্য',
+    advantagesHeading: 'সুবিধা',
+    disadvantagesHeading: 'অসুবিধা',
+    usesHeading: 'ব্যবহার',
+    testingHeading: 'টেস্টিং',
+    marketInfoHeading: 'মার্কেট তথ্য',
+    relatedLabsHeading: 'ল্যাবে ট্রাই করুন',
+    relatedToolsHeading: 'সম্পর্কিত টুল',
+    backToMaterials: 'ম্যাটেরিয়ালে ফিরে যান',
+    materials: {
+      cement: {
+        title: 'সিমেন্ট',
+        summary: 'কংক্রিট আর মর্টারের বাইন্ডিং এজেন্ট — পানির সাথে বিক্রিয়া করে একটা শক্ত matrix তৈরি করে যা aggregate-কে একসাথে বেঁধে রাখে।',
+        properties: [
+          'Ordinary Portland Cement-এর initial setting time প্রায় ৩০ মিনিট, final setting প্রায় ১০ ঘণ্টা',
+          'Specific gravity প্রায় ৩.১৫',
+          'Fineness স্ট্রেংথ বাড়ার হার প্রভাবিত করে',
+          'Hydration একটা exothermic বিক্রিয়া — curing-এর সময় তাপ উৎপন্ন করে',
+        ],
+        advantages: [
+          'সহজলভ্য, factory-তে তৈরি বলে quality consistent',
+          'উচ্চ compressive strength develop করে',
+          'Versatile — বিভিন্ন দরকারে বিভিন্ন type/grade পাওয়া যায়',
+        ],
+        disadvantages: [
+          'নিজে থেকে tensile strength খুবই কম',
+          'শুকানোর সময় shrink করে, crack হতে পারে',
+          'Manufacturing-এ carbon footprint বেশি',
+          'Water-cement ratio-তে ভুল হলে খুব sensitive',
+        ],
+        uses: ['কংক্রিট আর মর্টার তৈরি', 'প্লাস্টারিং', 'গ্রাউটিং', 'প্রিকাস্ট এলিমেন্ট'],
+        testing: [
+          'Fineness টেস্ট',
+          'Setting time টেস্ট (Vicat apparatus)',
+          'Soundness টেস্ট',
+          'সিমেন্ট মর্টার কিউবের compressive strength টেস্ট',
+        ],
+        marketInfo:
+          'বাংলাদেশে standard ৫০ কেজি ব্যাগে বিক্রি হয়। সাধারণ type হলো OPC (Ordinary Portland Cement) আর PCC (Portland Composite Cement)। সবসময় manufacture date চেক করুন — বেশিদিন রাখলে সিমেন্ট strength হারায়।',
+      },
+      sand: {
+        title: 'বালি (ফাইন অ্যাগ্রিগেট)',
+        summary: 'কংক্রিট, মর্টার, আর প্লাস্টারে ব্যবহৃত ফাইন অ্যাগ্রিগেট — coarse aggregate-এর মধ্যকার ফাঁকা জায়গা ভরে workability বাড়ায়।',
+        properties: [
+          'Grain size ০.০৭৫ mm থেকে ৪.৭৫ mm-এর মধ্যে',
+          'কংক্রিটের বালির জন্য fineness modulus সাধারণত ২.২–৩.২',
+          'Specific gravity প্রায় ২.৬–২.৭',
+          'আর্দ্রতার সাথে volume বেড়ে যায় ("bulking")',
+        ],
+        advantages: [
+          'কংক্রিট আর মর্টারের workability বাড়ায়',
+          'Coarse aggregate-এর মধ্যকার ফাঁক ভরে porosity কমায়',
+          'স্থানীয়ভাবে পাওয়া যায়, তুলনামূলক কম খরচ',
+        ],
+        disadvantages: [
+          'অতিরিক্ত silt বা clay কংক্রিটকে দুর্বল করে',
+          'নদীর বালি তোলা নিয়ে পরিবেশগত উদ্বেগ আছে',
+          'উৎসভেদে quality অনেক ভিন্ন হয়',
+        ],
+        uses: ['কংক্রিট', 'মর্টার', 'প্লাস্টার', 'ভরাট কাজ', 'ইটের গাঁথুনি'],
+        testing: ['Sieve analysis (grading)', 'Silt content টেস্ট', 'Bulking টেস্ট', 'Specific gravity টেস্ট'],
+        marketInfo:
+          'বাংলাদেশে ট্রাক-লোড হিসেবে বিক্রি হয়, CFT বা cubic meter-এ মাপা হয়। কম silt content-এর জন্য সিলেটের বালি কংক্রিটের কাজে বিশেষভাবে পছন্দ করা হয়; অন্য স্থানীয় বালি ভালো quality-র জন্য ধোয়া দরকার হতে পারে।',
+      },
+      aggregate: {
+        title: 'অ্যাগ্রিগেট (কোর্স অ্যাগ্রিগেট)',
+        summary: 'কংক্রিটের load-bearing কাঠামো তৈরি করা crushed stone বা gravel — কংক্রিটের প্রায় ৬০–৭৫% volume এটাই দখল করে।',
+        properties: [
+          'Structural কংক্রিটের জন্য সাধারণ সাইজ ১০–৪০ mm',
+          'Angular particle rounded-এর চেয়ে cement paste-এর সাথে ভালো bond করে',
+          'Hardness আর toughness crushing/impact প্রতিরোধ করে',
+          'Specific gravity প্রায় ২.৬–২.৯',
+        ],
+        advantages: [
+          'কম খরচে বাল্ক volume দেয়',
+          'কংক্রিটের বেশিরভাগ compressive strength এটাই দেয়',
+          'Angular aggregate cement paste-এর সাথে bond ভালো করে',
+        ],
+        disadvantages: [
+          'নরম বা weathered aggregate কংক্রিটকে উল্লেখযোগ্যভাবে দুর্বল করে',
+          'ওজন আর বাল্কের কারণে transportation খরচ বেশি',
+          'Flaky বা elongated particle workability কমায়',
+        ],
+        uses: ['কংক্রিট', 'রোড বেস/সাব-বেস', 'ড্রেনেজ ও ফিল্টার মিডিয়া'],
+        testing: [
+          'Sieve analysis',
+          'Aggregate impact value টেস্ট',
+          'Aggregate crushing value টেস্ট',
+          'Specific gravity ও water absorption টেস্ট',
+        ],
+        marketInfo:
+          'বাংলাদেশে ট্রাক-লোড (CFT/cum) হিসেবে বিক্রি হয়। দেশে natural stone-এর মজুদ সীমিত, তাই crushed stone প্রায়ই import করা হয়, কিছু ক্ষেত্রে brick khoa বিকল্প হিসেবে ব্যবহৃত হয়।',
+      },
+      steel: {
+        title: 'স্টিল (রিইনফোর্সমেন্ট)',
+        summary: 'কংক্রিটের ভিতরে বসানো উচ্চ-স্ট্রেংথ, tension-প্রতিরোধী ম্যাটেরিয়াল — কংক্রিট compression সামলায়, স্টিল tension সামলায়।',
+        properties: [
+          'সাধারণ yield strength grade 400 বা 500 MPa (স্থানীয়ভাবে Grade 60 / Grade 75)',
+          'উচ্চ tensile strength',
+          'Ductile — ভাঙার আগে লক্ষণীয়ভাবে বেঁকে যায়, তাই আগেভাগে সতর্কতা পাওয়া যায়',
+          'কংক্রিটের কাছাকাছি thermal expansion, তাই দুটো ভালো bond করে',
+        ],
+        advantages: [
+          'চমৎকার tensile strength',
+          'Ductility ধ্বসের আগে একটা safety margin দেয়',
+          'রিসাইকেল করা যায়',
+          'সব manufacturer জুড়ে ব্যাপকভাবে standardized',
+        ],
+        disadvantages: [
+          'কংক্রিট cover বা quality ঠিক না থাকলে corrode করে',
+          'অন্য structural material-এর তুলনায় দামি',
+          'ভারী, তাই transport/handling প্রভাবিত হয়',
+          'উচ্চ fire temperature-এ দ্রুত strength হারায়',
+        ],
+        uses: ['RCC বিম/কলাম/স্ল্যাব/ফুটিং', 'স্ট্রাকচারাল স্টিল ফ্রেমিং', 'রিবার কেজ'],
+        testing: [
+          'Tensile টেস্ট',
+          'Bend টেস্ট',
+          'Visual corrosion চেক',
+          'নমিনাল ভ্যালুর বিপরীতে weight-per-meter চেক',
+        ],
+        marketInfo:
+          'বাংলাদেশে ওজন হিসেবে (প্রতি টন বা প্রতি কেজি) বিক্রি হয়। সাধারণ grade হলো 60 Grade আর 500W। Brand-এর সুনাম গুরুত্বপূর্ণ — under-weight বা under-strength রিবার স্থানীয় বাজারে পরিচিত একটা quality risk।',
+      },
+      brick: {
+        title: 'ইট',
+        summary: 'পোড়ানো মাটি দিয়ে তৈরি সাধারণ masonry unit — দেয়াল আর পার্টিশনের জন্য ব্যবহৃত হয়, বাংলাদেশে প্রায়ই coarse aggregate-এর বিকল্প (brick khoa) হিসেবেও ব্যবহৃত।',
+        properties: [
+          'Class অনুযায়ী (1st/2nd/3rd class) compressive strength অনেক ভিন্ন হয়',
+          'ভালো quality-র ইটের water absorption প্রায় ২০%-এর মধ্যে থাকা উচিত',
+          'সমান সাইজ, শেপ, আর রঙ ভালো ও সমান firing নির্দেশ করে',
+        ],
+        advantages: [
+          'বাংলাদেশে প্রায় সব জায়গাতেই স্থানীয়ভাবে তৈরি হয়',
+          'কম খরচ',
+          'ভালো thermal mass',
+          'হাতে কাজ করা সহজ, বিশেষ কোনো equipment লাগে না',
+        ],
+        disadvantages: [
+          'কংক্রিট ব্লক বা পাথরের চেয়ে কম strength',
+          'ভাটাভেদে quality অনেক ভিন্ন হয়',
+          'ভালোভাবে না পুড়লে বেশি water absorption durability কমায়',
+          'ইট তৈরিতে উল্লেখযোগ্য পরিমাণ topsoil আর fuel খরচ হয়',
+        ],
+        uses: ['Masonry দেয়াল', 'পার্টিশন', 'Brick khoa (aggregate বিকল্প)', 'পেভমেন্ট ও সোলিং'],
+        testing: ['Compressive strength টেস্ট', 'Water absorption টেস্ট', 'Efflorescence টেস্ট', 'Dimension ও shape চেক'],
+        marketInfo:
+          'বাংলাদেশে প্রতি পিস বা প্রতি ১০০০ পিস হিসেবে বিক্রি হয়, quality অনুযায়ী 1st/2nd/3rd class-এ grade করা — exposed/structural কাজের জন্য 1st class, filling বা non-critical কাজের জন্য নিচের class।',
+      },
+      concrete: {
+        title: 'কংক্রিট',
+        summary: 'সিমেন্ট, বালি, অ্যাগ্রিগেট, আর পানির composite যা বেশিরভাগ আধুনিক বিল্ডিংয়ের structural backbone গঠন করে — compression-এ শক্তিশালী, tension-এ দুর্বল।',
+        properties: [
+          'Grade দিয়ে compressive strength নির্ধারিত হয় — যেমন M20 মানে ২৮ দিনে ২০ MPa',
+          'Slump টেস্ট দিয়ে workability মাপা হয়',
+          'Density প্রায় ২৪০০ kg/m³',
+          'সময়ের সাথে ধীরে ধীরে strength বাড়ে, curing-এর উপর ব্যাপকভাবে নির্ভরশীল',
+        ],
+        advantages: [
+          'প্রায় যেকোনো শেপে ঢালা যায়',
+          'উচ্চ compressive strength',
+          'অগ্নিপ্রতিরোধী',
+          'ঠিকভাবে cure হলে তুলনামূলক কম maintenance',
+        ],
+        disadvantages: [
+          'স্টিল রিইনফোর্সমেন্ট ছাড়া tension-এ দুর্বল',
+          'ঠিকভাবে cure না হলে shrink করে crack হতে পারে',
+          'ভারী',
+          'Mix proportioning আর সাইট curing practice-এর উপর quality ব্যাপকভাবে নির্ভরশীল',
+        ],
+        uses: ['ফাউন্ডেশন', 'কলাম', 'বিম', 'স্ল্যাব', 'পেভমেন্ট', 'প্রিকাস্ট এলিমেন্ট'],
+        testing: ['Slump টেস্ট', 'Compressive strength টেস্ট (কিউব বা সিলিন্ডার)', 'Flexural strength টেস্ট', 'Water-cement ratio verification'],
+        marketInfo:
+          'Mix design সাধারণত grade দিয়ে specify করা হয় (M15/M20/M25 ইত্যাদি)। বাংলাদেশের বড় শহরগুলোতে ready-mix কংক্রিট পাওয়া যায়; অন্য জায়গায় site-mixed কংক্রিটই বেশি প্রচলিত।',
+      },
+      asphalt: {
+        title: 'অ্যাসফাল্ট (বিটুমিন)',
+        summary: 'পেট্রোলিয়াম থেকে পাওয়া একটা viscous বাইন্ডার যা aggregate-এর সাথে মিশিয়ে flexible pavement তৈরি করে — বেশিরভাগ রাস্তার standard surfacing material।',
+        properties: [
+          'Penetration grade কঠোরতা নির্দেশ করে (যেমন 60/70, 80/100)',
+          'গরমে নরম হয়, ঠান্ডায় ভঙ্গুর হয়ে যায়',
+          'ট্রাফিক লোডের নিচে viscoelastic আচরণ করে',
+        ],
+        advantages: [
+          'Flexible — সামান্য মাটির নড়াচড়াতেও crack হয় না',
+          'তুলনামূলক দ্রুত বসানো যায় ও ট্রাফিকের জন্য খুলে দেওয়া যায়',
+          'Reclaimed asphalt pavement (RAP) হিসেবে রিসাইকেল করা যায়',
+          'মসৃণ riding surface তৈরি করে',
+        ],
+        disadvantages: [
+          'উচ্চ তাপমাত্রায় নরম হয়ে rutting-এর ঝুঁকি তৈরি করে',
+          'পেট্রোলিয়াম-ভিত্তিক, তাই দাম তেলের বাজারের সাথে যুক্ত',
+          'নিয়মিত resurfacing ও maintenance দরকার',
+          'ভারী, বারবার লোডে কংক্রিট পেভমেন্টের চেয়ে কম durable',
+        ],
+        uses: ['রোড সারফেসিং', 'ওয়াটারপ্রুফিং (modified আকারে)', 'পেভমেন্ট বাইন্ডার কোর্স'],
+        testing: ['Penetration টেস্ট', 'Softening point (ring and ball) টেস্ট', 'Ductility টেস্ট', 'Viscosity টেস্ট'],
+        marketInfo:
+          'বাংলাদেশে ড্রামে বা বাল্কে (প্রতি টন) বিক্রি হয়, সরকারি কাজের জন্য সাধারণত Roads and Highways Department-অনুমোদিত সাপ্লায়ারের মাধ্যমে সংগ্রহ করা হয়।',
+      },
+      wood: {
+        title: 'কাঠ (টিম্বার)',
+        summary: 'একটা প্রাকৃতিক, renewable structural ও finishing material — বাংলাদেশে মূলত ফর্মওয়ার্ক, ছাদের মেম্বার, দরজা-জানালা, আর traditional নির্মাণে ব্যবহৃত।',
+        properties: [
+          'প্রজাতিভেদে strength অনেক ভিন্ন হয়',
+          'Anisotropic — grain বরাবর আর grain-এর আড়াআড়ি strength ভিন্ন',
+          'আর্দ্রতা strength ও dimensional stability-কে ব্যাপকভাবে প্রভাবিত করে',
+          'স্বাভাবিকভাবেই দাহ্য',
+        ],
+        advantages: [
+          'Renewable সম্পদ',
+          'ভালো strength-to-weight ratio',
+          'হাতের যন্ত্র দিয়ে কাজ করা সহজ',
+          'নান্দনিকভাবে উষ্ণ finish',
+        ],
+        disadvantages: [
+          'পচন, উইপোকা, আর আগুনের ঝুঁকিতে সংবেদনশীল',
+          'প্রজাতি ও treatment অনুযায়ী strength ও durability ভিন্ন হয়',
+          'আর্দ্রতার সাথে dimension বদলায়',
+          'ভালো মানের কাঠ কমে আসায় খরচ ক্রমশ বাড়ছে',
+        ],
+        uses: ['ফর্মওয়ার্ক/শাটারিং', 'ছাদের truss আর purlin', 'দরজা-জানালা', 'ফার্নিচার', 'স্ক্যাফোল্ডিং পোল (বাঁশ প্রায়ই একইভাবে ব্যবহৃত হয়)'],
+        testing: ['Moisture content টেস্ট', 'Density টেস্ট', 'Bending/flexural strength টেস্ট', 'গিঁট/ফাটলের জন্য visual grading'],
+        marketInfo:
+          'বাংলাদেশে প্রতি cubic foot হিসেবে বিক্রি হয়। Structural/finishing কাজে শাল আর সেগুন (টিক) মূল্যবান হিসেবে গণ্য, তবে উঁচু grade-এর জন্য import করা কাঠ প্রচলিত।',
+      },
+      glass: {
+        title: 'কাচ',
+        summary: 'একটা ভঙ্গুর, স্বচ্ছ material যা মূলত জানালা, facade-এ ব্যবহৃত হয়, আধুনিক বিল্ডিংয়ে ক্রমশ structural facade system হিসেবেও ব্যবহৃত হচ্ছে।',
+        properties: [
+          'উচ্চ compressive strength কিন্তু খুবই কম tensile strength — হঠাৎ (brittle) ভেঙে যায়',
+          'স্বচ্ছ বা আধা-স্বচ্ছ',
+          'Treatment (যেমন low-E কোটিং, ডাবল গ্লেজিং) ছাড়া দুর্বল thermal insulator',
+          'অদাহ্য',
+        ],
+        advantages: [
+          'বিল্ডিংয়ে প্রাকৃতিক আলো আসতে দেয়',
+          'নান্দনিকভাবে আধুনিক',
+          'রিসাইকেল করা যায়',
+          'ভালো safety-র জন্য treat করা যায় (tempered বা laminated)',
+        ],
+        disadvantages: [
+          'ভঙ্গুর — কোনো পূর্ব সতর্কতা ছাড়াই হঠাৎ ভেঙে যায়',
+          'Tempering ও lamination খরচ বাড়ায়',
+          'Untreated অবস্থায় দুর্বল insulator — বাংলাদেশের আবহাওয়ায় এটা একটা real উদ্বেগ',
+          'ভারী, সাবধানে handling ও installation দরকার',
+        ],
+        uses: ['জানালা', 'দরজা', 'কার্টেন ওয়াল facade', 'পার্টিশন', 'ব্যালাস্ট্রেড (tempered বা laminated হলে)'],
+        testing: ['Thickness ও dimension চেক', 'Visual defect inspection', 'Impact/safety-glass certification চেক'],
+        marketInfo:
+          'বাংলাদেশে প্রতি বর্গফুট হিসেবে বিক্রি হয়, thickness আর type অনুযায়ী দাম— float glass বনাম tempered বনাম laminated। Safety-critical কাজে tempered আর laminated বাধ্যতামূলক হলেও দাম উল্লেখযোগ্যভাবে বেশি।',
+      },
+      aluminum: {
+        title: 'অ্যালুমিনিয়াম',
+        summary: 'একটা হালকা, corrosion-প্রতিরোধী ধাতু যা জানালা-দরজার ফ্রেম, facade system, আর ছাদের শিটে ক্রমশ বেশি ব্যবহৃত হচ্ছে।',
+        properties: [
+          'স্টিলের প্রায় এক-তৃতীয়াংশ density',
+          'স্বাভাবিকভাবেই একটা protective oxide layer তৈরি করে — corrosion প্রতিরোধী',
+          'উচ্চ strength-to-weight ratio',
+          'উচ্চ thermal conductivity ও thermal expansion',
+        ],
+        advantages: [
+          'হালকা অথচ শক্তিশালী',
+          'রং ছাড়াই corrosion প্রতিরোধী',
+          'কম maintenance',
+          'রিসাইকেল করা যায়',
+          'জটিল প্রোফাইলে সহজে extrude করা যায়',
+        ],
+        disadvantages: [
+          'যে strength দেয় তার তুলনায় স্টিলের চেয়ে বেশি দামি',
+          'স্টিলের চেয়ে কম stiffness — লোডে বেশি deflection',
+          'উচ্চ fire temperature-এ নরম হয়ে strength হারায়',
+          'ভিন্ন ধাতুর সরাসরি সংস্পর্শে থাকলে galvanic corrosion-এর ঝুঁকি',
+        ],
+        uses: ['জানালা-দরজার ফ্রেম', 'কার্টেন ওয়াল/facade system', 'ছাদের শিট', 'ফলস সিলিং ফ্রেমিং'],
+        testing: ['Anodizing/coating thickness চেক', 'Dimension ও profile চেক', 'Alloy grade verification'],
+        marketInfo:
+          'বাংলাদেশে প্রতি কেজি বা প্রতি running foot (extruded প্রোফাইলের জন্য) হিসেবে বিক্রি হয়। Brand অনুযায়ী profile quality আর anodizing thickness অনেক ভিন্ন হয়, যা দীর্ঘমেয়াদী corrosion performance প্রভাবিত করে।',
+      },
+    },
+  },
+  certificates: {
+    eyebrow: 'সার্টিফিকেশন',
+    pageTitle: 'সার্টিফিকেট ও ব্যাজ',
+    pageDescription: 'কোর্স সার্টিফিকেট, স্কিল ব্যাজ, আর একটা প্রোগ্রেস স্ন্যাপশট — তোমার real activity থেকে জেনারেট করা।',
+    courseCertificatesHeading: 'কোর্স সার্টিফিকেট',
+    noCourseCertificatesYet: 'এখনো কোনো কোর্স সার্টিফিকেট নেই',
+    noCourseCertificatesDescription: 'একটা কোর্সের সব lesson সম্পূর্ণ করলে সেটার সার্টিফিকেট পাবে।',
+    downloadButton: 'ডাউনলোড',
+    completedOn: (date) => `${date}-এ সম্পূর্ণ হয়েছে`,
+    skillBadgesHeading: 'স্কিল ব্যাজ',
+    noBadgesYetNote: 'ব্যাজ তোমার activity থেকে অটোমেটিক্যালি অর্জিত হয় — streak, quiz, lab, tool, আর সম্পূর্ণ করা কোর্স থেকে। এখনো একটাও নেই, কিন্তু এগিয়ে গেলে এখানে দেখা যাবে।',
+    progressCertificateHeading: 'প্রোগ্রেস সার্টিফিকেট',
+    progressCertificateDescription: 'এখন পর্যন্ত তোমার সামগ্রিক progress-এর একটা স্ন্যাপশট — কিছু শেষ করার শর্তে না, চাইলেই জেনারেট করা যায়।',
+    generateProgressCertificate: 'প্রোগ্রেস সার্টিফিকেট জেনারেট করুন',
+    verifyLinkText: 'একটা সার্টিফিকেট ভেরিফাই করুন',
+    verifyPageTitle: 'সার্টিফিকেট ভেরিফাই করুন',
+    verifyPageDescription: 'একটা সার্টিফিকেট ID সঠিকভাবে formatted কিনা চেক করুন।',
+    verifyInputPlaceholder: 'যেমন EXL-STE-20260715-A3F9C',
+    verifyButton: 'চেক করুন',
+    verifyResultWellFormed: 'এই ID সঠিকভাবে formatted এবং এই প্ল্যাটফর্মের একটা real কোর্সের সাথে মিলছে।',
+    verifyResultNotWellFormed: 'এই ID সঠিকভাবে formatted না, অথবা এই প্ল্যাটফর্মের কোনো কোর্সের সাথে মিলছে না।',
+    verifyResultCourse: (title) => `কোর্স: ${title}`,
+    verifyResultDate: (date) => `ID-তে এনকোড করা তারিখ: ${date}`,
+    verifyHonestNote:
+      'এটা শুধু চেক করে যে ID সঠিকভাবে formatted এবং একটা real কোর্সের সাথে মিলছে কিনা — এটা confirm করতে পারে না যে সার্টিফিকেটটা আসলে কার। এই প্ল্যাটফর্মের কোনো central server নেই, তাই কে আসলে কোন সার্টিফিকেট পেয়েছে তার কোনো রেকর্ড ওই ব্যক্তির নিজের device-এর বাইরে কোথাও নেই। এটাকে identity-র প্রমাণ না ভেবে একটা format check হিসেবে ধরুন।',
+    backToCertificates: 'সার্টিফিকেটে ফিরে যান',
+    certificateEyebrow: 'সার্টিফিকেট অফ কমপ্লিশন',
+    certificateBodyLine: 'সফলভাবে এই কোর্স সম্পূর্ণ করেছে',
+    progressCertificateEyebrow: 'সার্টিফিকেট অফ প্রোগ্রেস',
+    progressCertificateBodyLine: (n) => `EngineXLearn-এ ${n}টা lesson সম্পূর্ণ করেছে, তারিখ অনুযায়ী`,
+    badges: {
+      'first-course': {
+        title: 'প্রথম কোর্স',
+        description: 'তোমার প্রথম সম্পূর্ণ কোর্স শেষ করেছ।',
+      },
+      'five-courses': {
+        title: 'পাঁচটা কোর্স',
+        description: 'পাঁচটা সম্পূর্ণ কোর্স শেষ করেছ।',
+      },
+      'streak-7': {
+        title: '৭-দিনের স্ট্রিক',
+        description: 'টানা ৭ দিন active থেকেছ।',
+      },
+      'streak-30': {
+        title: '৩০-দিনের স্ট্রিক',
+        description: 'টানা ৩০ দিন active থেকেছ।',
+      },
+      'first-quiz': {
+        title: 'প্রথম কুইজ',
+        description: 'তোমার প্রথম quiz দিয়েছ।',
+      },
+      'ten-quizzes': {
+        title: 'দশটা কুইজ',
+        description: 'দশটা quiz দিয়েছ।',
+      },
+      'lab-explorer': {
+        title: 'ল্যাব এক্সপ্লোরার',
+        description: 'পাঁচটা ভিন্ন virtual lab-এর result save করেছ।',
+      },
+      'tool-user': {
+        title: 'টুল ইউজার',
+        description: 'পাঁচটা ভিন্ন ইঞ্জিনিয়ারিং টুলের result save করেছ।',
+      },
+    },
+  },
+  premium: {
+    eyebrow: 'প্রিমিয়াম',
+    pageTitle: 'প্রিমিয়াম ফিচার',
+    pageDescription: 'একটা paid tier হলে কী কী থাকবে তার একটা preview — এই প্ল্যাটফর্ম এখনো কিছু বিক্রি করে না।',
+    noBackendNote:
+      'এই প্ল্যাটফর্মে কোনো payment processor বা subscription system নেই। নিচের কোনোটাই এখন কেনা যাবে না — এই পেজ শুধু দেখাচ্ছে কখনো premium tier বানানো হলে তাতে কী থাকবে; এখন প্ল্যাটফর্মের সবকিছুই সম্পূর্ণ ফ্রি।',
+    previewAvailableLabel: 'আজই preview করা যায়, সম্পূর্ণ ফ্রি',
+    dependsOnUnbuiltLabel: (part) => `শুরু হয়নি — ${part}-এর উপর নির্ভরশীল, যেটা এখনো তৈরি হয়নি`,
+    advancedCoursesHeading: 'অ্যাডভান্সড কোর্স',
+    advancedCoursesDescription:
+      'Civil 3D, STAAD Pro, SAP2000, আর Primavera P6-এর মতো specialized software কোর্স ভবিষ্যতের "Advanced" tier-এ থাকার মতো কন্টেন্ট। এখন এগুলো ইতিমধ্যেই ফ্রি Software Learning Center-এর অংশ।',
+    viewAdvancedCourses: 'এই কোর্সগুলো এখনই দেখুন',
+    exclusiveProjectsHeading: 'এক্সক্লুসিভ প্রজেক্ট',
+    exclusiveProjectsDescription: 'প্রিমিয়াম মেম্বারদের জন্য real, বিস্তারিত worked project case study।',
+    aiPremiumToolsHeading: 'AI প্রিমিয়াম টুলস',
+    aiPremiumToolsDescription: 'বেসিক AI Assistant-এর চেয়ে বেশি advanced AI-assisted ফিচার।',
+    liveMentorshipHeading: 'লাইভ মেন্টরশিপ',
+    liveMentorshipDescription: 'প্র্যাকটিসিং ইঞ্জিনিয়ারদের সাথে এক-এক বা ছোট-গ্রুপ সেশন।',
+    downloadAccessHeading: 'ডাউনলোড অ্যাক্সেস',
+    downloadAccessDescription:
+      'ডাউনলোডযোগ্য template, checklist, আর format-এ priority বা expanded অ্যাক্সেস। Resource Library-তে এখনই real, ফ্রি ডাউনলোড আছে।',
+    viewResources: 'Resource Library এখনই দেখুন',
+  },
+  projects: {
+    eyebrow: 'রিয়েল প্রজেক্ট এক্সপেরিয়েন্স',
+    pageTitle: 'প্রজেক্ট',
+    pageDescription: '৪টা প্রজেক্ট টাইপ দিয়ে দেখুন সাইটে সত্যিই কীভাবে কাজ এগোয় — planning, structure, sequencing, আর মাঝের সিদ্ধান্তগুলো।',
+    backToProjects: 'প্রজেক্টে ফিরে যান',
+    representativeNote:
+      'এটা একটা representative উদাহরণ, দেখানোর জন্য বানানো যে এই ধরনের একটা real প্রজেক্ট সাধারণত কীভাবে এগোয় — কোনো specific, নামযুক্ত বিল্ডিংয়ের documentation না। Real drawing, site photo, আর construction video আসত একটা আসল সম্পূর্ণ প্রজেক্ট থেকে; কেন এখানে সেগুলো নেই তার কারণ এই পেজের নিচে লেখা আছে।',
+    mediaHeading: 'Real Drawing, Site Photo ও Construction Video',
+    mediaNote:
+      'এই প্ল্যাটফর্মের পেছনে কোনো real সম্পূর্ণ প্রজেক্ট নেই, আর real site photograph বা construction video বানানোরও কোনো উপায় নেই — সেগুলো একটা আসল প্রজেক্ট থেকেই আসতে হবে। Stock image দিয়ে সেটা পূরণ করে "real" বলে চালানোর বদলে, real project documentation না পাওয়া পর্যন্ত এই সেকশন honestly ফাঁকা রাখা হলো।',
+    relatedVisualizationsHeading: '3D-তে দেখুন',
+    relatedLabsHeading: 'সম্পর্কিত ল্যাব',
+    relatedMaterialsHeading: 'সম্পর্কিত ম্যাটেরিয়াল',
+    list: {
+      residential: {
+        title: 'রেসিডেন্সিয়াল বিল্ডিং',
+        summary: 'একটা typical G+3 রেসিডেন্সিয়াল বিল্ডিং, site selection থেকে finishing পর্যন্ত।',
+      },
+      commercial: {
+        title: 'কমার্শিয়াল বিল্ডিং',
+        summary: 'একটা মাল্টি-স্টোরি কমার্শিয়াল বিল্ডিং — structural system-এর সিদ্ধান্ত আর একটা busier, বেশি constrained সাইট।',
+      },
+      bridge: {
+        title: 'ব্রিজ প্রজেক্ট',
+        summary: 'একটা simple-span ব্রিজ, আর যে construction sequence মাটি থেকে ডেক পর্যন্ত নিয়ে যায়।',
+      },
+      road: {
+        title: 'রোড প্রজেক্ট',
+        summary: 'একটা flexible pavement রোড — সারফেসের নিচের layer system যা বেশিরভাগ মানুষ কখনো ভাবেই না।',
+      },
+    },
+    sections: {
+      planning: {
+        title: 'প্ল্যানিং',
+        body: `কোনো ড্রয়িং ফাইনাল হওয়ার আগে, একটা রেসিডেন্সিয়াল প্রজেক্টের প্ল্যানিং ফেজ এমন কিছু প্রশ্নের সমাধান করে যেগুলো পরে বদলাতে গেলে খরচ বেড়ে যায়। একটা soil investigation (কমপক্ষে কয়েকটা trial pit, ২-৩ তলার বেশি কিছুর জন্য একটা প্রপার boring log হলে ভালো) structural designer-কে বলে দেয় কোন ফাউন্ডেশন টাইপ realistic — শক্ত মাটিতে isolated footing, নাকি নরম মাটিতে raft বা piled ফাউন্ডেশন, যা বাংলাদেশের floodplain geology-তে প্রায়ই দরকার হয়।
+
+স্থানীয় কর্তৃপক্ষের (ঢাকায় RAJUK, অন্য জায়গায় relevant Pourashava/City Corporation) setback নিয়ম ঠিক করে দেয় প্লটের কতটুকুতে আসলে বিল্ডিং করা যাবে, যা architectural planning শুরু হওয়ার আগেই building footprint ঠিক করে দেয়। একটা typical urban প্লটের জন্য, front/rear/side setback আর Floor Area Ratio (FAR) limit মিলে প্রায়ই client-এর নিজের পছন্দের চেয়ে বেশি ডিজাইন constrain করে।
+
+Architectural আর structural coordination এখান থেকেই শুরু হওয়া উচিত, ড্রয়িং "শেষ" হওয়ার পরে না — একটা কলাম গ্রিড architectural plan-এ পরিষ্কার দেখালেও structurally awkward হতে পারে (লম্বা unsupported span, একটা stairwell-এর ভিতরে পড়া কলাম) যদি layout এখনো flexible থাকা অবস্থায় structure-কে consult না করা হয়।`,
+      },
+      construction: {
+        title: 'কনস্ট্রাকশন',
+        body: `একটা typical রেসিডেন্সিয়াল প্রজেক্টে কনস্ট্রাকশন মোটামুটি fixed একটা sequence অনুসরণ করে: প্রথমে earthwork আর ফাউন্ডেশন, তারপর structural frame স্টোরি বাই স্টোরি উঠতে থাকে, প্রতিটা স্টোরির স্ল্যাব আর বিম কাস্ট হয় তার উপরের কলাম শুরু হওয়ার আগে। এটা ঠিক সেই sequence যা প্ল্যাটফর্মের Construction Sequence visualizer (Part 6) ধাপে ধাপে দেখায় — এই সেকশনের সাথে সেটাও দেখে নেওয়া worth।
+
+বাস্তবে একটা ভালোভাবে চলা রেসিডেন্সিয়াল সাইটকে একটা সমস্যাগ্রস্ত সাইট থেকে যা বারবার আলাদা করে: curing discipline (প্রথম ৭ দিন ভেজা না রাখা কংক্রিট এমন strength হারায় যা আর কখনো পুরোপুরি ফিরে পায় না, আর বাংলাদেশের গরম এটাকে আরও খারাপ করে, ভালো না), reinforcement cover control (পোরের মাঝে spacer হারিয়ে গেলে বছরের পর বছর ধরে exposed, corroding rebar থেকে যায়), আর MEP rough-in-এর realistic sequencing — electrical conduit আর plumbing sleeve স্ল্যাব কাস্ট হওয়ার *আগে* বসাতে হবে, পরে chase করে না, যা দুর্বলও বটে, দেখতেও খারাপ।
+
+সাইট সুপারভিশন এখানে site technology-র চেয়ে বেশি গুরুত্বপূর্ণ — প্রতিটা পোরের আগে formwork alignment আর rebar spacing physically চেক করা একজন supervisor বেশিরভাগ ভুল ধরে ফেলেন যেগুলো নাহলে বছর পরে crack বা leak হিসেবে দেখা দিত।`,
+      },
+      finishing: {
+        title: 'ফিনিশিং',
+        body: `Finishing হলো সেই জায়গা যেখানে structurally সঠিক একটা বিল্ডিং হয় থাকার জন্য আনন্দদায়ক জায়গা হয়ে ওঠে, অথবা বছরের পর বছর ছোট ছোট অভিযোগের উৎস হয়ে যায় — প্লাস্টারিং, টাইলিং, পেইন্টিং, আর electrical/plumbing fixture বসানো। এখানে সবচেয়ে common real-world ভুল কোনো finishing defect না; এটা sequencing: স্ট্রাকচার পুরোপুরি cure আর settle হওয়ার আগে finishing-এর কাজ তাড়াহুড়া করলে প্লাস্টারে crack আর টাইলে সমস্যা হয় যার সাথে finishing crew-এর দক্ষতার কোনো সম্পর্ক নেই, পুরোটাই খুব তাড়াতাড়ি শুরু করার ফল।
+
+প্লাস্টারিং-এর জন্য ঠিকভাবে cured, পরিষ্কার masonry surface দরকার — ধুলোময় বা সদ্য-ভেজা ইটের কাজের উপর প্লাস্টার করলে পরে debond করে। টাইলিং-এর জন্য নিচে একটা level, ঠিকভাবে cured screed দরকার; screed বাদ দেওয়া বা তাড়াহুড়া করে cure করা এই কারণেই এত টাইলড ফ্লোর এক বছরের মধ্যে hollow spot develop করে। Electrical আর plumbing fixture সাধারণত first-coat পেইন্টিংয়ের পরে কিন্তু final coat-এর আগে বসানো হয়, যাতে fixture বসানোর সময় ক্ষতি হলে পুরো repaint না করে শুধু touch-up করা যায়।`,
+      },
+      'structural-system': {
+        title: 'স্ট্রাকচারাল সিস্টেম',
+        body: `একটা কমার্শিয়াল বিল্ডিংয়ের structural system সাধারণত রেসিডেন্সিয়ালের চেয়ে ভিন্ন চাহিদার মুখোমুখি হয়: বেশি live load (retail, office, বা assembly occupancy সবই BNBC অনুযায়ী রেসিডেন্সিয়ালের চেয়ে বেশি লোড নেয়), প্রায়ই বড় clear span (একটা retail floor plate কম কলাম চায়, বেশি না), আর প্রায়ই future flexibility-র দাবি — আজকের tenant layout পাঁচ বছর পরে একই নাও থাকতে পারে।
+
+এটা অনেক কমার্শিয়াল বিল্ডিংকে হয় একটা conventional RCC frame-এর দিকে ঠেলে দেয় strategically বসানো shear wall সহ (কলাম ছাড়াই lateral stability-র জন্য, যাতে কোনো layout ব্লক না হয়), অথবা flat slab system-এর দিকে (কোনো বিম নেই, প্রতি ফ্লোরে বেশি ceiling height, সহজ formwork) যেখানে span allow করে। Building Structure আর Reinforcement Model visualizer (Part 6) ঠিক এই ধরনের একটা full 3D frame দেখায় — একটা real মাল্টি-স্টোরি frame আসলে কীভাবে organize করা হয় তার জন্য এখানে দেখে নেওয়া worth।
+
+Parking floor বিশেষভাবে প্রায়ই নিজের structural সিদ্ধান্ত নিয়ে আসে — একটা ground বা basement parking floor সাধারণত উপরের floor-গুলোর চেয়ে বেশি চওড়া কলাম গ্রিড চায়, মানে একটা transfer structure (transfer বিম বা transfer স্ল্যাব) দরকার হয় যা উপরের floor-গুলোর কলাম নিচে sparser parking-floor গ্রিডে নামিয়ে আনে — একটা কমার্শিয়াল বিল্ডিংয়ের ডিজাইনের সবচেয়ে technically demanding অংশগুলোর একটা।`,
+      },
+      'site-management': {
+        title: 'সাইট ম্যানেজমেন্ট',
+        body: `একটা কমার্শিয়াল সাইট প্রায়ই একটা রেসিডেন্সিয়াল প্লটের চেয়ে বেশি ঘনবসতিপূর্ণ, ব্যস্ত জায়গায় থাকে — ম্যাটেরিয়াল রাখার জায়গা কম, ক্রেন swing radius-এর জন্য জায়গা কম, আর প্রায়ই সরাসরি একটা public footpath বা active রাস্তার কাছাকাছি, যা নতুন এলাকার রেসিডেন্সিয়াল সাইটকে সাধারণত মোকাবিলা করতে হয় না।
+
+এটা প্রতিদিনের সাইট চালানোর পদ্ধতি বদলে দেয়: ম্যাটেরিয়াল ডেলিভারি schedule করা লাগে (শুধু চলে এসে জায়গা আশা করা যায় না), hoarding/site boundary fencing একটা formality না হয়ে একটা real safety আর legal দরকার হয়ে ওঠে, আর একটা নির্দিষ্ট দিনে কোন trade কোথায় কাজ করবে তা sequence করতে অনেক বেশি coordination লাগে, কারণ একাধিক trade-এর একে অপরের সাথে না ঝামেলা করে parallel-এ কাজ করার মতো জায়গা কম থাকে।
+
+সাইটের চারপাশে public safety-ও একটা genuine, চলমান সাইট ম্যানেজমেন্ট কাজ হয়ে ওঠে, একবারের setup না — পড়ে যাওয়া debris, public path-এর উপর ক্রেন operation, আর dust/noise যা পাশের প্রপার্টিকে প্রভাবিত করে — এসবের active দৈনিক ম্যানেজমেন্ট লাগে একটা কমার্শিয়াল urban সাইটে, যা শান্ত রাস্তার একটা রেসিডেন্সিয়াল প্লটে সাধারণত লাগে না।`,
+      },
+      'construction-sequence': {
+        title: 'কনস্ট্রাকশন সিকোয়েন্স',
+        body: `একটা simple-span ব্রিজের কনস্ট্রাকশন সিকোয়েন্স প্রায় পুরোপুরি এই নীতির উপর গড়ে ওঠে যে superstructure শুরু হওয়ার আগে substructure ঠিকভাবে শেষ করতে হবে, কারণ পরের প্রতিটা ধাপ আগেরটা সঠিক এবং পুরোপুরি cured হওয়ার উপর নির্ভর করে।
+
+**প্রথমে Substructure:** পাইলিং (মাটিতে দরকার হলে) প্রথমে driven বা bored হয়, তারপর পাইলের উপর pile cap কাস্ট হয়, তারপর abutment এবং/অথবা pier pile cap থেকে সেই elevation পর্যন্ত তোলা হয় যেখানে superstructure বসবে। এই প্রতিটা ধাপকে পরের ধাপের লোড নেওয়ার আগে cure হয়ে strength নিতে হবে।
+
+**তারপর Superstructure:** span আর সাইট access-এর উপর নির্ভর করে, এটা হয় cast-in-situ (span-এর নিচে ground access থাকলে formwork সাপোর্ট করার জন্য মাটি থেকে falsework/staging তোলা হয়), অথবা precast (গার্ডার off-site বা কাছাকাছি একটা casting yard-এ কাস্ট হয়ে, তারপর ক্রেন দিয়ে বসানো হয় — যেখানে span একটা নদী বা রাস্তা পার হয় যা falsework দিয়ে block করা যাবে না, সেখানে বেশি common choice)।
+
+**Deck ও Finishing:** ডেক স্ল্যাব গার্ডারের উপর কাস্ট হয় (বা cast-in-situ পোরের অংশ হিসেবে), তারপর wearing surface, parapet/railing, আর abutment-এ expansion joint — এই detail-টাই একটা ব্রিজ ডেকের দীর্ঘমেয়াদী ride quality-র জন্য সবচেয়ে বেশি দায়ী, কারণ একটা খারাপভাবে detail করা expansion joint প্রাথমিক ব্রিজ ডেক deterioration-এর সবচেয়ে common উৎসগুলোর একটা।
+
+এই প্ল্যাটফর্মে এখনো কোনো visualization নেই যা specifically ব্রিজ কনস্ট্রাকশন model করে — Learning System-এর Construction Sequence visualizer একটা *বিল্ডিং*-এর স্টেজ-বাই-স্টেজ কনস্ট্রাকশনের উপর তৈরি, যা যথেষ্ট ভিন্ন একটা process (কোনো পাইলিং/pier sequence নেই, কোনো গার্ডার erection নেই) যে এখানে সেটা link করা helpful-এর চেয়ে বিভ্রান্তিকর হতো।`,
+      },
+      'pavement-layers': {
+        title: 'পেভমেন্ট লেয়ার',
+        body: `একটা রাস্তার pavement একটা layered system, আর যে layer কেউ দেখে না — wearing surface-এর নিচের সবকিছু — সেটাই সাধারণত ঠিক করে দেয় একটা রাস্তা ১৫ বছর টিকবে নাকি ৩ বছরে fail করবে।
+
+নিচ থেকে উপরে: **Subgrade** (প্রস্তুত করা, compacted natural মাটি) প্রথমে একটা consistent, adequate strength-এ আনতে হবে — একটা নরম বা inconsistent subgrade উপরের প্রতিটা layer-কে দুর্বল করে দেয়, উপরের layer যতই ভালো বানানো হোক না কেন। **Sub-base** (সাধারণত একটা granular layer) উপরের layer-গুলোর লোড subgrade-এর একটা বড় এলাকা জুড়ে ছড়িয়ে দেয় আর drainage উন্নত করে। **Base course** (প্রায়ই একটা শক্তিশালী granular material, কখনো stabilized) বেশিরভাগ structural load transfer বহন করে। **Binder course** আর **wearing course** (দুটোই asphalt/bitumen-bound layer) সবার উপরে বসে — wearing course-ই একমাত্র layer যা রাস্তা ব্যবহারকারীরা দেখে বা অনুভব করে, কিন্তু পুরো system-এর মধ্যে এটাই সবচেয়ে কম structural দায়িত্ব বহন করে, যা প্রথমবার pavement design-এর মুখোমুখি হওয়া মানুষের মধ্যে একটা common ভুল ধারণা।
+
+শুধু দৃশ্যমান wearing surface না, প্রতিটা layer-এই material quality গুরুত্বপূর্ণ — base course-এ impact বা crushing value টেস্টে fail করা একটা aggregate ঠিক সেই ধরনের premature failure (rutting, potholing) ঘটায় যাকে "খারাপ asphalt"-এর দোষ দেওয়া হয়, অথচ আসল কারণ কয়েক layer নিচে ছিল।`,
+      },
+    },
+  },
+  practical: {
+    eyebrow: 'প্র্যাকটিক্যাল ইঞ্জিনিয়ারিং হাব',
+    pageTitle: 'প্র্যাকটিক্যাল হাব',
+    pageDescription: 'একটা real সাইটে জিনিসগুলো আসলে কীভাবে হয় — ৬টা এরিয়া জুড়ে ৪২টা প্র্যাকটিক্যাল টপিক, সাথে যে ভুলগুলো বারবার হয় আর সেগুলো কীভাবে এড়ানো যায়।',
+    backToHub: 'প্র্যাকটিক্যাল হাবে ফিরে যান',
+    mediaHeading: 'Real Photo, Real Video ও Drone View',
+    mediaNote:
+      'এই প্ল্যাটফর্মের পেছনে কোনো real সাইট নেই, আর genuine site photography, video, বা drone footage বানানোরও কোনো উপায় নেই — সেগুলো একটা আসল, চলমান প্রজেক্ট থেকেই আসতে হবে। Stock image দিয়ে সেটা পূরণ করে real site documentation বলে চালানোর বদলে, real site media না পাওয়া পর্যন্ত এই সেকশন honestly ফাঁকা রাখা হলো।',
+    relatedVisualizationsHeading: '3D-তে দেখুন',
+    relatedLabsHeading: 'সম্পর্কিত ল্যাব',
+    relatedMaterialsHeading: 'সম্পর্কিত ম্যাটেরিয়াল',
+    relatedToolsHeading: 'সম্পর্কিত টুল',
+    commonMistakesHeading: 'সাইটে কমন ভুল',
+    categories: {
+      'site-engineering': {
+        title: 'সাইট ইঞ্জিনিয়ারিং / সাইট ওয়ার্ক',
+        summary: 'সাইট সেটআপ থেকে ফিনিশিং পর্যন্ত — একটা typical বিল্ডিং সাইটের পুরো sequence, ধাপে ধাপে।',
+      },
+      'reinforcement-work': {
+        title: 'রিইনফোর্সমেন্ট ওয়ার্ক',
+        summary: 'রিবার কাটা, বাঁকানো, বসানো, আর detailing — একটা structural drawing যা specify করে তার প্র্যাকটিক্যাল দিক।',
+      },
+      'concrete-technology': {
+        title: 'কংক্রিট টেকনোলজি',
+        summary: 'মিক্সিং, কাস্টিং, কমপ্যাকশন, আর কিউরিং — কংক্রিট design strength-এ পৌঁছাবে কিনা তা ঠিক করা প্র্যাকটিক্যাল সিদ্ধান্তগুলো।',
+      },
+      'foundation-systems': {
+        title: 'ফাউন্ডেশন সিস্টেম',
+        summary: 'Isolated, combined, raft, আর pile foundation — কোনটা কোন সাইট কন্ডিশনে ফিট করে, আর কেন।',
+      },
+      'road-construction': {
+        title: 'রোড কনস্ট্রাকশন',
+        summary: 'Subgrade থেকে asphalt পর্যন্ত — একটা রাস্তা layer বাই layer বানানো, আর প্রতিটা ঠিকভাবে compact করা।',
+      },
+      'site-safety': {
+        title: 'সাইট সেফটি',
+        summary: 'PPE, স্ক্যাফোল্ডিং, ইলেকট্রিক্যাল ও ক্রেন সেফটি, আর দৈনিক সাইট রিস্ক ম্যানেজ করা।',
+      },
+    },
+    topics: {
+      'site-setup': {
+        title: 'সাইট সেটআপ',
+        body: `কোনো excavation শুরু হওয়ার আগে, একটা সাইটের boundary পরিষ্কারভাবে মার্ক করা, একটা temporary site office, ম্যাটেরিয়াল স্টোরেজ এরিয়া প্ল্যান করা (যাতে ডেলিভারি করা সিমেন্ট আর স্টিল যেখানে জায়গা পাওয়া যায় সেখানে ফেলে না রাখা হয়), পানি আর বিদ্যুৎ সংযোগ ব্যবস্থা করা, আর সাইট public path-এর কাছাকাছি হলে একটা সাইট সেফটি boundary (hoarding/fencing) তোলা দরকার। "আসল কাজ" তাড়াতাড়ি শুরু করার জন্য site setup পার হয়ে যাওয়া একটা common lure, কিন্তু ম্যাটেরিয়াল ভুল জায়গায় জমা হয়ে গেলে বা একটা ডেলিভারি ট্রাক সাইটে ঢুকতে না পারলে সাধারণত পরে বেশি সময় নষ্ট করে।`,
+      },
+      excavation: {
+        title: 'এক্সক্যাভেশন',
+        body: `Excavation-এর depth আর width ফাউন্ডেশন ড্রয়িং-এর সাথে ঠিক মিলতে হবে, ফাউন্ডেশনের প্রতি পাশে formwork আর worker access-এর জন্য extra working space (সাধারণত ৩০০–৪৫০ mm) সহ। আলগা বা পানি-বহনকারী মাটিতে, excavation face ধসে পড়া ঠেকাতে side slope বা shoring/timbering দরকার — সময় বাঁচাতে এটা বাদ দেওয়া ছোট সাইটে নেওয়া বেশি বিপজ্জনক shortcut-গুলোর একটা। যে মাটি backfill হিসেবে reuse হবে সেটা disposal-এর জন্য মাটি থেকে আলাদা করে stockpile করা উচিত, একসাথে মিশিয়ে না ফেলে।`,
+      },
+      'layout-work': {
+        title: 'লেআউট ওয়ার্ক',
+        body: `Layout work ড্রয়িং-এর গ্রিড আর বিল্ডিং outline আসল মাটিতে transfer করে, একটা theodolite/total station ব্যবহার করে, অথবা ছোট সাইটে batter board আর একটা fixed benchmark থেকে reference করা string line দিয়ে। প্রতিটা কলাম পজিশন, wall line, আর গ্রিড intersection মার্ক করে ড্রয়িং-এর সাথে চেক করা হয় কোনো excavation বা foundation work শুরু হওয়ার আগে — layout স্টেজে ধরা পড়া একটা ভুল ঠিক করতে প্রায় কিছুই লাগে না; একই ভুল একটা ফাউন্ডেশন কাস্ট হওয়ার পরে ধরা পড়লে demolition পর্যন্ত লাগতে পারে।`,
+      },
+      'foundation-work': {
+        title: 'ফাউন্ডেশন ওয়ার্ক',
+        body: `Foundation work layout আর excavation-এর পরে আসে: প্রথমে একটা blinding/PCC layer (reinforcement-এর জন্য একটা পরিষ্কার, level base দেওয়ার জন্য, নিজে structural load বহন করার জন্য না), তারপর ফাউন্ডেশন ড্রয়িং অনুযায়ী reinforcement বসানো cover block দিয়ে specified cover বজায় রেখে, তারপর formwork, তারপর পোর নিজে। এখানে প্রতিটা স্টেজ পরেরটা ঢাকার আগে inspect করা উচিত — বিশেষ করে reinforcement placement, কারণ একবার কংক্রিট ঢালা হয়ে গেলে বার সাইজ বা spacing চেক করা আর সম্ভব না ভেঙে ফেলা ছাড়া।`,
+      },
+      'column-casting': {
+        title: 'কলাম কাস্টিং',
+        body: `কলাম formwork plumb (vertically true) আর ভালোভাবে braced হতে হবে — বেসে সামান্য হেলে থাকা একটা কলাম উপরের প্রতিটা স্টোরিতে সেই হেলা compound করে। কংক্রিট layer-এ বসানো হয় আর প্রতিটা layer vibrate করা হয়, উপর থেকে একবারে ফেলে দেওয়া হয় না, যা segregation ঘটায় (coarse aggregate mortar থেকে আলাদা হয়ে যাওয়া)। Formwork strike (সরানো) হয় শুধু কংক্রিট নিজেকে সাপোর্ট করার মতো early strength পাওয়ার পরে, সাইট কন্ডিশন নির্বিশেষে একটা fixed schedule অনুযায়ী না — গরম আবহাওয়া এটা দ্রুত করে, ঠান্ডা আবহাওয়া ধীর করে।`,
+      },
+      'beam-casting': {
+        title: 'বিম কাস্টিং',
+        body: `Beam আর স্ল্যাব সাধারণত একসাথে এক monolithic পোর হিসেবে কাস্ট হয় যেখানে ডিজাইন monolithic action ধরে নেয় — একটা বিম একা কাস্ট করে স্ল্যাব দিন কয়েক পরে (একটা unplanned "cold joint") কানেকশনকে দুর্বল করতে পারে যদি না সেটার জন্য specifically ডিজাইন আর প্রস্তুত করা হয় (roughened surface, extra shear reinforcement)। Beam soffit (নিচের) formwork কংক্রিট নিজে থেকে span করার মতো যথেষ্ট strength না পাওয়া পর্যন্ত propped থাকা উচিত — খুব তাড়াতাড়ি prop সরানো বিম deflection বা crack-এর একটা common কারণ যা সপ্তাহ পরে visible হয়।`,
+      },
+      'slab-casting': {
+        title: 'স্ল্যাব কাস্টিং',
+        body: `Slab casting-এর আগে reinforcement mesh (বা crossed bar)-এর spacing আর cover ঠিক আছে কিনা চেক করা দরকার, cover block/chair উপরের reinforcement layer-কে তার সঠিক height-এ ধরে রাখে — টপ স্টিল যদি পোরের সময় (worker হাঁটার কারণে proper walkway ছাড়া, বা cover chair fail করার কারণে) নিচে বসে যায়, তাহলে support-এর উপর negative moment resist করার কাজ বন্ধ হয়ে যায়। কংক্রিট সেট হওয়া শুরু হওয়ার আগে পোরের পরপরই স্ল্যাব finish (screed আর float) করা হয়, তারপর সাথে সাথে cover/cure করা হয়।`,
+      },
+      pcc: {
+        title: 'PCC (প্লেইন সিমেন্ট কংক্রিট)',
+        body: `Plain Cement Concrete (PCC) — কোনো reinforcement ছাড়া কংক্রিট — ব্যবহৃত হয় যেখানে শুধু compressive strength গুরুত্বপূর্ণ আর resist করার মতো কোনো tension নেই: ফাউন্ডেশনের নিচে blinding layer, flooring sub-base, আর কিছু pavement অ্যাপ্লিকেশন। যেহেতু এতে stress redistribute করার মতো কোনো reinforcement নেই, PCC-র নিচে একটা properly prepared, uniform sub-base দরকার; নরম বা অসম মাটির উপর সরাসরি ঢালা PCC একটা designed pattern-এর বদলে একটা uncontrolled pattern-এ crack করবে।`,
+      },
+      'rcc-work': {
+        title: 'RCC ওয়ার্ক',
+        body: `Reinforced Cement Concrete (RCC) হলো যা একই সাথে compression (কংক্রিটের মাধ্যমে) আর tension (embedded স্টিলের মাধ্যমে) বহন করে — এই combination-ই আধুনিক বিম, স্ল্যাব, আর কলামকে সম্ভব করে তোলে। সাইটে RCC ঠিকভাবে করার মানে একসাথে তিনটা জিনিস ঠিক হওয়া: কংক্রিট মিক্স তার design strength-এ পৌঁছানো, reinforcement সঠিক সাইজে আর সঠিক পজিশনে থাকা, আর দুটোর properly bond হওয়া (যার জন্য পরিষ্কার, corrosion-মুক্ত, পেইন্ট-না-করা বার সারফেস আর adequate কংক্রিট cover দরকার, বেশিও না কমও না)।`,
+      },
+      brickwork: {
+        title: 'ব্রিকওয়ার্ক',
+        body: `Brick masonry courses-এ বানানো হয় staggered (bonded) vertical joint সহ যাতে কোনো continuous vertical joint একাধিক course জুড়ে না চলে, যা একটা দুর্বল plane তৈরি করত। বসানোর আগে ইট pre-wet করা হয় (শুকনো ইট fresh মর্টার থেকে খুব দ্রুত পানি টেনে নেয়, bond দুর্বল করে) কিন্তু saturated হওয়া পর্যন্ত ভেজানো হয় না। মর্টার joint একটা consistent thickness-এ রাখা হয় (সাধারণত প্রায় ১০ mm) — inconsistent joint thickness দেখতেও খারাপ, performance-ও inconsistent।`,
+      },
+      plastering: {
+        title: 'প্লাস্টারিং',
+        body: `প্লাস্টারিং-এর আগে masonry surface properly cured, dust ও আলগা material থেকে পরিষ্কার, আর dampened (ভেজা-চুবানো না) হওয়া দরকার — শুকনো, ধুলোময় দেয়ালে করা প্লাস্টার পরে debond করে, প্রায়ই কাজ ঠিক দেখানোর কয়েক মাস পরে hollow-শোনা প্যাচ বা delamination হিসেবে দেখা যায়। প্লাস্টার সাধারণত দুই কোটে করা হয় (একটা rougher base coat, তারপর একটা finer finishing coat) একটা মোটা কোটের বদলে, যা crack আর sag হওয়ার জন্য বেশি prone।`,
+      },
+      'tile-work': {
+        title: 'টাইল ওয়ার্ক',
+        body: `টাইল ওয়ার্কের নিচে একটা level, properly cured screed বা bedding layer দরকার — অসম বা uncured base-এর উপর সরাসরি বসানো টাইল hollow spot develop করে আর শেষে crack বা loose হয়ে যায়। প্রতিটা টাইলের নিচে adhesive বা মর্টার-এর full, even coverage দরকার (বসানোর সময় মাঝেমধ্যে একটা টাইল তুলে চেক করা), শুধু corner-এ dab না, কারণ uneven coverage-ই একটা টাইলের এক অংশে hollow sound আর অন্য অংশে না হওয়ার আসল কারণ।`,
+      },
+      waterproofing: {
+        title: 'ওয়াটারপ্রুফিং',
+        body: `ছাদের স্ল্যাব, বাথরুম, আর পানির ট্যাংকে waterproofing-এর আগে surface properly prepared (পরিষ্কার, crack আর honeycombing মেরামত করা) হওয়া দরকার — মেরামত না করা একটা crack-এর উপর কোটিং করলে সেটা শুধু temporarily bridge করে যতক্ষণ না membrane নিজেই একই জায়গায় crack করে। Penetration-এর জায়গায় (একটা পাইপ ছাদের স্ল্যাব বা বাথরুম ফ্লোর দিয়ে যাওয়ার জায়গা) waterproofing detail-ই বাস্তবে সবচেয়ে বেশি leak শুরু হয়, একটা flat surface-এর মাঝখানে না, তাই এই detail-গুলো তাদের সাইজের তুলনায় disproportionate attention পাওয়ার যোগ্য।`,
+      },
+      painting: {
+        title: 'পেইন্টিং',
+        body: `পেইন্টিং-এর নিচে পুরোপুরি cured, শুকনো প্লাস্টার বা কংক্রিট দরকার — এখনো curing থেকে moisture release করা একটা দেয়ালে পেইন্ট করলে সেই moisture ভিতরে আটকে যায় আর পরে পেইন্ট quality নির্বিশেষে peeling বা blistering হয়। Substrate-এর সাথে মানানসই একটা primer/sealer কোট প্রথমে যায়, তারপর সাধারণত দুটো finish কোট, কোটের মধ্যে adequate drying time সহ, প্রথম কোট এখনো tacky থাকা অবস্থায় দ্বিতীয় কোটে তাড়াহুড়া না করে।`,
+      },
+      'finishing-work': {
+        title: 'ফিনিশিং ওয়ার্ক',
+        body: `Finishing work (ফাইনাল touch-up, fixture installation, পরিষ্কার, snag-list correction) হলো যেখানে একটা প্রজেক্টের সামগ্রিক quality impression client-এর কাছে আসলে তৈরি হয়, যদিও এটা মোট সাইট effort-এর একটা ছোট অংশ — একটা structurally excellent বিল্ডিং careless finishing সহ প্রায় সবার কাছে একটা poor-quality বিল্ডিং মনে হয়, কারণ খুব কম occupant-ই নিচের structural কাজ সরাসরি evaluate করে।`,
+      },
+      'bar-cutting': {
+        title: 'বার কাটিং',
+        body: `Reinforcement bar bar bending schedule (BBS)-এ দেখানো ঠিক length-এ কাটা হয়, bend deduction হিসাব করে (একটা বাঁকানো বারের nominal dimension-এর চেয়ে সামান্য ছোট straight length দরকার, কারণ বাঁকটাই কিছু length নেয়) — bend deduction ছাড়া nominal length-এ বার কাটা একটা common কারণ যে বাঁকানোর পর বার সামান্য বেশি লম্বা হয়ে যায়, সাইটে cover বা spacing সমস্যা তৈরি করে।`,
+      },
+      'bar-bending': {
+        title: 'বার বেন্ডিং',
+        body: `Bar bender দিয়ে বার standard hook আর bend shape-এ (৯০°, ১৩৫°, ১৮০° hook) বাঁকানো হয়, code minimum মেটানো bend radius সহ — খুব sharp করে (খুব ছোট radius) বাঁকালে বাঁকের জায়গায় বার crack বা দুর্বল হয়ে যেতে পারে, বিশেষ করে বড় diameter-এর বারে। Bend BBS থেকে আগে থেকেই প্ল্যান করা হয়, কাটার আগে, সাইটে improvise করা হয় না, কারণ ভুলভাবে বাঁকানো একটা বার সাধারণত সঠিক shape-এ আবার বাঁকানো যায় না দুর্বল না করে।`,
+      },
+      'bar-placement': {
+        title: 'বার প্লেসমেন্ট',
+        body: `Reinforcement ড্রয়িং-এ দেখানো spacing আর position-এ বার বসানো হয়, intersection-এ binding wire দিয়ে বাঁধা (শুধু আলগা রাখা না, যা পোরের সময় সরে যেতে দেয়), আর cover block বা chair দিয়ে সঠিক height ও cover-এ রাখা — placement হলো সেই স্টেজ যেখানে একটা ডিজাইনের সতর্ক হিসাব বাস্তব সাইটের সংস্পর্শে টিকে থাকে অথবা টেকে না; ভুল পজিশনে বসানো বার আসলে যেটা ডিজাইন আর চেক করা হয়েছিল তার চেয়ে ভিন্ন, দুর্বল structural behavior দেয়।`,
+      },
+      lapping: {
+        title: 'ল্যাপিং',
+        body: `যেখানে দুটো বার একটা load path চালিয়ে নিতে হয় কিন্তু এক continuous length হতে পারে না (যা বেশিরভাগ সময়ই হয়, কারণ বার limited standard length-এ আসে), সেগুলো lap করা হয় — একটা calculated development length ওভারল্যাপ করে একসাথে বাঁধা। Lap ইচ্ছাকৃতভাবে stagger করা হয় (একটা সেকশনের সব বার একই পয়েন্টে lap করা হয় না) আর যেখানে সম্ভব member-এর maximum-moment zone থেকে দূরে রাখা হয়, কারণ একটা lap স্বাভাবিকভাবেই continuous বারের চেয়ে সামান্য দুর্বল একটা পয়েন্ট এবং member সবচেয়ে বেশি stressed যেখানে তার সাথে মিলে যাওয়া উচিত না।`,
+      },
+      anchorage: {
+        title: 'অ্যাংকরেজ',
+        body: `Anchorage হলো কীভাবে একটা বার তার শেষ প্রান্তে তার force আশেপাশের কংক্রিটে transfer করে — straight embedment length, একটা hook, বা একটা mechanical anchor দিয়ে — যথেষ্ট লম্বা যাতে বার কংক্রিট থেকে বেরিয়ে আসার আগেই তার পূর্ণ design stress-এ পৌঁছাতে পারে। কম-length anchorage (একটা critical প্রান্তে খুব ছোট করে কাটা বার, বা ড্রয়িং-এ hook চাওয়া হলেও বাদ দেওয়া) একটা নীরব failure mode: এটা প্রায়ই দেখা যায় না যতক্ষণ না member আসলে তার design capacity-র কাছাকাছি লোড হয়, নির্মাণ শেষ আর inspect হওয়ার অনেক পরে।`,
+      },
+      'cover-block': {
+        title: 'কভার ব্লক',
+        body: `Cover block (বা chair) reinforcement-কে formwork face থেকে ড্রয়িং-এ specify করা ঠিক cover distance-এ ধরে রাখে — corrosion আর আগুন থেকে স্টিল রক্ষা করার জন্য যথেষ্ট, কিন্তু স্টিল structurally যেখানে দরকার তার থেকে খুব দূরে না। Cover block missing বা crushed হওয়া সবচেয়ে common, সবচেয়ে প্রতিরোধযোগ্য সাইট defect-গুলোর একটা: formwork face-কে ছুঁয়ে যাওয়া স্টিলের formwork strike হওয়ার পর প্রায় zero cover থাকে, আর ডিজাইন করা চেয়ে অনেক দ্রুত corrode করে।`,
+      },
+      'reinforcement-detailing': {
+        title: 'রিইনফোর্সমেন্ট ডিটেইলিং',
+        body: `Reinforcement detailing হলো সেই ড্রয়িং কাজ যা একটা structural analysis result (এই বিমের এত স্টিল দরকার)-কে buildable instruction-এ (এই সাইজের বার, এই shape, এই লোকেশনে, এই lap আর anchorage সহ) পরিণত করে — ভালো detailing real construction sequence আর congestion আগে থেকেই ভাবে (একটা ব্যস্ত বিম-কলাম জয়েন্টে এই সব বার আসলে fit আর tie করা যাবে কি?) শুধু কাগজে calculated steel area সন্তুষ্ট করার বদলে।`,
+      },
+      'concrete-mix': {
+        title: 'কংক্রিট মিক্স / মিক্সিং',
+        body: `একটা কংক্রিট মিক্স সিমেন্ট, বালি, অ্যাগ্রিগেট, আর পানি একটা proportion-এ মেশায় যা একটা target strength grade পৌঁছাতে ডিজাইন করা, একই সাথে ঠিকভাবে বসানো আর কমপ্যাক্ট করার মতো workable থেকে। Mix proportion একটা design decision, সাইটে feel দিয়ে স্বাধীনভাবে adjust করার কিছু না — "নিরাপদ থাকতে" extra সিমেন্ট যোগ করা বা "ঢালা সহজ করতে" extra পানি যোগ করা দুটোই কংক্রিটের আসল behavior-কে যা design ও test করা হয়েছিল তা থেকে সরিয়ে দেয়।`,
+      },
+      'water-cement-ratio': {
+        title: 'ওয়াটার সিমেন্ট রেশিও',
+        body: `Water-cement ratio — সিমেন্টের তুলনায় কতটা পানি ব্যবহৃত হয়, ওজন হিসেবে — কংক্রিট strength-এর সবচেয়ে গুরুত্বপূর্ণ variable-গুলোর একটা: বেশি পানি (কংক্রিট বসানো সহজ করতে একটা common সাইট shortcut) hardened কংক্রিটের final strength ব্যাপকভাবে দুর্বল করে দেয়, যদিও এটা wet মিক্সকে কাজ করা সহজ মনে হতে বানায়। এই কারণেই "একটু বেশি পানি যোগ করি" একটা unsupervised সাইটের সবচেয়ে ক্ষতিকর অভ্যাসগুলোর একটা, যদিও মুহূর্তে নিরীহ মনে হয়।`,
+      },
+      'slump-test-practice': {
+        title: 'স্লাম্প টেস্ট',
+        body: `Slump test বসানোর আগে একটা কংক্রিট batch-এর workability মাপে — একটা standard cone ভরে, তুলে, কংক্রিট কতটা slump করে তা মেপে। এটা একটা দ্রুত সাইট quality check যা প্রতিটা batch-এ (বা নির্দিষ্ট interval-এ) specifically করা হয় যাতে একটা মিক্স যেটা design water content থেকে সরে গেছে তা structure-এ ঢালার আগেই ধরা পড়ে, শুধু রেকর্ডের জন্য করা একটা formality না। এই প্ল্যাটফর্মের Slump Test lab (Part 7)-এ simulated data দিয়ে ঠিক এই টেস্টটাই চালানো যায়।`,
+      },
+      casting: {
+        title: 'কাস্টিং',
+        body: `Casting (formwork-এ কংক্রিট বসানো) যেখানে সম্ভব একটা structural element-এর জন্য continuously এগোনো উচিত, প্ল্যান করা layer-এ, এক layer সেট হওয়া শুরু করার আগেই তার উপর পরের layer বসানো ছাড়া (যা element-এর মাঝখানে একটা দুর্বল, খারাপভাবে-bonded "cold joint" তৈরি করত, একটা প্ল্যান করা construction joint-এর বদলে)। কংক্রিট যতটা সম্ভব তার final position-এর কাছে বসানো হয়, উপর থেকে ফেলা বা vibrator দিয়ে লম্বা দূরত্বে টেনে নেওয়া হয় না, দুটোই segregation ঘটায়।`,
+      },
+      'vibrating-compaction': {
+        title: 'ভাইব্রেটিং / কমপ্যাকশন',
+        body: `Vibration সদ্য বসানো কংক্রিটকে কমপ্যাক্ট করে, আটকে থাকা বাতাস বের করে আর মিক্সকে reinforcement-এর চারপাশে আর formwork-এর কোণায় পুরোপুরি প্রবাহিত হতে সাহায্য করে। Under-vibration void রেখে দেয় (পরে "honeycombing" হিসেবে দেখা যায় — একটা rough, gap-ভরা কংক্রিট surface) — over-vibration segregation ঘটায়, ভারী aggregate settle করে আর সিমেন্ট paste-এর একটা দুর্বল layer উপরে উঠে আসে। Vibration প্রতিটা লোকেশনে systematically আর সংক্ষেপে apply করা হয়, একটা জায়গায় অনির্দিষ্টকাল ধরে রাখা বা পৌঁছানো কঠিন কোণায় বাদ দেওয়া হয় না।`,
+      },
+      curing: {
+        title: 'কিউরিং',
+        body: `Curing কাস্টিং-এর পরে একটা টানা সময়ের জন্য কংক্রিটকে ভেজা (আর একটা reasonable temperature range-এর মধ্যে) রাখে — সাধারণ কন্ডিশনে কমপক্ষে ৭ দিন — যাতে cement hydration reaction যা আসলে strength তৈরি করে তা ঠিকভাবে চলতে পারে। যে কংক্রিটকে তাড়াতাড়ি শুকাতে দেওয়া হয় সেটা যেখানে শুকিয়েছে সেই পয়েন্টেই strength বাড়ানো স্থায়ীভাবে বন্ধ করে দেয়, সাময়িকভাবে না — inadequate curing কংক্রিট তার design strength-এ না পৌঁছানোর সবচেয়ে common, সবচেয়ে প্রতিরোধযোগ্য কারণগুলোর একটা, বিশেষ করে বাংলাদেশের গরম আবহাওয়ায় যেখানে surface পানি দ্রুত evaporate হয়।`,
+      },
+      'concrete-failure': {
+        title: 'কংক্রিট ফেইলিউর',
+        body: `সাইটে কংক্রিট failure চেনা-যাওয়া pattern-এ দেখা দেয়: honeycombing (খারাপ কমপ্যাকশন), plastic shrinkage crack (কংক্রিট সেট হওয়ার আগেই surface খুব তাড়াতাড়ি শুকানো), পরের drying shrinkage crack (inadequate curing বা joint spacing), আর লোডের নিচে structural crack (সাধারণত শুধু একটা material সমস্যার বদলে একটা genuine design, detailing, বা construction defect-এর লক্ষণ)। কোন pattern present তা সঠিকভাবে চেনা আসল কারণ খুঁজে বের করার প্রথম ধাপ, অনুমান করার বদলে।`,
+      },
+      'isolated-footing': {
+        title: 'আইসোলেটেড ফুটিং',
+        body: `একটা isolated footing একটা একক কলামকে সাপোর্ট করে, তার point load একটা বড় footing এলাকা জুড়ে ছড়িয়ে দেয় যাতে ফলস্বরূপ মাটির উপর pressure মাটির safe bearing capacity-র মধ্যে থাকে। এটা সবচেয়ে সহজ, সবচেয়ে economical foundation type যেখানে মাটি reasonably শক্ত আর কলামগুলো যথেষ্ট দূরে থাকে যে individual footing একে অপরের সাথে overlap বা interfere না করে।`,
+      },
+      'combined-footing': {
+        title: 'কম্বাইন্ড ফুটিং',
+        body: `একটা combined footing দুটো (কখনো আরও বেশি) কলামকে একটা shared footing-এ সাপোর্ট করে — ব্যবহৃত হয় যখন individual isolated footing খুব কাছাকাছি হয়ে যেত (overlap করত) অথবা যখন একটা কলাম ঠিক একটা property line-এ থাকে আর তার footing এক পাশে সেই line পার হতে পারে না, তাই সেটাকে পরের interior কলামের footing-এর সাথে combine করে pressure balance করা হয়।`,
+      },
+      'raft-foundation': {
+        title: 'রাফট ফাউন্ডেশন',
+        body: `একটা raft (বা mat) foundation হলো একটা continuous স্ল্যাব যা পুরো বিল্ডিং footprint সাপোর্ট করে, ব্যবহৃত হয় যেখানে মাটির bearing capacity এতটাই কম যে individual footing uneconomically বড় হতে হবে বা এমনিতেই বেশিরভাগ footprint কভার করে ফেলবে — সেক্ষেত্রে, একটা continuous raft সাধারণত অনেকগুলো overlapping individual footing-এর চেয়ে সহজ আর বেশি effective, আর যেকোনো differential settlement পুরো structure জুড়ে ভালোভাবে distribute করে।`,
+      },
+      'pile-foundation': {
+        title: 'পাইল ফাউন্ডেশন',
+        body: `একটা pile foundation বিল্ডিংয়ের লোড দুর্বল উপরের মাটির layer পার হয়ে হয় একটা গভীর, শক্ত bearing stratum-এ (end-bearing pile) নিয়ে যায়, অথবা pile surface আর তার চারপাশের মাটির মধ্যে friction-এর উপর নির্ভর করে (friction pile) যেখানে reasonable depth-এ কোনো শক্ত stratum নেই। বাংলাদেশের বেশিরভাগ নরম, alluvial মাটিতে এটা common, যেখানে একটা shallow foundation প্রায়ই একটা practical depth-এ adequate bearing capacity-তে পৌঁছাতে পারে না।`,
+      },
+      subgrade: {
+        title: 'সাবগ্রেড',
+        body: `Subgrade হলো প্রস্তুত করা, compacted natural মাটি যার উপর একটা রাস্তা বানানো হয় — এর উপরের প্রতিটা layer নির্ভর করে subgrade প্রথমে consistent, adequate strength-এ আনা হয়েছে কিনা তার উপর। একটা নরম বা inconsistently compacted subgrade উপরের layer যতই ভালো বানানো হোক না কেন পুরো pavement structure-কে দুর্বল করে দেয়, এই কারণেই subgrade preparation রাস্তা শেষ হওয়ার পর কতটা কম visible থাকে তার তুলনায় disproportionate attention পায়।`,
+      },
+      subbase: {
+        title: 'সাববেস',
+        body: `Sub-base সরাসরি subgrade-এর উপর বসে — সাধারণত একটা granular material — আর উপরের layer-এর লোড subgrade-এর একটা বড় এলাকা জুড়ে ছড়ানো, drainage উন্নত করা, আর উপরের layer বানানোর জন্য একটা stable working platform দেওয়ার কাজ করে। খারাপভাবে compacted বা contaminated (subgrade মাটির সাথে মিশে যাওয়া) sub-base তার বেশিরভাগ load-spreading সুবিধা হারায়।`,
+      },
+      'base-course': {
+        title: 'বেস কোর্স',
+        body: `Base course, sub-base-এর উপরে, সাধারণত একটা শক্তিশালী granular বা stabilized material যা pavement system-এর মধ্য দিয়ে বেশিরভাগ structural load transfer বহন করে। এখানে aggregate quality সরাসরি গুরুত্বপূর্ণ — impact বা crushing value টেস্টে fail করা material বারবার ট্রাফিক লোডের নিচে ভেঙে যায়, যা পরে rutting বা potholing হিসেবে দেখা যায় যার দোষ প্রায়ই visible asphalt সারফেসকে দেওয়া হয় যখন আসল কারণ কয়েক layer নিচে।`,
+      },
+      'asphalt-work': {
+        title: 'অ্যাসফাল্ট ওয়ার্ক',
+        body: `Asphalt (bituminous) layer — binder course আর wearing course — base course-এর উপরে বসে আর সঠিক তাপমাত্রায় বসানো দরকার (খুব ঠান্ডা asphalt খারাপভাবে compact হয় আর কখনো তার design density-তে পৌঁছায় না) আর workable তাপমাত্রা পার হয়ে ঠান্ডা হওয়ার আগেই দ্রুত compact করা দরকার। পাশাপাশি paving pass-এর মধ্যে joint বিশেষ যত্ন দরকার, কারণ একটা খারাপভাবে compacted longitudinal joint একটা common early failure point।`,
+      },
+      'road-compaction': {
+        title: 'রোড কমপ্যাকশন',
+        body: `প্রতিটা pavement layer — subgrade, sub-base, base, আর asphalt — একটা target density-র বিরুদ্ধে (এই প্ল্যাটফর্মের Lab-এর মতো একটা compaction test থেকে) চেক করা দরকার, শুধু visual appearance বা roller pass-এর সংখ্যা দিয়ে বিচার না করে। যেকোনো একটা single layer-এ under-compaction, অন্য প্রতিটা layer perfectly বানানো হলেও, ঠিক সেই depth-এ premature settlement বা rutting-এর দিকে নিয়ে যাওয়া একটা দুর্বল পয়েন্ট তৈরি করে।`,
+      },
+      ppe: {
+        title: 'PPE (পার্সোনাল প্রোটেক্টিভ ইকুইপমেন্ট)',
+        body: `Personal Protective Equipment — হেলমেট, সেফটি বুট, high-visibility vest, আর কাজ-নির্দিষ্ট আইটেম যেমন উচ্চতায় কাজের জন্য harness বা ধুলোময় কাজের জন্য respirator — একটা active work area-তে যে কারো জন্য minimum baseline, বিশেষভাবে বিপজ্জনক কাজের জন্য একটা optional extra না। যে অভ্যাস আসলে injury প্রতিরোধ করে তা হলো consistent, site-wide PPE culture যা supervisor আর visitor সহ সবার জন্য enforce করা, শুধু দৃশ্যত ঝুঁকিপূর্ণ কাজে selective enforcement না।`,
+      },
+      scaffolding: {
+        title: 'স্ক্যাফোল্ডিং',
+        body: `স্ক্যাফোল্ডিং stable, level মাটিতে base plate সহ (নরম মাটিতে sole board সহ) তোলা দরকার, properly braced, একটা নির্দিষ্ট height পার হলে নিয়মিত interval-এ structure-এর সাথে tied, আর ব্যবহারের আগে ও যেকোনো modification-এর পরে tagged/inspected। একটা untagged বা দৃশ্যত modified স্ক্যাফোল্ড (ম্যাটেরিয়াল access-এর জন্য বোর্ড সরানো হয়েছে আর ফেরত বসানো হয়নি, উদাহরণস্বরূপ) unsafe ধরে নিয়ে re-inspect না হওয়া পর্যন্ত ব্যবহার করা উচিত না, শেষবার কেমন দেখেছিল তার ভিত্তিতে না।`,
+      },
+      'electrical-safety': {
+        title: 'ইলেকট্রিক্যাল সেফটি',
+        body: `সাইট electrical safety মানে temporary wiring আর distribution board পানি ও physical damage থেকে সুরক্ষিত, circuit উপযুক্ত breaker/RCD দিয়ে protected, আর overhead বা buried service-এর কাছে কাজ করার আগে excavation বা crane operation-এর জন্য safe clearance distance হিসাব করা। Improvised, exposed, বা পানি-exposed temporary wiring একটা common সাইট hazard ঠিক এই কারণে যে এটাকে "temporary" ধরা হয় আর তাই permanent electrical কাজের চেয়ে কম rigorously maintain করা হয়।`,
+      },
+      'crane-safety': {
+        title: 'ক্রেন সেফটি',
+        body: `সাইটে ক্রেন সেফটি নির্ভর করে ক্রেন verified-adequate ground bearing capacity-তে সেটআপ হওয়ার উপর (একটা ক্রেন দেখতে stable মনে হলেও outrigger-এর নিচে মাটি চেক না করলে tip করতে পারে), load chart actual radius আর angle-এর জন্য respect করা হচ্ছে কিনা (শুধু আলাদাভাবে load weight না), আর load path-এর নিচে একটা clear, enforced exclusion zone — বেশিরভাগ serious crane incident-এ হয় একটা outrigger-এর নিচে ground failure, বা একটা load path যা আসলে personnel থেকে clear রাখা হয়নি।`,
+      },
+      'site-risk-management': {
+        title: 'সাইট রিস্ক ম্যানেজমেন্ট',
+        body: `Site risk management মানে প্রতিটা activity শুরু হওয়ার আগে তার foreseeable hazard identify করা (পুরো সাইটের জন্য generically না), প্রতিটার জন্য একটা clear control measure assign করা, আর কন্ডিশন বদলালে সেই assessment revisit করা — প্রজেক্ট শুরুতে একবার করা আর কখনো revisit না করা একটা risk assessment কয়েক সপ্তাহের মধ্যেই সাইটের actual current risk আর reflect করে না, যেহেতু কাজ নিজেই excavation থেকে structure থেকে finishing-এ বদলায়, প্রতিটার genuinely ভিন্ন hazard সহ।`,
+      },
+    },
+    mistakes: {
+      'mistake-curing': {
+        title: 'Curing বাদ দেওয়া বা কমিয়ে দেওয়া',
+        body: 'প্রথম কয়েক দিন ভেজা না রাখা কংক্রিট স্থায়ীভাবে এমন strength হারায় যা আর কখনো পুরোপুরি ফিরে পায় না — "কিছুটা" strength সাময়িকভাবে না, বরং strength বাড়া বন্ধ হয়ে যায় যেখানে কংক্রিট শুকিয়েছে সেই পয়েন্টেই। এটা সবচেয়ে common আর সবচেয়ে এড়ানো-যায় এমন সাইট defect-গুলোর একটা, বিশেষ করে গরম আবহাওয়ায় যেখানে curing actively maintain না করলে ঘণ্টাখানেকের মধ্যে surface পানি evaporate হয়ে যায়। সমাধান সহজ আর সস্তা defect-এর খরচের তুলনায়: কাস্ট করা প্রতিটা surface কমপক্ষে ৭ দিন ভেজা রাখুন (ponding, ভেজা hessian, বা curing compound), "শুকনো-শুকনো লাগা পর্যন্ত" না।',
+      },
+      'mistake-layout': {
+        title: 'তাড়াতাড়ি "আসল কাজ" শুরু করতে layout-এ তাড়াহুড়া করা',
+        body: 'Layout-এ একটা ভুল — কলামের পজিশন কয়েক সেন্টিমিটার এদিক-ওদিক, ভুল পড়া একটা গ্রিড লাইন — layout স্টেজে ঠিক করতে প্রায় কিছুই লাগে না: মার্ক মুছে ফেলুন, আবার মাপুন, আবার মার্ক করুন। একই ভুল excavation-এর পরে, বা আরও খারাপ, একটা ফাউন্ডেশন কাস্ট হওয়ার পরে ধরা পড়লে, expensive rework অথবা খারাপ ক্ষেত্রে demolition পর্যন্ত লাগতে পারে। Layout visible excavation বা casting-এর তুলনায় "real progress" মনে হয় না, যে কারণেই এটাতে তাড়াহুড়া করা হয় — কিন্তু এটাই সেই স্টেজ যেখানে ভুল ধরা সবচেয়ে সস্তা।',
+      },
+      'mistake-cover': {
+        title: 'Cover block missing বা crushed হওয়া',
+        body: 'একটা ব্যস্ত পোরের সময় cover block লাথি খেয়ে সরে যায়, পায়ের নিচে crush হয়ে যায়, বা simply ভুলে যাওয়া হয়, যা reinforcement-কে ঝুলে যেতে বা সরে গিয়ে formwork face ছুঁয়ে দিতে দেয়। একবার formwork strike হয়ে গেলে, সেই স্টিলের specified amount-এর বদলে প্রায় zero cover থাকে, আর ডিজাইনের ধরে নেওয়ার চেয়ে অনেক দ্রুত corrode করে — একটা defect যা পোরের দিন invisible আর বছর পরে rust staining বা spalling হিসেবেই শুধু visible হয়। প্রতিটা পোরের ঠিক আগে cover block placement চেক করা, শুধু rebar tying-এর সময় একবার না, এটাই প্র্যাকটিক্যাল সমাধান।',
+      },
+      'mistake-lap-location': {
+        title: 'সব বার একই critical সেকশনে lap করা',
+        body: 'একটা lap স্বাভাবিকভাবেই continuous, অটুট স্টিলের চেয়ে একটা বারে সামান্য দুর্বল পয়েন্ট — যে কারণেই lap stagger করা আর member-এর maximum-moment location থেকে দূরে রাখার কথা। একটা সেকশনের সব বার একই পয়েন্টে lap করা (প্রায়ই শুধু এটাই কাটার জন্য সবচেয়ে সহজ জায়গা বলে করা হয়) সেই দুর্বলতাকে ঠিক সেখানেই concentrate করে যেখানে member সবচেয়ে কম tolerate করতে পারে। Reinforcement detailing (ড্রয়িং) দেখানো উচিত lap কোথায় যাবে; সাইট placement সেটা অনুসরণ করা উচিত, tie করতে যা সবচেয়ে convenient তা default না করে।',
+      },
+      'mistake-water-added': {
+        title: 'ঢালা সহজ করতে "একটু বেশি পানি যোগ করি"',
+        body: 'অতিরিক্ত পানি একটা কংক্রিট batch-কে মুহূর্তে বসানো আর finish করা লক্ষণীয়ভাবে সহজ করে দেয়, যে কারণেই একটা গরম, ক্লান্তিকর পোরের দিনে এই shortcut এত লোভনীয় — আর ঠিক সেই কারণেই এটা এত ক্ষতিকর, কারণ মিক্স ঢালার সময় যতই ভালো দেখাক না কেন, এটা hardened কংক্রিটের final strength সরাসরি আর উল্লেখযোগ্যভাবে দুর্বল করে দেয়। Slump test specifically এটা ধরার জন্যই আছে, structure-এর একটা স্থায়ী, ঠিক-করা-যায়-না অংশ হয়ে যাওয়ার আগে — যে batch তার slump test-এ fail করে সেটা reject করা উচিত, সাইটে বেশি পানি দিয়ে adjust করা না।',
+      },
+      'mistake-founding-level': {
+        title: 'Soil report-এর সাথে founding level মিলছে কিনা confirm না করেই একটা footing কাস্ট করা',
+        body: 'Founding level (যে depth-এ একটা footing আসলে bear করে) soil investigation যা adequate bearing capacity হিসেবে confirm করেছে তার সাথে মিলতে হবে — excavation যে depth-এ পৌঁছেছে তা না। একজন ইঞ্জিনিয়ার confirm করার আগেই যে excavation-এর নিচে exposed মাটি আসলে assumed bearing condition-এর সাথে মেলে, blinding কংক্রিট আর reinforcement কাস্ট করা একটা ফাউন্ডেশনকে যেটার জন্য ডিজাইন করা হয়েছিল তার চেয়ে দুর্বল মাটিতে bear করার ঝুঁকি নেয়, একটা ভুল যা পরে demolition ছাড়া ঠিক করা প্রায় অসম্ভব।',
+      },
+      'mistake-subgrade-skip': {
+        title: 'Subgrade preparation-কে একটা formality হিসেবে treat করা',
+        body: 'রাস্তা শেষ হওয়ার পর subgrade invisible হয়ে যায় বলে, বেশি visible sub-base আর asphalt কাজে পৌঁছানোর আগে এর preparation-কে একটা দ্রুত formality হিসেবে treat করার প্রলোভন হয়। কিন্তু একটা নরম বা inconsistently compacted subgrade উপরে তৈরি প্রতিটা layer-কে দুর্বল করে দেয়, সেই layer যতই ভালো বানানো হোক না কেন — একটা রাস্তা যা এক-দুই বছরের মধ্যে fail করে, যখন প্রতিটা visible layer ঠিকভাবে বানানো মনে হয়, প্রায়ই সেই সময় কেউ চেক না করা inadequate subgrade preparation-এ ফিরে যায়।',
+      },
+      'mistake-ppe-culture': {
+        title: 'শুধু দৃশ্যত ঝুঁকিপূর্ণ কাজে PPE enforce করা',
+        body: 'PPE compliance যা শুধু একটা কাজ দৃশ্যত বিপজ্জনক দেখালে (উচ্চতায় কাজ, ক্রেনের কাছে) enforce করা হয় আর routine কাজে (একটা general work area দিয়ে হাঁটা, ছোট ম্যাটেরিয়াল handling) ignore করা হয়, এমন একটা culture তৈরি করে যেখানে PPE-কে task-specific মনে করা হয় baseline না — যার মানে এটা সেই দিনগুলোতেও skip হয় যখন একটা routine কাজ অপ্রত্যাশিতভাবে বিপজ্জনক হয়ে ওঠে (একটা unplanned lift, একটা অপ্রত্যাশিত fall hazard)। উপস্থিত সবার জন্য, প্রতিটা কাজে consistent, site-wide enforcement-ই সেই অভ্যাস তৈরি করে যা কিছু অপ্রত্যাশিতভাবে ভুল হলেও টিকে থাকে।',
+      },
     },
   },
   lab: {

@@ -196,6 +196,28 @@ export function setDailyGoalMinutes(uid: string, minutes: number): void {
 }
 
 // ---------------------------------------------------------------------------
+// User role (Profile System, blueprint Part 20)
+// ---------------------------------------------------------------------------
+
+/** Self-declared only — there is no backend to verify this against, so
+ * the Profile page states that plainly rather than implying it's an
+ * admin-assigned role. Blueprint Part 20 also lists "Admin" as a user
+ * type; that one specifically is never offered here, since a
+ * self-service localStorage toggle is not a real admin permission
+ * boundary and offering it as a choice would be actively misleading. */
+export type UserRole = 'student' | 'engineer' | 'teacher' | 'professional';
+
+const DEFAULT_USER_ROLE: UserRole = 'student';
+
+export function getUserRole(uid: string): UserRole {
+  return readJson<UserRole>(storageKey(uid, 'userRole'), DEFAULT_USER_ROLE);
+}
+
+export function setUserRole(uid: string, role: UserRole): void {
+  writeJson(storageKey(uid, 'userRole'), role);
+}
+
+// ---------------------------------------------------------------------------
 // Activity log (streak calculation)
 // ---------------------------------------------------------------------------
 

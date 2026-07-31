@@ -89,7 +89,10 @@ export default function DashboardOverviewPage() {
             {dict.dashboard.continueLearning}
           </h2>
           {stats.continueLearning ? (
-            <Link href={`/learning`} className="block">
+            <Link
+              href={`/learning/${stats.continueLearning.courseSlug}/${stats.continueLearning.lessonId}`}
+              className="block"
+            >
               <ProgressCard
                 title={stats.continueLearning.courseTitle}
                 percent={stats.continueLearning.percent}

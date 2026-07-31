@@ -1,0 +1,60 @@
+'use client';
+
+import { Link } from '@/components/i18n/link';
+import { ChevronRight, HardHat, Cog, Beaker, Layers, Route, ShieldAlert } from 'lucide-react';
+import { AppShell } from '@/components/layout/app-shell';
+import { Card, CardContent } from '@/components/ui/card';
+import { PRACTICAL_CATALOG, type PracticalCategory } from '@/lib/content/practical-catalog';
+import { useDictionary } from '@/lib/i18n/dictionary-context';
+
+const CATEGORY_ICONS: Record<PracticalCategory, typeof HardHat> = {
+  'site-engineering': HardHat,
+  'reinforcement-work': Cog,
+  'concrete-technology': Beaker,
+  'foundation-systems': Layers,
+  'road-construction': Route,
+  'site-safety': ShieldAlert,
+};
+
+export default function PracticalHubPage() {
+  const dict = useDictionary();
+  const t = dict.practical;
+
+  return (
+    <AppShell>
+      <main className="container max-w-3xl py-12 md:py-16">
+        <div className="mb-10">
+          <span className="font-mono text-xs uppercase tracking-wider text-steel-500">{t.eyebrow}</span>
+          <h1 className="mt-2 font-display text-3xl font-semibold tracking-tight md:text-4xl">{t.pageTitle}</h1>
+          <p className="mt-2 max-w-xl text-muted-foreground">{t.pageDescription}</p>
+        </div>
+
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          {PRACTICAL_CATALOG.map((entry) => {
+            const copy = t.categories[entry.category];
+            const Icon = CATEGORY_ICONS[entry.category];
+            return (
+              <Link key={entry.category} href={`/practical/${entry.category}`}>
+                <Card className="group h-full transition-colors hover:border-steel-400/60">
+                  <CardContent className="flex items-start gap-3 p-4">
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-muted text-steel-500">
+                      <Icon className="h-4.5 w-4.5" strokeWidth={1.75} />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="font-display text-sm font-semibold leading-snug">{copy.title}</p>
+                      <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{copy.summary}</p>
+                      <p className="mt-1.5 font-mono text-[11px] text-muted-foreground">
+                        {entry.topicKeys.length} topics
+                      </p>
+                    </div>
+                    <ChevronRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100" />
+                  </CardContent>
+                </Card>
+              </Link>
+            );
+          })}
+        </div>
+      </main>
+    </AppShell>
+  );
+}
