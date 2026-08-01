@@ -159,7 +159,7 @@ const bn: Dictionary = {
     aiChatDescription: 'আপনার AI Assistant সেশনগুলো এখানে তালিকাভুক্ত হবে।',
     overview: 'ওভারভিউ',
     practical: 'প্র্যাকটিক্যাল',
-    labNav: 'এক্সপেরিমেন্ট ও ল্যাব',
+    labNav: 'ল্যাব',
     toolsNav: 'টুলস',
     aiNav: 'AI অ্যাসিস্ট্যান্ট',
     communityNav: 'কমিউনিটি',

@@ -162,7 +162,7 @@ const en: Dictionary = {
     aiChatDescription: 'Your AI Assistant sessions will be listed here.',
     overview: 'Overview',
     practical: 'Practical',
-    labNav: 'Experiment & Lab',
+    labNav: 'Lab',
     toolsNav: 'Tools',
     aiNav: 'AI Assistant',
     communityNav: 'Community',

@@ -1,7 +1,12 @@
 'use client';
 
 import { initializeApp, getApps, getApp, type FirebaseApp } from 'firebase/app';
-import { getAuth, type Auth } from 'firebase/auth';
+import {
+  getAuth,
+  setPersistence,
+  browserLocalPersistence,
+  type Auth,
+} from 'firebase/auth';
 import { getStorage, type FirebaseStorage } from 'firebase/storage';
 
 /**
@@ -21,5 +26,15 @@ const firebaseConfig = {
 const app: FirebaseApp = getApps().length ? getApp() : initializeApp(firebaseConfig);
 
 export const auth: Auth = getAuth(app);
+
+// Force local (localStorage-backed) persistence explicitly. Without this,
+// some mobile browsers (in-app browser tabs, privacy-hardened Chrome/WebView
+// configs, or third-party-storage-partitioning setups) fall back to
+// in-memory persistence, which drops the session on every reload/app-switch
+// and forces the user to log in again and again.
+setPersistence(auth, browserLocalPersistence).catch((error) => {
+  console.error('Failed to set Firebase auth persistence:', error);
+});
+
 export const storage: FirebaseStorage = getStorage(app);
 export default app;

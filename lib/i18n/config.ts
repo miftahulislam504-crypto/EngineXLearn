@@ -23,3 +23,8 @@ export const LOCALE_LABELS: Record<Locale, string> = {
   en: 'English',
   bn: 'বাংলা',
 };
+
+export const LOCALE_SHORT_LABELS: Record<Locale, string> = {
+  en: 'EN',
+  bn: 'বাং',
+};

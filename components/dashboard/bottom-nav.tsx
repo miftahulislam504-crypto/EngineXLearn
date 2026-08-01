@@ -47,15 +47,17 @@ export function BottomNav() {
               key={item.href}
               href={item.href}
               className={cn(
-                'flex flex-1 flex-col items-center justify-center gap-1 text-[11px] font-medium transition-colors',
+                'flex flex-1 min-w-0 flex-col items-center justify-center gap-1 px-1 text-[11px] font-medium transition-colors',
                 active ? 'text-accent' : 'text-muted-foreground hover:text-foreground'
               )}
             >
               <item.icon
-                className="h-5 w-5"
+                className="h-5 w-5 shrink-0"
                 strokeWidth={active ? 2.25 : 1.9}
               />
-              <span>{item.label}</span>
+              <span className="w-full truncate whitespace-nowrap text-center leading-tight">
+                {item.label}
+              </span>
             </Link>
           );
         })}

@@ -7,6 +7,7 @@ import { useAuth } from '@/lib/auth-context';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useDictionary, useLocale } from '@/lib/i18n/dictionary-context';
 import { AppMenuSheet } from '@/components/dashboard/app-menu-sheet';
+import { LanguageSwitcher } from '@/components/i18n/language-switcher';
 
 const DATE_LOCALE_MAP: Record<string, string> = {
   en: 'en-US',
@@ -48,7 +49,8 @@ export function DashboardTopbar() {
         </h1>
       </div>
 
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2 sm:gap-3">
+        <LanguageSwitcher compact />
         <button
           className="rounded-md p-2 text-muted-foreground hover:bg-muted hover:text-foreground"
           aria-label={dict.dashboard.notificationsAria}
