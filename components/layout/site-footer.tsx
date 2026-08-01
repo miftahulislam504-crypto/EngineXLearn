@@ -2,6 +2,7 @@
 
 import { Link } from '@/components/i18n/link';
 import { useDictionary } from '@/lib/i18n/dictionary-context';
+import { SiteLogo } from '@/components/layout/site-logo';
 
 export function SiteFooter() {
   const dict = useDictionary();
@@ -43,9 +44,7 @@ export function SiteFooter() {
       <div className="container py-14">
         <div className="grid grid-cols-2 gap-10 md:grid-cols-5">
           <div className="col-span-2">
-            <span className="font-display text-lg font-semibold tracking-tight">
-              CivilLearn
-            </span>
+            <SiteLogo />
             <p className="mt-3 max-w-xs font-mono text-xs leading-relaxed text-muted-foreground">
               {dict.footer.tagline}
             </p>

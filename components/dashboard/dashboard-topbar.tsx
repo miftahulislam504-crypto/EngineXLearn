@@ -44,7 +44,7 @@ export function DashboardTopbar() {
           })}
         </p>
         <h1 className="font-display text-lg font-semibold tracking-tight">
-          {isOverview ? dict.dashboard.welcomeBackName(firstName) : 'CivilLearn'}
+          {isOverview ? dict.dashboard.welcomeBackName(firstName) : 'EngineX Learn'}
         </h1>
       </div>
 

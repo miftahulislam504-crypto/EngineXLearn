@@ -3,11 +3,12 @@
 import { Link } from '@/components/i18n/link';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Compass, Search } from 'lucide-react';
+import { Menu, X, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/lib/auth-context';
 import { useDictionary } from '@/lib/i18n/dictionary-context';
 import { LanguageSwitcher } from '@/components/i18n/language-switcher';
+import { SiteLogo } from '@/components/layout/site-logo';
 import {
   Avatar,
   AvatarFallback,
@@ -40,13 +41,8 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/85 backdrop-blur-md">
       <div className="container flex h-16 items-center justify-between">
-        <Link href="/" className="flex items-center gap-2.5">
-          <span className="flex h-8 w-8 items-center justify-center rounded-md bg-structural-900 text-vellum-100 dark:bg-vellum-100 dark:text-structural-900">
-            <Compass className="h-4.5 w-4.5" strokeWidth={2.25} />
-          </span>
-          <span className="font-display text-lg font-semibold tracking-tight">
-            CivilLearn
-          </span>
+        <Link href="/">
+          <SiteLogo />
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">

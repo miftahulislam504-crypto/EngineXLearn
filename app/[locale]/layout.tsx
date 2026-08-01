@@ -28,8 +28,8 @@ export async function generateMetadata({
 
   return {
     title: isEnglish
-      ? 'CivilLearn — Civil Engineering Learning Platform'
-      : 'CivilLearn — সিভিল ইঞ্জিনিয়ারিং লার্নিং প্ল্যাটফর্ম',
+      ? 'EngineX Learn — Civil Engineering Learning Platform'
+      : 'EngineX Learn — সিভিল ইঞ্জিনিয়ারিং লার্নিং প্ল্যাটফর্ম',
     description: isEnglish
       ? 'Learn, practice, and visualize civil engineering — from first-year mechanics to BNBC 2020-compliant structural design.'
       : 'সিভিল ইঞ্জিনিয়ারিং শিখুন, প্র্যাকটিস করুন, এবং ভিজ্যুয়ালাইজ করুন — ফার্স্ট-ইয়ার মেকানিক্স থেকে BNBC 2020-compliant স্ট্রাকচারাল ডিজাইন পর্যন্ত।',

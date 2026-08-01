@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Compass } from 'lucide-react';
+import { SiteLogoMark } from '@/components/layout/site-logo';
 
 /**
  * One-time splash screen. Shows only on the first page load of a
@@ -16,7 +16,7 @@ import { Compass } from 'lucide-react';
  * this overlay the whole time; the splash just covers it and clears.
  */
 
-const SESSION_KEY = 'civillearn-splash-shown';
+const SESSION_KEY = 'enginexlearn-splash-shown';
 
 export function SiteSplash() {
   const [phase, setPhase] = useState<'hidden' | 'center' | 'rising' | 'done'>('hidden');
@@ -68,11 +68,9 @@ export function SiteSplash() {
             animate={rising ? { y: 0, scale: 1 } : { y: '45vh', scale: 1.35 }}
             transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
           >
-            <span className="flex h-8 w-8 items-center justify-center rounded-md bg-structural-900 text-vellum-100 dark:bg-vellum-100 dark:text-structural-900">
-              <Compass className="h-4.5 w-4.5" strokeWidth={2.25} />
-            </span>
+            <SiteLogoMark />
             <span className="font-display text-lg font-semibold tracking-tight">
-              CivilLearn
+              EngineX Learn
             </span>
           </motion.div>
         </motion.div>

@@ -22,7 +22,7 @@ export interface CertificateContent {
   subjectLine: string; // e.g. the course title
   dateLine: string; // pre-formatted, localized date string
   certificateId: string;
-  footer: string; // e.g. "EngineXLearn"
+  footer: string; // e.g. "EngineX Learn"
 }
 
 const COLORS = {

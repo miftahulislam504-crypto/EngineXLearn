@@ -28,7 +28,7 @@ const bn: Dictionary = {
     discussions: 'আলোচনা',
     sharedProjects: 'শেয়ার করা প্রজেক্ট',
     careerHub: 'ক্যারিয়ার হাব',
-    copyright: 'CivilLearn। রেফারেন্স: BNBC 2020 · ACI 318-19।',
+    copyright: 'EngineX Learn। রেফারেন্স: BNBC 2020 · ACI 318-19।',
   },
   hero: {
     badge: 'BNBC 2020 · ACI 318-19 অনুসরণ করে তৈরি',
@@ -860,7 +860,7 @@ const bn: Dictionary = {
     certificateEyebrow: 'সার্টিফিকেট অফ কমপ্লিশন',
     certificateBodyLine: 'সফলভাবে এই কোর্স সম্পূর্ণ করেছে',
     progressCertificateEyebrow: 'সার্টিফিকেট অফ প্রোগ্রেস',
-    progressCertificateBodyLine: (n) => `EngineXLearn-এ ${n}টা lesson সম্পূর্ণ করেছে, তারিখ অনুযায়ী`,
+    progressCertificateBodyLine: (n) => `EngineX Learn-এ ${n}টা lesson সম্পূর্ণ করেছে, তারিখ অনুযায়ী`,
     badges: {
       'first-course': {
         title: 'প্রথম কোর্স',

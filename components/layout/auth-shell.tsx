@@ -1,5 +1,5 @@
 import { Link } from '@/components/i18n/link';
-import { Compass } from 'lucide-react';
+import { SiteLogo } from '@/components/layout/site-logo';
 
 export function AuthShell({
   title,
@@ -23,13 +23,8 @@ export function AuthShell({
       />
 
       <div className="relative w-full max-w-sm">
-        <Link href="/" className="mb-8 flex items-center justify-center gap-2.5">
-          <span className="flex h-8 w-8 items-center justify-center rounded-md bg-structural-900 text-vellum-100 dark:bg-vellum-100 dark:text-structural-900">
-            <Compass className="h-4.5 w-4.5" strokeWidth={2.25} />
-          </span>
-          <span className="font-display text-lg font-semibold tracking-tight">
-            CivilLearn
-          </span>
+        <Link href="/" className="mb-8 flex justify-center">
+          <SiteLogo />
         </Link>
 
         <div className="rounded-xl border border-border bg-card p-8 shadow-sm">

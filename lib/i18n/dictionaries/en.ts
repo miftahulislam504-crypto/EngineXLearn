@@ -28,7 +28,7 @@ const en: Dictionary = {
     discussions: 'Discussions',
     sharedProjects: 'Shared Projects',
     careerHub: 'Career Hub',
-    copyright: 'CivilLearn. Reference: BNBC 2020 · ACI 318-19.',
+    copyright: 'EngineX Learn. Reference: BNBC 2020 · ACI 318-19.',
   },
   hero: {
     badge: 'BNBC 2020 · ACI 318-19 aligned',
@@ -867,7 +867,7 @@ const en: Dictionary = {
     certificateEyebrow: 'Certificate of Completion',
     certificateBodyLine: 'has successfully completed the course',
     progressCertificateEyebrow: 'Certificate of Progress',
-    progressCertificateBodyLine: (n) => `has completed ${n} lesson${n === 1 ? '' : 's'} on EngineXLearn as of`,
+    progressCertificateBodyLine: (n) => `has completed ${n} lesson${n === 1 ? '' : 's'} on EngineX Learn as of`,
     badges: {
       'first-course': {
         title: 'First Course',

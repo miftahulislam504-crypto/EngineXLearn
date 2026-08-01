@@ -1,6 +1,6 @@
 'use client';
 
-import { Compass } from 'lucide-react';
+import { SiteLogo } from '@/components/layout/site-logo';
 
 /**
  * Landing-page-only header. Deliberately has no nav links, no
@@ -15,14 +15,7 @@ export function LandingHeader() {
   return (
     <header className="border-b border-border bg-background/85 backdrop-blur-md">
       <div className="container flex h-16 items-center">
-        <span className="flex items-center gap-2.5">
-          <span className="flex h-8 w-8 items-center justify-center rounded-md bg-structural-900 text-vellum-100 dark:bg-vellum-100 dark:text-structural-900">
-            <Compass className="h-4.5 w-4.5" strokeWidth={2.25} />
-          </span>
-          <span className="font-display text-lg font-semibold tracking-tight">
-            CivilLearn
-          </span>
-        </span>
+        <SiteLogo />
       </div>
     </header>
   );

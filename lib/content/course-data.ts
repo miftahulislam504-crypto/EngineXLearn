@@ -1,7 +1,7 @@
 /**
  * All course/subject content, hardcoded — no database. This file is the
  * single source of truth for every subject, course, module, and lesson
- * in CivilLearn. It was originally written as Prisma seed data; the
+ * in EngineX Learn. It was originally written as Prisma seed data; the
  * course/lesson content itself (titles, descriptions, lesson bodies) is
  * unchanged from that version — only the loading mechanism changed, from
  * "write these rows to Postgres" to "import this array directly".
@@ -108,7 +108,7 @@ R₁ = 6.67 kN
 Notice the load closer to the left support puts *more* reaction on the
 left support — the beam is "sharing" the load in inverse proportion to
 distance, the same principle you can see live in the beam diagram on
-the CivilLearn home page.`,
+the EngineX Learn home page.`,
         },
         {
           title: 'Determinate vs. indeterminate structures',
